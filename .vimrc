@@ -73,6 +73,8 @@ Bundle 'Townk/vim-autoclose'
 Bundle 'tpope/vim-surround'
 Bundle 'nathanaelkane/vim-indent-guides'
 Bundle 'godlygeek/tabular'
+Bundle 'altercation/vim-colors-solarized'
+
 
 " Javascript
 Bundle 'pangloss/vim-javascript'
@@ -180,7 +182,7 @@ let g:neosnippet#disable_runtime_snippets = { '_': 1 }
 let g:neosnippet#snippets_directory='~/.vim/bundle/vim-snippets/snippets'
 
 " Enable neosnippet snipmate compatibility mode
-"let g:neosnippet#enable_snipmate_compatibility = 1
+let g:neosnippet#enable_snipmate_compatibility = 1
 
 " indent guides
 "autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=#010101 ctermbg=3
@@ -238,11 +240,11 @@ set cul " highlight current line
 syntax enable "Enable syntax hl
 
 if LINUX() && has("gui_running")
-set guifont=Andale\ Mono\ Regular\ 16,Menlo\ Regular\ 15,Consolas\ Regular\ 16,Courier\ New\ Regular\ 18
+  set guifont=Andale\ Mono\ Regular\ 16,Menlo\ Regular\ 15,Consolas\ Regular\ 16,Courier\ New\ Regular\ 18
 elseif OSX() && has("gui_running")
-set guifont=Andale\ Mono\ Regular:h16,Menlo\ Regular:h15,Consolas\ Regular:h16,Courier\ New\ Regular:h18
+  set guifont=Andale\ Mono\ Regular:h16,Menlo\ Regular:h15,Consolas\ Regular:h16,Courier\ New\ Regular:h18
 elseif WINDOWS() && has("gui_running")
-set guifont=Andale_Mono:h10,Menlo:h10,Consolas:h10,Courier_New:h10
+  set guifont=Andale_Mono:h10,Menlo:h10,Consolas:h10,Courier_New:h10
 endif
 
 if has("gui_running")
@@ -252,19 +254,20 @@ if has("gui_running")
   set guioptions-=e
   set guioptions-=L "remove left scrollbar when there is vertical split
   set guioptions-=l "remove left scrollbar
-  set t_Co=256
+"  set t_Co=256
 else
 endif
 
 " highlight current line
-hi clear CursorLine
-augroup CLClear
-  autocmd! ColorScheme * hi CursorLine ctermbg=0 guibg=Grey40 cterm=NONE
-augroup END
+"hi clear CursorLine
+"augroup CLClear
+"  autocmd! ColorScheme * hi CursorLine ctermbg=0 guibg=Grey40 cterm=NONE
+"augroup END
 
-set background=dark
-colorscheme desert
-set t_Co=256
+set background=light
+colorscheme solarized
+"set t_Co=256
+let g:solarized_termcolors=256
 
 
 set encoding=utf8
@@ -580,6 +583,7 @@ set tags+=./tags
 " => JavaScript section
 """""""""""""""""""""""""""""""
 let g:syntastic_javascript_checkers = ['jshint']
+map <leader>nn :!node %<CR>
 
 """"""""""""""""""""""""""""""
 " => HTML & CSS
