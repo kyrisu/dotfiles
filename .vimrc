@@ -66,7 +66,7 @@ Bundle 'honza/vim-snippets'
 Bundle 'scrooloose/nerdcommenter'
 Bundle 'scrooloose/syntastic'
 Bundle 'tpope/vim-fugitive'
-Bundle 'ervandew/supertab'
+"Bundle 'ervandew/supertab'
 Bundle 'majutsushi/tagbar'
 Bundle 'bling/vim-airline'
 Bundle 'Townk/vim-autoclose'
@@ -240,7 +240,7 @@ set cul " highlight current line
 syntax enable "Enable syntax hl
 
 if LINUX() && has("gui_running")
-  set guifont=Andale\ Mono\ Regular\ 16,Menlo\ Regular\ 15,Consolas\ Regular\ 16,Courier\ New\ Regular\ 18
+  set guifont=Inconsolata\ 11,Andale\ Mono\ Regular\ 16,Menlo\ Regular\ 15,Consolas\ Regular\ 16,Courier\ New\ Regular\ 18
 elseif OSX() && has("gui_running")
   set guifont=Andale\ Mono\ Regular:h16,Menlo\ Regular:h15,Consolas\ Regular:h16,Courier\ New\ Regular:h18
 elseif WINDOWS() && has("gui_running")
@@ -544,8 +544,8 @@ inoremap <expr><CR> neocomplcache#complete_common_string()
 
 " <CR>: close popup
 " <s-CR>: close popup and save indent.
-inoremap <expr><s-CR> pumvisible() ? neocomplcache#close_popup()"\<CR>" : "\<CR>"
-inoremap <expr><CR> pumvisible() ? neocomplcache#close_popup() : "\<CR>"
+"inoremap <expr><s-CR> pumvisible() ? neocomplcache#close_popup()"\<CR>" : "\<CR>"
+"inoremap <expr><CR> pumvisible() ? neocomplcache#close_popup() : "\<CR>"
 
 " <C-h>, <BS>: close popup and delete backword char.
 inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
@@ -589,6 +589,26 @@ map <leader>nn :!node %<CR>
 " => HTML & CSS
 """""""""""""""""""""""""""""""
 let g:user_emmet_expandabbr_key='<C-j>'
+
+function! Expander()
+  let line   = getline(".")
+  let col    = col(".")
+  let first  = line[col-2]
+  let second = line[col-1]
+  let third  = line[col]
+
+  if first ==# ">"
+    if second ==# "<" && third ==# "/"
+      return "\<CR>\<C-o>==\<C-o>O"
+    else
+      return "\<CR>"
+    endif
+  else
+    return "\<CR>"
+  endif
+endfunction
+
+inoremap <expr> <CR> Expander()
 
 """"""""""""""""""""""""""""""
 " => Git Section
