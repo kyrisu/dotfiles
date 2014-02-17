@@ -240,7 +240,7 @@ set cul " highlight current line
 syntax enable "Enable syntax hl
 
 if LINUX() && has("gui_running")
-  set guifont=Inconsolata\ 11,Andale\ Mono\ Regular\ 16,Menlo\ Regular\ 15,Consolas\ Regular\ 16,Courier\ New\ Regular\ 18
+  set guifont=Inconsolata\ 13,Andale\ Mono\ Regular\ 16,Menlo\ Regular\ 15,Consolas\ Regular\ 16,Courier\ New\ Regular\ 18
 elseif OSX() && has("gui_running")
   set guifont=Andale\ Mono\ Regular:h16,Menlo\ Regular:h15,Consolas\ Regular:h16,Courier\ New\ Regular:h18
 elseif WINDOWS() && has("gui_running")
@@ -264,10 +264,16 @@ endif
 "  autocmd! ColorScheme * hi CursorLine ctermbg=0 guibg=Grey40 cterm=NONE
 "augroup END
 
-set background=light
+
+if has ("gui_running")
+  set background=dark
+else
+  set background=dark
+  set t_Co=256
+  let g:solarized_termcolors=256
+endif
+
 colorscheme solarized
-"set t_Co=256
-let g:solarized_termcolors=256
 
 
 set encoding=utf8
