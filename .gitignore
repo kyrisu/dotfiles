@@ -1,1 +1,9 @@
 .vim/bundle
+/vim/tmp/*
+!vim/tmp/.empty
+/vim/.netrwhist
+/zsh/local.zsh
+/tags
+/.vimrc.local
+/vim/bundle/*
+!/vim/bundle/vundle
