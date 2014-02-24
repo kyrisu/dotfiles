@@ -183,8 +183,9 @@ let g:neosnippet#snippets_directory='~/.vim/bundle/vim-snippets/snippets'
 let g:neosnippet#enable_snipmate_compatibility = 1
 
 " indent guides
-"autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=#010101 ctermbg=3
-"autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=#050505 ctermbg=4
+let g:indent_guides_auto_colors = 0
+autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  ctermbg=black
+autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=darkgrey
 let g:indent_guides_start_level = 2
 let g:indent_guides_guide_size = 1
 let g:indent_guides_enable_on_vim_startup = 1
