@@ -53,7 +53,6 @@ Bundle 'gmarik/vundle'
 Bundle 'kien/ctrlp.vim'
 Bundle 'scrooloose/nerdtree'
 "Bundle 'jistr/vim-nerdtree-tabs'
-Bundle 'terryma/vim-multiple-cursors'
 
 " programming general
 Bundle 'MarcWeber/vim-addon-mw-utils'
@@ -96,7 +95,6 @@ Bundle 'Rip-Rip/clang_complete'
 " vim
 Bundle 'vim-scripts/L9'
 Bundle 'vim-scripts/vimwiki'
-Bundle 'vim-scripts/FuzzyFinder'
 
 filetype plugin indent on
 
