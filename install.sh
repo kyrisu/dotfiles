@@ -111,8 +111,8 @@ create_symlinks() {
         mkdir -p "$endpath/.vim/bundle"
     fi
 
-    lnif "$endpath/.vimrc"              "$HOME/.vimrc"
-    lnif "$endpath/.vim"                "$HOME/.vim"
+    lnif "$endpath/.vimrc"              "$HOME/vimrc"
+    lnif "$endpath/.vim"                "$HOME/vim"
 
     ret="$?"
     success "$1"

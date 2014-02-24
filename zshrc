@@ -45,7 +45,7 @@ fpath=($DOTFILES/zsh/autocompletions/src $fpath)
 # }
 
 # Theme {
-    source "$ZSH/themes/gentoo.zsh-theme"
+    source "$ZSH/themes/bira.zsh-theme"
 # }
 
 # tell me a fortune :)
