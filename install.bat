@@ -13,9 +13,9 @@ IF NOT EXIST "%BASE_DIR%" (
         call cd "%BASE_DIR%" 
 )
 
-call mklink "%HOME%\.vimrc" "%BASE_DIR%\.vimrc"
-call mklink "%HOME%\_vimrc" "%BASE_DIR%\.vimrc"
-call mklink /J "%HOME%\.vim" "%BASE_DIR%\.vim"
+call mklink "%HOME%\.vimrc" "%BASE_DIR%\vimrc"
+call mklink "%HOME%\_vimrc" "%BASE_DIR%\vimrc"
+call mklink /J "%HOME%\.vim" "%BASE_DIR%\vim"
 
 IF NOT EXIST "%BASE_DIR%\.vim\bundle" (
         call mkdir "%BASE_DIR%\.vim\bundle"
