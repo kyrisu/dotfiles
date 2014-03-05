@@ -70,7 +70,7 @@ Bundle 'majutsushi/tagbar'
 Bundle 'bling/vim-airline'
 Bundle 'Townk/vim-autoclose'
 Bundle 'tpope/vim-surround'
-Bundle 'nathanaelkane/vim-indent-guides'
+Bundle 'Yggdroot/indentLine'
 Bundle 'godlygeek/tabular'
 Bundle 'altercation/vim-colors-solarized'
 
@@ -96,6 +96,7 @@ Bundle 'Rip-Rip/clang_complete'
 Bundle 'vim-scripts/L9'
 Bundle 'vim-scripts/vimwiki'
 
+filetype on
 filetype plugin indent on
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -183,14 +184,17 @@ let g:neosnippet#snippets_directory='~/.vim/bundle/vim-snippets/snippets'
 let g:neosnippet#enable_snipmate_compatibility = 1
 
 " indent guides
-let g:indent_guides_auto_colors = 0
-autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  ctermbg=black
-autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=darkgrey
-let g:indent_guides_start_level = 2
-let g:indent_guides_guide_size = 1
-let g:indent_guides_enable_on_vim_startup = 1
+"let g:indent_guides_auto_colors = 0
+"autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  ctermbg=black
+"autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=darkgrey
+"let g:indent_guides_start_level = 2
+"let g:indent_guides_guide_size = 1
+"let g:indent_guides_enable_on_vim_startup = 1
+let g:indentLine_color_term = 239
+let g:indentLine_color_gui = '#a4e57e'
 
-let g:multi_cursor_quit_key = '<C-c>'
+"
+"let g:multi_cursor_quit_key = '<C-c>'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VIM user interface
@@ -271,8 +275,8 @@ else
   set t_Co=256
   let g:solarized_termcolors=256
 endif
-
 colorscheme solarized
+
 
 
 set encoding=utf8
@@ -590,6 +594,10 @@ set tags+=./tags
 let g:syntastic_javascript_checkers = ['jshint']
 map <leader>nn :!node %<CR>
 
+" insert newline when pressing enter between brackets
+autocmd FileType javascript inoremap {<CR>  {<CR>}<C-c><S-o>
+autocmd FileType javascript inoremap [<CR>  [<CR>]<C-c><S-o>
+
 """"""""""""""""""""""""""""""
 " => HTML & CSS
 """""""""""""""""""""""""""""""
@@ -671,7 +679,12 @@ map <leader>pp :setlocal paste!<cr>
 map <leader>bb :cd ..<cr>
 
 " TagBar options
-let g:tagbar_ctags_bin = "C:\\bin\\ctags.exe"
+if WINDOWS()
+  let g:tagbar_ctags_bin = "C:\\bin\\ctags.exe"
+elseif LINUX()
+  let g:tagbar_ctags_bin = "ctags"
+endif
+
 nnoremap <silent> <F8> :TagbarToggle<CR>
 
 cmap w!! w !/B c:\bin\sudotee.exe % > NUL
