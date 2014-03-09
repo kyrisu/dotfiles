@@ -417,9 +417,7 @@ map <silent> <leader><cr> :noh<cr>
 
 " Close the current buffer
 map <leader>bd :Bclose<cr>
-
-" Find buffer with FuzzyFinder
-map <leader>o :FufBuffer<cr>
+map <leader>c :bp\|bd #<cr>
 
 " Close all the buffers
 map <leader>ba :1,300 bd!<cr>
