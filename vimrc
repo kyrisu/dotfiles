@@ -70,7 +70,7 @@ Bundle 'majutsushi/tagbar'
 Bundle 'bling/vim-airline'
 Bundle 'Townk/vim-autoclose'
 Bundle 'tpope/vim-surround'
-Bundle 'Yggdroot/indentLine'
+"Bundle 'Yggdroot/indentLine'
 Bundle 'godlygeek/tabular'
 Bundle 'altercation/vim-colors-solarized'
 
