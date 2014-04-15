@@ -6,6 +6,7 @@
 # Path to your oh-my-zsh configuration.
 DOTFILES=$HOME/.dotfiles
 ZSH=$DOTFILES/oh-my-zsh
+PATH=$PATH:~/bin:~/.dotfiles/scripts
 
 # helper method
 has_executable() {
@@ -28,7 +29,7 @@ fpath=($DOTFILES/zsh/autocompletions/src $fpath)
 
 # Plugins {
     # main zsh repository
-    plugins=(git extract go history-substring-search symfony2 systemd)
+    plugins=(git extract history-substring-search systemd node npm)
     for plugin in $plugins; do
         source $ZSH/plugins/$plugin/$plugin.plugin.zsh
     done
@@ -51,3 +52,4 @@ fpath=($DOTFILES/zsh/autocompletions/src $fpath)
 # tell me a fortune :)
 has_executable "fortune" && has_executable "cowsay" && fortune | cowsay
 
+source /usr/share/doc/pkgfile/command-not-found.zsh

@@ -52,25 +52,22 @@ Bundle 'gmarik/vundle'
 
 Bundle 'kien/ctrlp.vim'
 Bundle 'scrooloose/nerdtree'
-"Bundle 'jistr/vim-nerdtree-tabs'
 
 " programming general
 Bundle 'MarcWeber/vim-addon-mw-utils'
 Bundle 'tomtom/tlib_vim'
+Bundle "garbas/vim-snipmate"
+Bundle "honza/vim-snippets"
 
 Bundle 'Shougo/neocomplcache'
-Bundle 'Shougo/neosnippet'
-Bundle 'honza/vim-snippets'
 
 Bundle 'scrooloose/nerdcommenter'
 Bundle 'scrooloose/syntastic'
-Bundle 'tpope/vim-fugitive'
-"Bundle 'ervandew/supertab'
+"Bundle 'tpope/vim-fugitive'
 Bundle 'majutsushi/tagbar'
 Bundle 'bling/vim-airline'
 Bundle 'Townk/vim-autoclose'
 Bundle 'tpope/vim-surround'
-"Bundle 'Yggdroot/indentLine'
 Bundle 'godlygeek/tabular'
 Bundle 'altercation/vim-colors-solarized'
 
@@ -79,6 +76,7 @@ Bundle 'altercation/vim-colors-solarized'
 Bundle 'pangloss/vim-javascript'
 Bundle 'jelera/vim-javascript-syntax'
 Bundle 'moll/vim-node'
+Bundle 'ahayman/vim-nodejs-complete'
 
 
 
@@ -93,7 +91,7 @@ Bundle 'groenewege/vim-less'
 Bundle 'Rip-Rip/clang_complete'
 
 " vim
-Bundle 'vim-scripts/L9'
+"Bundle 'vim-scripts/L9'
 Bundle 'vim-scripts/vimwiki'
 
 filetype on
@@ -161,43 +159,8 @@ let g:nerdtree_tabs_open_on_gui_startup=0
 map <c-b> :CtrlPBuffer<CR>
 
 " snippets
-let g:acp_enableAtStartup = 0
-
-imap <c-k> <Plug>(neosnippet_expand_or_jump)
-smap <c-k> <Plug>(neosnippet_expand_or_jump)
-xmap <c-k> <Plug>(neosnippet_expand_or_jump)
-
-" SuperTab like snippets behavior.
-imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-\ "\<Plug>(neosnippet_expand_or_jump)"
-\: pumvisible() ? "\<C-n>" : "\<TAB>"
-smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-\ "\<Plug>(neosnippet_expand_or_jump)"
-\: "\<TAB>"
-
-" For snippet_complete marker.
-if has('conceal')
-  set conceallevel=2 concealcursor=i
-endif
-
-let g:neosnippet#disable_runtime_snippets = { '_': 1 }
-let g:neosnippet#snippets_directory='~/.vim/bundle/vim-snippets/snippets'
-
-" Enable neosnippet snipmate compatibility mode
-let g:neosnippet#enable_snipmate_compatibility = 1
-
-" indent guides
-"let g:indent_guides_auto_colors = 0
-"autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  ctermbg=black
-"autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=darkgrey
-"let g:indent_guides_start_level = 2
-"let g:indent_guides_guide_size = 1
-"let g:indent_guides_enable_on_vim_startup = 1
-let g:indentLine_color_term = 239
-let g:indentLine_color_gui = '#a4e57e'
-
-"
-"let g:multi_cursor_quit_key = '<C-c>'
+imap <C-K>  <Plug>snipMateNextOrTrigger
+smap <C-K>  <Plug>snipMateNextOrTrigger
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VIM user interface
@@ -384,13 +347,6 @@ cnoremap <C-K>		<C-U>
 cnoremap <C-P> <Up>
 cnoremap <C-N> <Down>
 
-" Useful on some European keyboards
-map Ă‚Â˝ $
-imap Ă‚Â˝ $
-vmap Ă‚Â˝ $
-cmap Ă‚Â˝ $
-
-
 func! Cwd()
 let cwd = getcwd()
 return "e " . cwd
@@ -540,7 +496,7 @@ autocmd FileType sql set omnifunc=sqlComplete#CompleteSQL
 autocmd FileType python set omnifunc=pythoncomplete#Complete
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
 autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType javascript setlocal omnifunc=nodejscomplete#CompleteJS
 autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
@@ -554,8 +510,8 @@ inoremap <expr><CR> neocomplcache#complete_common_string()
 
 " <CR>: close popup
 " <s-CR>: close popup and save indent.
-"inoremap <expr><s-CR> pumvisible() ? neocomplcache#close_popup()"\<CR>" : "\<CR>"
-"inoremap <expr><CR> pumvisible() ? neocomplcache#close_popup() : "\<CR>"
+inoremap <expr><s-CR> pumvisible() ? neocomplcache#close_popup()"\<CR>" : "\<CR>"
+inoremap <expr><CR> pumvisible() ? neocomplcache#close_popup() : "\<CR>"
 
 " <C-h>, <BS>: close popup and delete backword char.
 inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
@@ -688,7 +644,7 @@ endif
 
 nnoremap <silent> <F8> :TagbarToggle<CR>
 
-cmap w!! w !/B c:\bin\sudotee.exe % > NUL
+cmap w!! w !sudo tee % > /dev/null %
 
 set autochdir
 
@@ -712,16 +668,6 @@ if has('cscope')
 
 "  command -nargs=0 Cscope cs add $VIMSRC/src/cscope.out $VIMSRC/src
 endif
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => SuperTab
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:SuperTabDefaultCompletionType = "context"
-let g:SuperTabNoCompleteAfter = ['^', ',', '\s']
-
-let g:clang_complete_auto = 1
-let g:clang_complete_copen = 1
-let g:clang_use_library = 1
-set completeopt=menuone,menu,longest,preview
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Folding
