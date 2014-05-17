@@ -101,7 +101,7 @@ _sound() {
 
 _active_network_interface() {
     ACTIVE="none" # default to eth0 in case if none active
-    for iface in  `ifconfig | egrep 'eth[0-9]|wlp[0-9]s[0-9]|enp[0-9]s[0-9]' | awk -F': ' '{print $1}'` ; do
+    for iface in  `ifconfig | egrep 'eth[0-9]|wlp[0-9]s[0-9]|enp[0-9]s[0-9]|ppp[0-9]' | awk -F': ' '{print $1}'` ; do
         ifconfig $iface | grep -q 'inet ' && ACTIVE="$iface"
     done
 
@@ -152,7 +152,7 @@ while true; do
             txColor="#dc322f"
         fi
 
-        if [ "$CURR_IFACE" = "wlan0" ]; then
+        if [ "$CURR_IFACE" = "wlp5s0" ]; then
             # wifi
             netIcon="$DZEN_ICONPATH/net-wifi5.xbm"
         else
