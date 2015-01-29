@@ -28,74 +28,93 @@
 "
 
 silent function! OSX()
-    return has('macunix')
+return has('macunix')
 endfunction
 silent function! LINUX()
-    return has('unix') && !has('macunix') && !has('win32unix')
+return has('unix') && !has('macunix') && !has('win32unix')
 endfunction
 silent function! WINDOWS()
-    return  (has('win16') || has('win32') || has('win64'))
+return  (has('win16') || has('win32') || has('win64'))
 endfunction
 
 " Plugins_Included:
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Note: Skip initialization for vim-tiny or vim-small.
+if !1 | finish | endif
 
-set nocompatible              " be iMproved
-filetype off                  " required!
+if has('vim_starting')
+  if &compatible
+    set nocompatible               " Be iMproved
+  endif
 
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+  " Required:
+  set runtimepath+=~/.dotfiles/vim/bundle/neobundle.vim/
+endif
 
-" let Vundle manage Vundle
-" " required! 
-Bundle 'gmarik/vundle'
+" Required:
+call neobundle#begin(expand('~/.dotfiles/vim/bundle/'))
 
-Bundle 'kien/ctrlp.vim'
-Bundle 'scrooloose/nerdtree'
+" Let NeoBundle manage NeoBundle
+" Required:
+NeoBundleFetch 'Shougo/neobundle.vim'
+
+" My Bundles here:
+" Refer to |:NeoBundle-examples|.
+" Note: You don't set neobundle setting in .gvimrc!
+
+NeoBundle 'kien/ctrlp.vim'
+NeoBundle 'scrooloose/nerdtree'
+NeoBundle 'sickill/vim-monokai'
 
 " programming general
-Bundle 'MarcWeber/vim-addon-mw-utils'
-Bundle 'tomtom/tlib_vim'
-Bundle "garbas/vim-snipmate"
-Bundle "honza/vim-snippets"
+NeoBundle 'SirVer/ultisnips'
+NeoBundle 'honza/vim-snippets'
+NeoBundle 'scrooloose/nerdcommenter'
+NeoBundle 'scrooloose/syntastic'
+NeoBundle 'Valloric/YouCompleteMe', {
+      \ 'build' : {
+      \     'unix' : './install.sh --clang-completer --system-libclang',
+      \     'windows' : './install.sh --clang-completer --system-libclang --omnisharp-completer',
+      \    }
+      \ }
 
-Bundle 'Shougo/neocomplcache'
-
-Bundle 'scrooloose/nerdcommenter'
-Bundle 'scrooloose/syntastic'
 "Bundle 'tpope/vim-fugitive'
-Bundle 'majutsushi/tagbar'
-Bundle 'bling/vim-airline'
-Bundle 'Townk/vim-autoclose'
-Bundle 'tpope/vim-surround'
-Bundle 'godlygeek/tabular'
-Bundle 'altercation/vim-colors-solarized'
+NeoBundle 'majutsushi/tagbar'
+NeoBundle 'bling/vim-airline'
+NeoBundle 'Townk/vim-autoclose'
+NeoBundle 'tpope/vim-surround'
+NeoBundle 'godlygeek/tabular'
 
 
 " Javascript
-Bundle 'pangloss/vim-javascript'
-Bundle 'jelera/vim-javascript-syntax'
-Bundle 'moll/vim-node'
-Bundle 'ahayman/vim-nodejs-complete'
-
-
+NeoBundle 'pangloss/vim-javascript'
+NeoBundle 'jelera/vim-javascript-syntax'
+NeoBundle 'moll/vim-node'
+NeoBundle 'ahayman/vim-nodejs-complete'
 
 " HTML & CSS
-Bundle 'jimmyhchan/dustjs.vim'
-Bundle 'mattn/emmet-vim'
-Bundle 'groenewege/vim-less'
+NeoBundle 'jimmyhchan/dustjs.vim'
+NeoBundle 'mattn/emmet-vim'
+NeoBundle 'groenewege/vim-less'
 
 " cpp
 "Bundle 'vim-scripts/c.vim'
 "Bundle 'vim-scripts/autoproto.vim'
-Bundle 'Rip-Rip/clang_complete'
+"NeoBundle 'Rip-Rip/clang_complete'
 
 " vim
 "Bundle 'vim-scripts/L9'
-Bundle 'vim-scripts/vimwiki'
+NeoBundle 'vim-scripts/vimwiki'
 
-filetype on
+call neobundle#end()
+
+" Required:
 filetype plugin indent on
+
+" If there are uninstalled bundles found on startup,
+" this will conveniently prompt you to install them.
+
+NeoBundleCheck
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Files, backups and undo
@@ -158,10 +177,6 @@ let g:nerdtree_tabs_open_on_gui_startup=0
 " CtrlP
 map <c-b> :CtrlPBuffer<CR>
 
-" snippets
-imap <C-K>  <Plug>snipMateNextOrTrigger
-smap <C-K>  <Plug>snipMateNextOrTrigger
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VIM user interface
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -201,7 +216,7 @@ set novisualbell
 set t_vb=
 set tm=500
 
-set cul " highlight current line
+"set cul " highlight current line
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Colors and Fonts
@@ -209,7 +224,7 @@ set cul " highlight current line
 syntax enable "Enable syntax hl
 
 if LINUX() && has("gui_running")
-  set guifont=Inconsolata\ 13,Andale\ Mono\ Regular\ 16,Menlo\ Regular\ 15,Consolas\ Regular\ 16,Courier\ New\ Regular\ 18
+  set guifont=Inconsolata\ 12,Andale\ Mono\ Regular\ 16,Menlo\ Regular\ 15,Consolas\ Regular\ 16,Courier\ New\ Regular\ 18
 elseif OSX() && has("gui_running")
   set guifont=Andale\ Mono\ Regular:h16,Menlo\ Regular:h15,Consolas\ Regular:h16,Courier\ New\ Regular:h18
 elseif WINDOWS() && has("gui_running")
@@ -223,7 +238,7 @@ if has("gui_running")
   set guioptions-=e
   set guioptions-=L "remove left scrollbar when there is vertical split
   set guioptions-=l "remove left scrollbar
-"  set t_Co=256
+  "  set t_Co=256
 else
 endif
 
@@ -241,7 +256,7 @@ else
   set t_Co=256
   let g:solarized_termcolors=256
 endif
-colorscheme solarized
+colorscheme monokai
 
 
 
@@ -271,20 +286,20 @@ set wrap "Wrap lines
 set list
 
 " Tabularize {
-    nmap <Leader>a& :Tabularize /&<CR>
-    vmap <Leader>a& :Tabularize /&<CR>
-    nmap <Leader>a= :Tabularize /=<CR>
-    vmap <Leader>a= :Tabularize /=<CR>
-    nmap <Leader>a: :Tabularize /:<CR>
-    vmap <Leader>a: :Tabularize /:<CR>
-    nmap <Leader>a:: :Tabularize /:\zs<CR>
-    vmap <Leader>a:: :Tabularize /:\zs<CR>
-    nmap <Leader>a, :Tabularize /,<CR>
-    vmap <Leader>a, :Tabularize /,<CR>
-    nmap <Leader>a,, :Tabularize /,\zs<CR>
-    vmap <Leader>a,, :Tabularize /,\zs<CR>
-    nmap <Leader>a<Bar> :Tabularize /<Bar><CR>
-    vmap <Leader>a<Bar> :Tabularize /<Bar><CR>
+nmap <Leader>a& :Tabularize /&<CR>
+vmap <Leader>a& :Tabularize /&<CR>
+nmap <Leader>a= :Tabularize /=<CR>
+vmap <Leader>a= :Tabularize /=<CR>
+nmap <Leader>a: :Tabularize /:<CR>
+vmap <Leader>a: :Tabularize /:<CR>
+nmap <Leader>a:: :Tabularize /:\zs<CR>
+vmap <Leader>a:: :Tabularize /:\zs<CR>
+nmap <Leader>a, :Tabularize /,<CR>
+vmap <Leader>a, :Tabularize /,<CR>
+nmap <Leader>a,, :Tabularize /,\zs<CR>
+vmap <Leader>a,, :Tabularize /,\zs<CR>
+nmap <Leader>a<Bar> :Tabularize /<Bar><CR>
+vmap <Leader>a<Bar> :Tabularize /<Bar><CR>
 " }
 
 """"""""""""""""""""""""""""""
@@ -315,11 +330,11 @@ function! VisualSearch(direction) range
   let l:pattern = substitute(l:pattern, "\n$", "", "")
 
   if a:direction == 'b'
-      execute "normal ?" . l:pattern . "^M"
+    execute "normal ?" . l:pattern . "^M"
   elseif a:direction == 'gv'
-      call CmdLine("vimgrep " . '/'. l:pattern . '/' . ' **/*.')
+    call CmdLine("vimgrep " . '/'. l:pattern . '/' . ' **/*.')
   elseif a:direction == 'f'
-      execute "normal /" . l:pattern . "^M"
+    execute "normal /" . l:pattern . "^M"
   endif
 
   let @/ = l:pattern
@@ -348,12 +363,12 @@ cnoremap <C-P> <Up>
 cnoremap <C-N> <Down>
 
 func! Cwd()
-let cwd = getcwd()
-return "e " . cwd
+  let cwd = getcwd()
+  return "e " . cwd
 endfunc
 
 func! CurrentFileDir(cmd)
-return a:cmd . " " . expand("%:p:h") . "/"
+  return a:cmd . " " . expand("%:p:h") . "/"
 endfunc
 
 
@@ -388,22 +403,22 @@ map <leader>cd :cd %:p:h<cr>
 
 command! Bclose call <SID>BufcloseCloseIt()
 function! <SID>BufcloseCloseIt()
- let l:currentBufNum = bufnr("%")
- let l:alternateBufNum = bufnr("#")
+  let l:currentBufNum = bufnr("%")
+  let l:alternateBufNum = bufnr("#")
 
- if buflisted(l:alternateBufNum)
-   buffer #
- else
-   bnext
- endif
+  if buflisted(l:alternateBufNum)
+    buffer #
+  else
+    bnext
+  endif
 
- if bufnr("%") == l:currentBufNum
-   new
- endif
+  if bufnr("%") == l:currentBufNum
+    new
+  endif
 
- if buflisted(l:currentBufNum)
-   execute("bdelete! ".l:currentBufNum)
- endif
+  if buflisted(l:currentBufNum)
+    execute("bdelete! ".l:currentBufNum)
+  endif
 endfunction
 
 " Specify the behavior when switching between buffers 
@@ -427,13 +442,13 @@ set laststatus=2
 
 " Format the statusline
 "let g:airline_theme = 'desert'
-"let g:airline_powerline_fonts = 1
+let g:airline_powerline_fonts = 1
 
 function! HasPaste()
   if &paste
-      return 'PASTE MODE  '
+    return 'PASTE MODE  '
   else
-      return ''
+    return ''
   endif
 endfunction
 
@@ -478,9 +493,9 @@ vmap <M-k> :m'<-2<cr>`>my`<mzgv`yo`z
 
 "Delete trailing white space, useful for Python ;)
 func! DeleteTrailingWS()
-exe "normal mz"
-%s/\s\+$//ge
-exe "normal `z"
+  exe "normal mz"
+  %s/\s\+$//ge
+  exe "normal `z"
 endfunc
 autocmd BufWrite *.py :call DeleteTrailingWS()
 
@@ -502,49 +517,29 @@ autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
 autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
 
-let g:neocomplcache_enable_at_startup = 1
-
-inoremap <expr><C-g> neocomplcache#undo_completion()
-inoremap <expr><C-l> neocomplcache#complete_common_string()
-inoremap <expr><CR> neocomplcache#complete_common_string()
-
-" <CR>: close popup
-" <s-CR>: close popup and save indent.
-inoremap <expr><s-CR> pumvisible() ? neocomplcache#close_popup()"\<CR>" : "\<CR>"
-inoremap <expr><CR> pumvisible() ? neocomplcache#close_popup() : "\<CR>"
-
-" <C-h>, <BS>: close popup and delete backword char.
-inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
-inoremap <expr><C-y> neocomplcache#close_popup()
-
 inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<TAB>"
 
-let g:neocomplcache_enable_at_startup = 1
-let g:neocomplcache_enable_camel_case_completion = 1
-let g:neocomplcache_enable_smart_case = 1
-let g:neocomplcache_enable_underbar_completion = 1
-let g:neocomplcache_enable_auto_delimiter = 1
-let g:neocomplcache_max_list = 15
-"let g:neocomplcache_force_overwrite_completefunc = 1
+let g:ycm_add_preview_to_completeopt=1
+let g:ycm_global_ycm_extra_conf = '~/.dotfiles/.ycm_extra_conf.py'
+let g:ycm_confirm_extra_conf = 1
+let g:ycm_extra_conf_globlist = ['~/.dotfiles']
+let g:ycm_autoclose_preview_window_after_completion = 1
+let g:syntastic_always_populate_loc_list = 1
 
-" Define keyword.
-if !exists('g:neocomplcache_keyword_patterns')
-  let g:neocomplcache_keyword_patterns = {}
-endif
-
-let g:neocomplcache_keyword_patterns._ = '\h\w*'
-if !exists('g:neocomplcache_omni_patterns')
-  let g:neocomplcache_omni_patterns = {}
-endif
-
-let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
-let g:neocomplcache_omni_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
-let g:neocomplcache_omni_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
-let g:neocomplcache_omni_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
-let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\h\w*\|\h\w*::'
+let g:ycm_server_user_vim_stdout = 1
 
 set tags+=./tags
+
+let g:UltiSnipsExpandTrigger="<c-k>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsListSnippets="<c-e>"
+
+" this mapping Enter key to <C-y> to chose the current highlight item 
+" and close the selection list, same as other IDEs.
+" CONFLICT with some plugins like tpope/Endwise
+"inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+
 """"""""""""""""""""""""""""""
 " => JavaScript section
 """""""""""""""""""""""""""""""
@@ -666,7 +661,7 @@ if has('cscope')
   cnoreabbrev css cs show
   cnoreabbrev csh cs help
 
-"  command -nargs=0 Cscope cs add $VIMSRC/src/cscope.out $VIMSRC/src
+  "  command -nargs=0 Cscope cs add $VIMSRC/src/cscope.out $VIMSRC/src
 endif
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -677,4 +672,4 @@ set foldnestmax=10      "deepest fold is 10 levels
 set nofoldenable        "dont fold by default
 set foldlevel=1         "this is just what i use
 
- 
+

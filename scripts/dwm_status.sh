@@ -1,13 +1,13 @@
 #!/bin/zsh
 
 # Configuration
-DATE_FORMAT='%a %d %b %H:%M'
+DATE_FORMAT='%a %d %b %H:%M '
 DZEN_ICONPATH=$HOME/.dotfiles/xbm
 BG='#222222'
 FG='#839496'
 X=-580 # move from the right, so the status bar would be always aligned right. leave some space for systray
 Y=0
-HEIGHT=18
+HEIGHT=14
 WIDTH=500 # adjust it if theres less items used to show in status bar
 FONT='InconsolataSansMono:size=10'
 # Main loop interval in seconds
@@ -65,7 +65,7 @@ fload() {
 fmem() {
     # MEMORY
 
-    memory=$(free | awk '/buffers\/cache:/ {printf "%.0f", 100*$3/($3 + $4)}')
+    memory=$(free | awk '/Mem:/ {printf "%.0f", 100*$3/($3 + $4)}')
     if [ "$memory" -gt 90 ]; then modifier="^bg(#dc322f)^fg(white)"
     elif [ "$memory" -gt 80 ]; then modifier="^bg(#cb4b16)^fg(white)"
     elif [ "$memory" -gt 70 ]; then modifier="^fg(#b58900)"
@@ -78,7 +78,7 @@ fmem() {
 
 _cpu_temp() {
     # CPUs temp
-    temp=$(sensors | grep 'Core 2' | awk -F+ '{print $2}' | awk -F. '{print $1}')
+    temp=$(sensors | grep 'Core 1' | awk -F+ '{print $2}' | awk -F. '{print $1}')
     if [ "$temp" -gt 80 ]; then
         modifier='^bg(#dc322f)^fg(white)'
     elif [ "$temp" -gt 60 ]; then
