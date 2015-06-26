@@ -1,32 +1,10 @@
+" vim:fdm=marker
+"
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Maintainer: Krystian Pasziewicz
 "             http://codingzombies.com - kyrisu@codingzombies.com
-"
-" Version: 1.0 - 27.12.2013
-"
-" Sections:
-"    -> General
-"    -> VIM user interface
-"    -> Colors and Fonts
-"    -> Files and backups
-"    -> Text, tab and indent related
-"    -> Visual mode related
-"    -> Command mode related
-"    -> Moving around, tabs and buffers
-"    -> Statusline
-"    -> Parenthesis/bracket expanding
-"    -> General Abbrevs
-"    -> Editing mappings
-"
-"    -> Cope
-"    -> Minibuffer plugin
-"    -> Omni complete functions
-"    -> Python section
-"    -> JavaScript section
-"    -> Git section
-"
-"
 
+" OS Detection  {{{
 silent function! OSX()
 return has('macunix')
 endfunction
@@ -36,8 +14,9 @@ endfunction
 silent function! WINDOWS()
 return  (has('win16') || has('win32') || has('win64'))
 endfunction
+" }}}
 
-" Plugins_Included:
+" Plugins_Included: {{{
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Note: Skip initialization for vim-tiny or vim-small.
 if !1 | finish | endif
@@ -65,45 +44,70 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 NeoBundle 'kien/ctrlp.vim'
 NeoBundle 'scrooloose/nerdtree'
 NeoBundle 'sickill/vim-monokai'
+NeoBundle 'junegunn/vim-easy-align'
+NeoBundle 'airblade/vim-rooter'
+NeoBundle 'milkypostman/vim-togglelist'
+"NeoBundle 'vim-scripts/a.vim'
+"NeoBundle 'Lokaltog/vim-easymotion'
 
 " programming general
-NeoBundle 'SirVer/ultisnips'
+NeoBundle 'Yggdroot/indentLine'
+NeoBundle 'Raimondi/delimitMate'
+NeoBundle 'ervandew/supertab'
+NeoBundle 'vim-scripts/SyntaxComplete'
 NeoBundle 'honza/vim-snippets'
 NeoBundle 'scrooloose/nerdcommenter'
 NeoBundle 'scrooloose/syntastic'
 NeoBundle 'Valloric/YouCompleteMe', {
       \ 'build' : {
-      \     'unix' : './install.sh --clang-completer --system-libclang',
+      \     'unix' : './install.sh --clang-completer',
       \     'windows' : './install.sh --clang-completer --system-libclang --omnisharp-completer',
       \    }
       \ }
 
+NeoBundle 'SirVer/ultisnips'
+
 "Bundle 'tpope/vim-fugitive'
 NeoBundle 'majutsushi/tagbar'
 NeoBundle 'bling/vim-airline'
-NeoBundle 'Townk/vim-autoclose'
 NeoBundle 'tpope/vim-surround'
-NeoBundle 'godlygeek/tabular'
 
 
 " Javascript
-NeoBundle 'pangloss/vim-javascript'
-NeoBundle 'jelera/vim-javascript-syntax'
-NeoBundle 'moll/vim-node'
-NeoBundle 'ahayman/vim-nodejs-complete'
+"NeoBundle 'jelera/vim-javascript-syntax' , {'autoload':{'filetypes':['javascript']}}
+NeoBundle 'othree/yajs.vim', {'autoload':{'filetypes':['javascript']}}
+NeoBundle 'othree/javascript-libraries-syntax.vim', {'autoload':{'filetypes':['javascript']}}
+NeoBundle 'maksimr/vim-jsbeautify'
+NeoBundle 'burnettk/vim-angular'
+NeoBundle 'matthewsimo/angular-vim-snippets'
+NeoBundle 'claco/jasmine.vim', {'autoload':{'filetypes':['javascript']}}
+NeoBundle 'myhere/vim-nodejs-complete', {'autoload':{'filetypes':['javascript']}}
+NeoBundle 'marijnh/tern_for_vim', {
+      \ 'build' : {
+      \     'unix' : 'npm install',
+      \    },
+      \ 'autoload':{'filetypes':['javascript']}
+      \ }
+
+" JAVA
 
 " HTML & CSS
-NeoBundle 'jimmyhchan/dustjs.vim'
+"NeoBundle 'jimmyhchan/dustjs.vim'
+"NeoBundle 'mustache/vim-mustache-handlebars'
+"NeoBundle 'Slava/vim-spacebars'
+
 NeoBundle 'mattn/emmet-vim'
 NeoBundle 'groenewege/vim-less'
+"NeoBundle 'tpope/vim-haml'
 
+" CSV
+"NeoBundle 'chrisbra/csv.vim'
 " cpp
 "Bundle 'vim-scripts/c.vim'
 "Bundle 'vim-scripts/autoproto.vim'
 "NeoBundle 'Rip-Rip/clang_complete'
 
 " vim
-"Bundle 'vim-scripts/L9'
 NeoBundle 'vim-scripts/vimwiki'
 
 call neobundle#end()
@@ -115,9 +119,9 @@ filetype plugin indent on
 " this will conveniently prompt you to install them.
 
 NeoBundleCheck
+" }}}
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Files, backups and undo
+" => Files, backups and undo {{{
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Turn backup off, since most stuff is in SVN, git anyway...
 set nobackup
@@ -137,17 +141,21 @@ endtry
 set ssop-=options
 set ssop-=folds
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => General
+"}}}
+
+" => General {{{
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Sets how many lines of history VIM has to remember
 set history=700
 
 " Set to auto read when a file is changed from the outside
 set autoread
+set exrc
 
 " With a map leader it's possible to do extra key combinations
 " like <leader>w saves the current file
+"let mapleader = "\<Space>"
+"let g:mapleader = "\<Space>"
 let mapleader = ","
 let g:mapleader = ","
 
@@ -176,9 +184,10 @@ let g:nerdtree_tabs_open_on_gui_startup=0
 
 " CtrlP
 map <c-b> :CtrlPBuffer<CR>
+let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git\|bower_components'
+" }}}
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => VIM user interface
+" => VIM user interface {{{
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Set 7 lines to the curors - when moving vertical..
 set so=7
@@ -216,10 +225,12 @@ set novisualbell
 set t_vb=
 set tm=500
 
-"set cul " highlight current line
+highlight Pmenu ctermbg=238 gui=bold
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Colors and Fonts
+"set cul " highlight current line
+" }}}
+
+" => Colors and Fonts {{{
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 syntax enable "Enable syntax hl
 
@@ -258,6 +269,11 @@ else
 endif
 colorscheme monokai
 
+" Popup menu hightLight Group
+highlight Pmenu ctermbg=201 guibg=Magenta
+highlight PmenuSel ctermbg=248 guibg=DarkGrey
+highlight PmenuSbar ctermbg=250 guibg=Grey
+highlight PmenuThumb cterm=reverse gui=reverse
 
 
 set encoding=utf8
@@ -267,9 +283,9 @@ catch
 endtry
 
 set ffs=unix,dos,mac "Default file types
+" }}}
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Text, tab and indent related
+" => Text, tab and indent related {{{
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set expandtab
 set shiftwidth=2
@@ -285,25 +301,20 @@ set wrap "Wrap lines
 
 set list
 
-" Tabularize {
-nmap <Leader>a& :Tabularize /&<CR>
-vmap <Leader>a& :Tabularize /&<CR>
-nmap <Leader>a= :Tabularize /=<CR>
-vmap <Leader>a= :Tabularize /=<CR>
-nmap <Leader>a: :Tabularize /:<CR>
-vmap <Leader>a: :Tabularize /:<CR>
-nmap <Leader>a:: :Tabularize /:\zs<CR>
-vmap <Leader>a:: :Tabularize /:\zs<CR>
-nmap <Leader>a, :Tabularize /,<CR>
-vmap <Leader>a, :Tabularize /,<CR>
-nmap <Leader>a,, :Tabularize /,\zs<CR>
-vmap <Leader>a,, :Tabularize /,\zs<CR>
-nmap <Leader>a<Bar> :Tabularize /<Bar><CR>
-vmap <Leader>a<Bar> :Tabularize /<Bar><CR>
-" }
+" Easy align
+" Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
+vmap <Enter> <Plug>(EasyAlign)
 
-""""""""""""""""""""""""""""""
-" => Visual mode related
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
+
+"autocmd FileType javascript vnoremap <buffer>  = :call RangeJsBeautify()<cr>
+"autocmd FileType html vnoremap <buffer> = :call RangeHtmlBeautify()<cr>
+"autocmd FileType css vnoremap <buffer> = :call RangeCSSBeautify()<cr>
+
+" }}}
+
+" => Visual mode related {{{
 """"""""""""""""""""""""""""""
 " Really useful!
 "  In visual mode when you press * or # to search for the current selection
@@ -344,47 +355,14 @@ endfunction
 " Visual shifting
 vnoremap < <gv
 vnoremap > >gv
+"}}}
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Command mode related
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Smart mappings on the command line
-cno $h e ~/
-cno $d e ~/Desktop/
-cno $j e ./
-cno $c e <C-\>eCurrentFileDir("e")<cr>
-
-" Bash like keys for the command line
-cnoremap <C-A>		<Home>
-cnoremap <C-E>		<End>
-cnoremap <C-K>		<C-U>
-
-cnoremap <C-P> <Up>
-cnoremap <C-N> <Down>
-
-func! Cwd()
-  let cwd = getcwd()
-  return "e " . cwd
-endfunc
-
-func! CurrentFileDir(cmd)
-  return a:cmd . " " . expand("%:p:h") . "/"
-endfunc
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Moving around, tabs and buffers
+" => Moving around, tabs and buffers {{{
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Map space to / (search) and c-space to ? (backgwards search)
 nnoremap <silent> <space> :nohlsearch<Bar>:echo<CR>
 map <c-space> ?
 map <silent> <leader><cr> :noh<cr>
-
-" Smart way to move btw. windows
-"map <C-j> <C-W>j
-"map <C-k> <C-W>k
-"map <C-h> <C-W>h
-"map <C-l> <C-W>l
 
 " Close the current buffer
 map <leader>bd :Bclose<cr>
@@ -397,8 +375,13 @@ map <leader>ba :1,300 bd!<cr>
 map <right> :bn<cr>
 map <left> :bp<cr>
 
+nnoremap <leader>l :ls<CR>:b<space>
+
+"jump to alternative file
+nnoremap <leader>a <C-^>
+
 " When pressing <leader>cd switch to the directory of the open buffer
-map <leader>cd :cd %:p:h<cr>
+"map <leader>cd :cd %:p:h<cr>
 
 
 command! Bclose call <SID>BufcloseCloseIt()
@@ -433,9 +416,9 @@ map <leader>tn :tabnew %<cr>
 map <leader>tc :tabclose<cr>
 map <leader>tm :tabmove 
 
+"}}}
 
-""""""""""""""""""""""""""""""
-" => Statusline
+" => Statusline {{{
 """"""""""""""""""""""""""""""
 " Always hide the statusline
 set laststatus=2
@@ -452,35 +435,15 @@ function! HasPaste()
   endif
 endfunction
 
+" }}}
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Parenthesis/bracket expanding
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-vnoremap $1 <esc>`>a)<esc>`<i(<esc>
-vnoremap $2 <esc>`>a]<esc>`<i[<esc>
-vnoremap $3 <esc>`>a}<esc>`<i{<esc>
-vnoremap $$ <esc>`>a"<esc>`<i"<esc>
-vnoremap $q <esc>`>a'<esc>`<i'<esc>
-vnoremap $e <esc>`>a"<esc>`<i"<esc>
-
-" Map auto complete of (, ", ', [
-inoremap $1 ()<esc>i
-inoremap $2 []<esc>i
-inoremap $3 {}<esc>i
-inoremap $4 {<esc>o}<esc>O
-inoremap $q ''<esc>i
-inoremap $e ""<esc>i
-inoremap $t <><esc>i
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => General Abbrevs
+" => General Abbrevs {{{
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 iab xdate <c-r>=strftime("%d/%m/%y %H:%M:%S")<cr>
 
+" }}}
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Editing mappings
+" => Editing mappings {{{
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "Remap VIM 0
 map 0 ^
@@ -503,56 +466,80 @@ set guitablabel=%t
 
 set listchars=tab:›\ ,trail:•,extends:#,nbsp:. " Highlight problematic whitespaceo
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Omni complete functions
+"}}}
+
+" => Omni complete functions {{{
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "autocmd FileType cpp set omnifunc=omni#cpp#complete#Main
 autocmd FileType sql set omnifunc=sqlComplete#CompleteSQL
 autocmd FileType python set omnifunc=pythoncomplete#Complete
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
 autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-autocmd FileType javascript setlocal omnifunc=nodejscomplete#CompleteJS
+"autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType javascript setlocal omnifunc=tern#Complete
 autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
 autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
 
-inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<TAB>"
-
+" YCM
 let g:ycm_add_preview_to_completeopt=1
 let g:ycm_global_ycm_extra_conf = '~/.dotfiles/.ycm_extra_conf.py'
 let g:ycm_confirm_extra_conf = 1
 let g:ycm_extra_conf_globlist = ['~/.dotfiles']
 let g:ycm_autoclose_preview_window_after_completion = 1
-let g:syntastic_always_populate_loc_list = 1
-
 let g:ycm_server_user_vim_stdout = 1
+let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
+let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
+
+let g:SuperTabDefaultCompletionType = '<C-n>'
+"let g:SuperTabDefaultCompletionType = 'context'
+
+let g:EclimCompletionMethod = 'omnifunc'
+
+" better key bindings for UltiSnipsExpandTrigger
+let g:UltiSnipsExpandTrigger = "<tab>"
+let g:UltiSnipsJumpForwardTrigger = "<tab>"
+let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
+
+let g:syntastic_auto_loc_list = 0
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_java_javac_config_file_enabled=1
+"let g:syntastic_java_javac_classpath = "path/to/sdk:path/to/project/app/libs"
 
 set tags+=./tags
+"}}}
 
-let g:UltiSnipsExpandTrigger="<c-k>"
-let g:UltiSnipsJumpForwardTrigger="<tab>"
-let g:UltiSnipsListSnippets="<c-e>"
-
-" this mapping Enter key to <C-y> to chose the current highlight item 
-" and close the selection list, same as other IDEs.
-" CONFLICT with some plugins like tpope/Endwise
-"inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-
-""""""""""""""""""""""""""""""
-" => JavaScript section
+" => JavaScript section {{{
 """""""""""""""""""""""""""""""
+"let g:syntastic_javascript_checkers = ['jshint', 'jscs']
 let g:syntastic_javascript_checkers = ['jshint']
 map <leader>nn :!node %<CR>
+
+"au FileType javascript call JavaScriptFold()
+
+let g:used_javascript_libs = 'underscore,angularjs,angularui,jquery,handlebars,chai'
+
+let g:tern_show_argument_hints='on_hold'
+let g:tern_show_signature_in_pum ='1'
+
+autocmd FileType javascript nnoremap gd :TernDef<cr>
+" and 
+let g:tern_map_keys=1
 
 " insert newline when pressing enter between brackets
 autocmd FileType javascript inoremap {<CR>  {<CR>}<C-c><S-o>
 autocmd FileType javascript inoremap [<CR>  [<CR>]<C-c><S-o>
 
+let g:angular_source_directory = 'src/client/app'
+let g:angular_test_directory = 'tests/client'
+
+let g:indentLine_noConcealCursor=""
+
 """"""""""""""""""""""""""""""
 " => HTML & CSS
 """""""""""""""""""""""""""""""
+"let g:syntastic_html_checkers = ['tidy']
 let g:user_emmet_expandabbr_key='<C-j>'
 
 function! Expander()
@@ -575,34 +562,70 @@ endfunction
 
 inoremap <expr> <CR> Expander()
 
-""""""""""""""""""""""""""""""
-" => Git Section
-""""""""""""""""""""""""""""""
+" }}}
 
-""""""""""""""""""""""""""""""
-" => MRU plugin
-""""""""""""""""""""""""""""""
-let MRU_Max_Entries = 400
-map <leader>f :MRU<CR>
+" => Ionic Framework section {{{
+"""""""""""""""""""""""""""""""
+"mark syntax errors with :signs
+let g:syntastic_enable_signs=1
+"automatically jump to the error when saving the file
+let g:syntastic_auto_jump=0
+"show the error list automatically
+let g:syntastic_auto_loc_list=1
+"don't care about warnings
+let g:syntastic_quiet_messages = {'level': 'warnings'}
 
-""""""""""""""""""""""""""""""
-" => Vim grep
+"let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute \"ng-","<ion-", "</ion-"]
+"allow for ionic html attributes
+let g:syntastic_html_tidy_blocklevel_tags = [
+  \'ion-checkbox',
+  \'ion-content',
+  \'ion-delete-button',
+  \'ion-footer-bar',
+  \'ion-header-bar',
+  \'ion-infinite-scroll',
+  \'ion-item',
+  \'ion-list',
+  \'ion-modal-view',
+  \'ion-nav-back-button',
+  \'ion-nav-bar',
+  \'ion-nav-buttons',
+  \'ion-nav-view',
+  \'ion-option-button',
+  \'ion-pane',
+  \'ion-popover-view',
+  \'ion-radio',
+  \'ion-refresher',
+  \'ion-reorder-button',
+  \'ion-scroll',
+  \'ion-side-menu',
+  \'ion-side-menus',
+  \'ion-side-menu-content',
+  \'ion-slide',
+  \'ion-slide-box',
+  \'ion-tab',
+  \'ion-tabs',
+  \'ion-toggle',
+  \'ion-view',
+  \]
+" }}}
+
+" => Vim grep {{{
 """"""""""""""""""""""""""""""
 let Grep_Skip_Dirs = 'RCS CVS SCCS .svn generated'
 set grepprg=/bin/grep\ -nH
 
+" }}}
 
-""""""""""""""""""""""""""""""
-" => Filetypes
+" => Filetypes {{{
 """"""""""""""""""""""""""""""
 "*.ags
 au BufRead,BufNewFile *.ags set ft=ags
 "*.log
 au BufRead,BufNewFile *.log set ft=log
-"
+" }}}
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => C++
+" => C++ {{{
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 function! s:insert_gates()
@@ -616,11 +639,15 @@ autocmd BufNewFile *.{h,hpp} call <SID>insert_gates()
 
 set makeprg=mingw32-make
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => MISC
+"}}}
+
+" => MISC {{{
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Remove the Windows ^M - when the encodings gets messed up
 noremap <Leader>m mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
+
+" Remove polish characters
+" %!iconv -f cp1250 -t utf-8
 
 "Quickly open a buffer for scripbble
 map <leader>q :e ~/buffer<cr>
@@ -641,35 +668,14 @@ nnoremap <silent> <F8> :TagbarToggle<CR>
 
 cmap w!! w !sudo tee % > /dev/null %
 
-set autochdir
+"set autochdir
 
+"}}}
+
+" => ALIASES {{{
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => CSCOPE
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+command! JI JavaImport
+command! JIO JavaImportOrganize
+"}}}
 
-if has('cscope')
-  set cscopetag cscopeverbose
-
-  if has('quickfix')
-    set cscopequickfix=s-,c-,d-,i-,t-,e-
-  endif
-
-  cnoreabbrev csa cs add
-  cnoreabbrev csf cs find
-  cnoreabbrev csk cs kill
-  cnoreabbrev csr cs reset
-  cnoreabbrev css cs show
-  cnoreabbrev csh cs help
-
-  "  command -nargs=0 Cscope cs add $VIMSRC/src/cscope.out $VIMSRC/src
-endif
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Folding
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set foldmethod=indent   "fold based on indent
-set foldnestmax=10      "deepest fold is 10 levels
-set nofoldenable        "dont fold by default
-set foldlevel=1         "this is just what i use
-
-
+set secure
