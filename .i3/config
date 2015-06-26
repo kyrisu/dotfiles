@@ -1,0 +1,237 @@
+set $mod Mod1
+
+font xft:Cousine, FontAwesome 8
+
+new_window pixel 2
+#new_float pixel 5
+
+focus_follows_mouse  yes
+workspace_layout default
+
+#don't move to neighbouring screen with hjkl
+force_focus_wrapping yes
+
+set $blue #005588
+set $gray1 #484848
+set $gray2 #333333
+
+# class                 border  backgr. text    indicator
+#client.focused          #4c7899 #285577 #ffffff #2e9ef4
+client.focused          #4c7899 #fa162d #ffffff #2e9ef4
+client.focused_inactive #333333 #5f676a #ffffff #484e50
+client.unfocused        #333333 #222222 #888888 #292d2e
+client.urgent           #2f343a #900000 #ffffff #900000
+
+# Use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
+
+# kill focused window
+bindsym $mod+q kill
+
+# toggle border
+#bindsym $mod+b [class="^.*"] border toggle
+
+# start dmenu (a program launcher)
+#bindsym $mod+p exec --no-startup-id j4-dmenu-desktop --dmenu='dmenu -i -b -fn '-*-terminus-*-*-*-*-12-*-*-*-*-*-*-*''
+bindsym $mod+p exec --no-startup-id j4-dmenu-desktop --dmenu='xboomx'
+
+## KEY BINDINGS
+bindsym $mod+Tab workspace back_and_forth
+bindsym $mod+u [urgent=latest] focus
+
+# HANDLE POPUPS
+#popup_during_fullscreen smart
+
+# change focus
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+
+# move focused window
+bindsym $mod+Shift+H move left
+bindsym $mod+Shift+J move down
+bindsym $mod+Shift+K move up
+bindsym $mod+Shift+L move right
+
+# split in horizontal orientation
+bindsym $mod+bar split h
+
+# split in vertical orientation
+bindsym $mod+underscore split v
+
+# enter fullscreen mode for the focused container
+bindsym $mod+f fullscreen
+
+# change container layout (stacked, tabbed, default)
+bindsym $mod+s layout stacking
+bindsym $mod+x layout tabbed
+bindsym $mod+z layout default
+
+# toggle tiling / floating
+bindsym $mod+Shift+space floating toggle
+
+# change focus between tiling / floating windows
+bindsym $mod+space focus mode_toggle
+
+# focus the parent container
+bindsym $mod+a focus parent
+
+# focus the child container
+bindsym $mod+d focus child
+
+# assign workspace variables
+set $WS1 1
+set $WS2 2
+set $WS3 3
+set $WS4 4
+set $WS5 5
+set $WS6 6
+set $WS7 7
+set $WS8 8
+set $WS9 9
+
+# switch to workspace
+bindsym $mod+1 workspace $WS1
+bindsym $mod+2 workspace $WS2
+bindsym $mod+3 workspace $WS3
+bindsym $mod+4 workspace $WS4
+bindsym $mod+5 workspace $WS5
+bindsym $mod+6 workspace $WS6
+bindsym $mod+7 workspace $WS7
+bindsym $mod+8 workspace $WS8
+bindsym $mod+9 workspace $WS9
+bindsym $mod+0 workspace 10
+
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace $WS1
+bindsym $mod+Shift+2 move container to workspace $WS2
+bindsym $mod+Shift+3 move container to workspace $WS3
+bindsym $mod+Shift+4 move container to workspace $WS4
+bindsym $mod+Shift+5 move container to workspace $WS5
+bindsym $mod+Shift+6 move container to workspace $WS6
+bindsym $mod+Shift+7 move container to workspace $WS7
+bindsym $mod+Shift+8 move container to workspace $WS8
+bindsym $mod+Shift+9 move container to workspace $WS9
+bindsym $mod+Shift+0 move container to workspace 10
+
+# custome keys
+bindsym XF86Display exec --no-startup-id $HOME/.screenlayout/laptop_only.sh
+#bindcode --release 530 exec --no-startup-id $HOME/bin/touchpad_toggle
+#bindcode --release 530 exec --no-startup-id notify-send "keycode 530 pressed"
+
+# workspaces 
+assign [class="Wync|Sky"] $WS6
+assign [class="Thunderbird"] $WS7
+
+# float 
+for_window [class="VLC|MPlayer|Skype|xpad|Java|Spotify|Hamster|Systemadm|Modem-manager-gui"] floating enable
+for_window [class="File-roller|Lxappearance|Nitrogen|Arandr|Caffeine|Pavucontrol|emulator64-arm|Transmission-gtk|sublime-text|VirtualBox"] floating enable
+for_window [instance="wync|sky|TeamViewer.exe"] floating enable
+for_window [title="Preferences|Xfce-notifyd|TrueCrypt|Catfish|Google Keep|Pocket|irssi|Xarchiver|Wync|Unetbootin"] floating enable
+for_window [title="File Operation Progress" class="Thunar"] floating enable
+for_window [title="Share a link on Twitter - Mozilla Firefox" class="Firefox"] floating enable
+for_window [title="Press This - Mozilla Firefox" class="Firefox"] floating enable
+for_window [class="Gimp"] floating enable
+for_window [window_role="pop-up"] floating enable,move absolute center
+
+# float projects
+for_window [title="EverGTD"] floating enable
+
+
+# reload the configuration file
+bindsym $mod+Shift+C reload
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+R restart
+# exit i3 (logs you out of your X session)
+bindsym $mod+Shift+E exit
+
+mode "resize" {
+# These bindings trigger as soon as you enter the resize mode
+
+    bindsym h resize shrink width 10 px or 10 ppt
+    bindsym j resize grow height 10 px or 10 ppt
+    bindsym k resize shrink height 10 px or 10 ppt
+    bindsym l resize grow width 10 px or 10 ppt 
+# arrow keys #        
+# bindsym 113 right
+
+# back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+bindsym $mod+r mode "resize"
+
+# Create Log out, Reboot, Poweroff bindings
+#set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (Shift+s) shutdown
+#mode "$mode_system" {
+#    bindsym l exec --no-startup-id $HOME/bin/i3exit lock, mode "default"
+#    bindsym e exec --no-startup-id $HOME/bin/i3exit logout, mode "default"
+#    bindsym s exec --no-startup-id $HOME/bin/i3exit suspend, mode "default"
+#    bindsym h exec --no-startup-id $HOME/bin/i3exit hibernate, mode "default"
+#    bindsym r exec --no-startup-id $HOME/bin/i3exit reboot, mode "default"
+#    bindsym Shift+s exec --no-startup-id $HOME/bin/i3exit shutdown, mode "default"  
+#
+#    # back to normal: Enter or Escape
+#    bindsym Return mode "default"
+#    bindsym Escape mode "default"
+#}
+#bindsym $mod+Shift+Q mode "$mode_system"
+
+# take screenshot
+bindsym Print exec scrot '%Y-%m-%d-%T.png' -e 'mv $f ~/pictures/screenshots/'
+#bindsym Mod1+Print exec $HOME/bin/screen.sh active
+
+# key bindings
+bindsym $mod+Return exec --no-startup-id urxvtc
+bindsym Mod4+l exec ~/bin/lock
+
+# multimedia keys
+bindsym XF86AudioRaiseVolume exec --no-startup-id "ponymix increase 5"
+bindsym XF86AudioLowerVolume exec --no-startup-id "ponymix decrease 5"
+bindsym XF86AudioMute exec "ponymix toggle"
+
+# brightness
+bindsym XF86MonBrightnessUp exec --no-startup-id "xbacklight +10"
+bindsym XF86MonBrightnessDown exec --no-startup-id "xbacklight -10"
+
+bar {
+  position top
+    status_command ~/.i3/conky
+    colors { 
+      statusline #AAAAAA
+        background #333333
+        focused_workspace  #4c7899 #285577 #ffffff
+        active_workspace   #333333 #5f676a #ffffff
+        inactive_workspace #333333 #222222 #888888
+        urgent_workspace   #2f343a #900000 #ffffff
+    }
+}
+
+# autostart
+
+# background
+#exec --no-startup-id feh --bg-fill --no-xinerama ~/pictures/level_up_by_deadslug.jpg
+exec --no-startup-id feh --bg-fill --no-xinerama ~/pictures/twins_by_deadslug.jpg
+
+# wireless
+#exec --no-startup-id nm-applet
+
+# volume Control
+exec --no-startup-id pasystray
+
+# dropbox
+exec --no-startup-id dropbox
+
+# parcellite
+exec --no-startup-id parcellite
+
+# urxvtc
+exec --no-startup-id /usr/bin/urxvtd
+
+# run synademon
+exec --no-startup-id syndaemon -K -i 1 -R -d
+
+#HAL
+#exec --no-startup-id /usr/sbin/hald --daemon=yes

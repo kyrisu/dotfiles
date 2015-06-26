@@ -1,0 +1,21 @@
+background        no
+out_to_console 	  yes
+out_to_x	  no
+update_interval	  2
+total_run_times	  0
+short_units	  yes
+pad_percents	  3
+
+override_utf8_locale yes
+
+TEXT
+,[{"full_text": "  ${hwmon 1 temp 1}°C [$cpu%] ","color": "\#DC322F"},
+  {"full_text": "  [$membar] ", "color":"\#B58900"},
+  {"full_text":"  ${exec ponymix get-volume}% ","color":"\#909737"},
+  ${if_up wlp2s0}{"full_text": "  ${wireless_essid wlp2s0} [${wireless_link_qual_perc wlp2s0}%] [${addr wlp2s0}]","color":"\#33CC99"},
+  $else${if_up wwp0s20u4c2i12}{"full_text": "  4G [${addr wwp0s20u4c2i12}] ","color":"\#33CC99"},
+  $else${if_up enp0s25}{"full_text": "  enp0s25 [${addr enp0s25}]","color":"\#33CC99"},
+  $else{"full_text": " ≈ no connection ","color":"\#33CC99"},$endif$endif$endif
+  {"full_text": "  ${exec ~/bin/get_power_consumption.sh} [${battery_percent BAT1} %] ","color":"\#9933CC"},
+  {"full_text": "  ${tztime Asia/Bangkok %a %d %b} ${tztime Asia/Bangkok %H:%M} [Warsaw: ${time %H:%M}]"}
+]
