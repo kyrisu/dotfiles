@@ -1,8 +1,8 @@
 " vim:fdm=marker
 "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Maintainer: Krystian Pasziewicz
-"             http://codingzombies.com - kyrisu@codingzombies.com
+" Maintainer: Krystian Paszkiewicz
+"             http://kyrisu.com - krystian.paszkiewicz@gmail.com
 
 " OS Detection  {{{
 silent function! OSX()
@@ -44,6 +44,7 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 NeoBundle 'kien/ctrlp.vim'
 NeoBundle 'scrooloose/nerdtree'
 NeoBundle 'sickill/vim-monokai'
+NeoBundle 'morhetz/gruvbox'
 NeoBundle 'junegunn/vim-easy-align'
 NeoBundle 'airblade/vim-rooter'
 NeoBundle 'milkypostman/vim-togglelist'
@@ -53,19 +54,20 @@ NeoBundle 'milkypostman/vim-togglelist'
 " programming general
 NeoBundle 'Yggdroot/indentLine'
 NeoBundle 'Raimondi/delimitMate'
-NeoBundle 'ervandew/supertab'
+"NeoBundle 'ervandew/supertab'
 NeoBundle 'vim-scripts/SyntaxComplete'
 NeoBundle 'honza/vim-snippets'
 NeoBundle 'scrooloose/nerdcommenter'
 NeoBundle 'scrooloose/syntastic'
 NeoBundle 'Valloric/YouCompleteMe', {
       \ 'build' : {
-      \     'unix' : './install.sh --clang-completer',
+      \     'unix' : './install.sh --clang-completer --system-libclang --omnisharp-completer',
       \     'windows' : './install.sh --clang-completer --system-libclang --omnisharp-completer',
       \    }
       \ }
 
 NeoBundle 'SirVer/ultisnips'
+NeoBundle 'luochen1990/rainbow'
 
 "Bundle 'tpope/vim-fugitive'
 NeoBundle 'majutsushi/tagbar'
@@ -93,19 +95,25 @@ NeoBundle 'marijnh/tern_for_vim', {
 
 " HTML & CSS
 "NeoBundle 'jimmyhchan/dustjs.vim'
-"NeoBundle 'mustache/vim-mustache-handlebars'
-"NeoBundle 'Slava/vim-spacebars'
+NeoBundle 'mustache/vim-mustache-handlebars'
 
 NeoBundle 'mattn/emmet-vim'
 NeoBundle 'groenewege/vim-less'
+NeoBundle 'wavded/vim-stylus', {'autoload':{'filetypes':['stylus']}}
 "NeoBundle 'tpope/vim-haml'
 
 " CSV
 "NeoBundle 'chrisbra/csv.vim'
-" cpp
-"Bundle 'vim-scripts/c.vim'
-"Bundle 'vim-scripts/autoproto.vim'
-"NeoBundle 'Rip-Rip/clang_complete'
+
+" CPP
+NeoBundle 'ciaranm/googletest-syntax'
+NeoBundle 'octol/vim-cpp-enhanced-highlight'
+
+" Dockerfile
+NeoBundle 'ekalinin/Dockerfile.vim'
+
+" config files
+NeoBundle 'vim-scripts/nginx.vim'
 
 " vim
 NeoBundle 'vim-scripts/vimwiki'
@@ -184,7 +192,11 @@ let g:nerdtree_tabs_open_on_gui_startup=0
 
 " CtrlP
 map <c-b> :CtrlPBuffer<CR>
-let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git\|bower_components'
+"let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git\|bower_components\|jspm_packages'
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v[\/]\.?(node_modules|DS_Store|git|bower_components|jspm_packages)$',
+  \ 'file': '\v\.(exe|so|dll|o)$'
+  \ }
 " }}}
 
 " => VIM user interface {{{
@@ -224,8 +236,6 @@ set noerrorbells
 set novisualbell
 set t_vb=
 set tm=500
-
-highlight Pmenu ctermbg=238 gui=bold
 
 "set cul " highlight current line
 " }}}
@@ -267,13 +277,17 @@ else
   set t_Co=256
   let g:solarized_termcolors=256
 endif
-colorscheme monokai
+"colorscheme monokai
+colorscheme gruvbox
 
 " Popup menu hightLight Group
-highlight Pmenu ctermbg=201 guibg=Magenta
-highlight PmenuSel ctermbg=248 guibg=DarkGrey
-highlight PmenuSbar ctermbg=250 guibg=Grey
-highlight PmenuThumb cterm=reverse gui=reverse
+"highlight Pmenu ctermbg=201 guibg=Magenta
+"highlight PmenuSel ctermbg=248 guibg=DarkGrey
+"highlight PmenuSbar ctermbg=250 guibg=Grey
+"highlight PmenuThumb cterm=reverse gui=reverse
+hi Pmenu  guifg=\#000000 guibg=\#F8F8F8 ctermfg=black ctermbg=Lightgray
+hi PmenuSbar  guifg=\#8A95A7 guibg=\#F8F8F8 gui=NONE ctermfg=darkcyan ctermbg=lightgray cterm=NONE
+hi PmenuThumb  guifg=\#F8F8F8 guibg=\#8A95A7 gui=NONE ctermfg=lightgray ctermbg=darkcyan cterm=NONE
 
 
 set encoding=utf8
@@ -486,29 +500,81 @@ autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
 let g:ycm_add_preview_to_completeopt=1
 let g:ycm_global_ycm_extra_conf = '~/.dotfiles/.ycm_extra_conf.py'
 let g:ycm_confirm_extra_conf = 1
-let g:ycm_extra_conf_globlist = ['~/.dotfiles']
+let g:ycm_extra_conf_globlist = ['~/.dotfiles', '~/dev/*']
 let g:ycm_autoclose_preview_window_after_completion = 1
 let g:ycm_server_user_vim_stdout = 1
-let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
-let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
+let g:ycm_key_list_select_completion = ['<Tab>']
+let g:ycm_key_list_previous_completion = ['<C-Tab>']
 
-let g:SuperTabDefaultCompletionType = '<C-n>'
+"let g:SuperTabDefaultCompletionType = '<C-n>'
 "let g:SuperTabDefaultCompletionType = 'context'
 
-let g:EclimCompletionMethod = 'omnifunc'
+"let g:EclimCompletionMethod = 'omnifunc'
 
 " better key bindings for UltiSnipsExpandTrigger
-let g:UltiSnipsExpandTrigger = "<tab>"
-let g:UltiSnipsJumpForwardTrigger = "<tab>"
-let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
+"let g:UltiSnipsExpandTrigger = "<C-k>"
+"let g:UltiSnipsJumpForwardTrigger = "<C-n>"
+"let g:UltiSnipsJumpBackwardTrigger = "<C-p>"
 
 let g:syntastic_auto_loc_list = 0
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_java_javac_config_file_enabled=1
-"let g:syntastic_java_javac_classpath = "path/to/sdk:path/to/project/app/libs"
+
+function! Neoj()
+    if pumvisible() == 1
+        return "\<C-n>"
+    else
+        call UltiSnips#JumpForwards()
+        if g:ulti_jump_forwards_res == 0
+            return "\<C-j>"
+        endif
+        return ""
+    endif
+endfunction
+
+function! Neok()
+  if pumvisible() == 1
+    return "\<C-p>"
+  else
+    call UltiSnips#JumpBackwards()
+    if g:ulti_jump_backwards_res == 0
+      return "\<C-k>"
+    endif
+    return ""
+  endif
+endfunction
+
+let g:ulti_expand_or_jump_res = 0
+function! NeoCR()
+  if pumvisible() == 1
+    let snippet = UltiSnips#ExpandSnippetOrJump()
+    if g:ulti_expand_or_jump_res > 0
+      return snippet
+    else
+      return "\<CR>"
+    endif
+  else
+    return "\<CR>"
+  endfunction
+
+let g:UltiSnipsJumpForwardTrigger = "<nop>"
+let g:UltiSnipsJumpBackwardTrigger = "<nop>"
+let g:UltiSnipsExpandTrigger="<nop>"
+inoremap <silent> <C-j> <C-R>=Neoj()<CR>
+snoremap <silent> <C-j> <Esc>:call UltiSnips#JumpForwards()<CR>
+inoremap <silent> <C-k> <C-R>=Neok()<CR>
+snoremap <silent> <C-k> <Esc>:call UltiSnips#JumpBackwards()<CR>
+
+au BufEnter * exec "inoremap <silent> <CR> <C-R>=NeoCR()<CR>"
 
 set tags+=./tags
 "}}}
+
+" => Programming general section {{{
+"""""""""""""""""""""""""""""""
+autocmd Syntax c,cpp,vim,xml,html,xhtml setlocal foldmethod=syntax
+" }}}
+
 
 " => JavaScript section {{{
 """""""""""""""""""""""""""""""
@@ -539,8 +605,8 @@ let g:indentLine_noConcealCursor=""
 """"""""""""""""""""""""""""""
 " => HTML & CSS
 """""""""""""""""""""""""""""""
-"let g:syntastic_html_checkers = ['tidy']
-let g:user_emmet_expandabbr_key='<C-j>'
+let g:syntastic_html_checkers = ['tidy']
+"let g:user_emmet_expandabbr_key='<C-j>'
 
 function! Expander()
   let line   = getline(".")
@@ -562,18 +628,14 @@ endfunction
 
 inoremap <expr> <CR> Expander()
 
+au BufNewFile,BufRead *.ejs set filetype=html
+
 " }}}
 
 " => Ionic Framework section {{{
 """""""""""""""""""""""""""""""
-"mark syntax errors with :signs
-let g:syntastic_enable_signs=1
 "automatically jump to the error when saving the file
 let g:syntastic_auto_jump=0
-"show the error list automatically
-let g:syntastic_auto_loc_list=1
-"don't care about warnings
-let g:syntastic_quiet_messages = {'level': 'warnings'}
 
 "let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute \"ng-","<ion-", "</ion-"]
 "allow for ionic html attributes
@@ -625,19 +687,17 @@ au BufRead,BufNewFile *.ags set ft=ags
 au BufRead,BufNewFile *.log set ft=log
 " }}}
 
+" => Markdown {{{
+""""""""""""""""""""""""""""""
+au BufRead,BufNewFile *.md setlocal spell
+" }}}
+
 " => C++ {{{
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-function! s:insert_gates()
-  let gatename = substitute(toupper(expand("%:t")), "\\.", "_", "g")
-  execute "normal! i#ifndef " . gatename
-  execute "normal! o#define " . gatename . " "
-  execute "normal! Go#endif /* " . gatename . " */"
-  normal! kk
-endfunction
-autocmd BufNewFile *.{h,hpp} call <SID>insert_gates()
+nmap <leader>tt :!make testAll<cr>
+"set makeprg=g++
 
-set makeprg=mingw32-make
 
 "}}}
 

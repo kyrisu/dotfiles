@@ -21,6 +21,8 @@ alias psc='ps xawf -eo pid,user,cgroup,args'
 # docker aliases
 alias dl='docker ps -l -q'
 alias dps='docker ps'
+alias dockip="docker inspect --format '{{ .NetworkSettings.IPAddress }}'"
+alias dc="docker-compose"
 
 # soft aliases
 alias gn1='geeknote find --tags 1-Now'
