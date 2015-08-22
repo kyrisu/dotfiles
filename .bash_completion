@@ -1,16 +1,43 @@
 
 _geeknote_command()
 {
-    COMPREPLY=()
-    cur="${COMP_WORDS[COMP_CWORD]}"
+  COMPREPLY=()
+  cur="${COMP_WORDS[COMP_CWORD]}"
 
-    SAVE_IFS=$IFS
-    IFS=" "
-    args="${COMP_WORDS[*]:1}"
-    IFS=$SAVE_IFS
+  SAVE_IFS=$IFS
+  IFS=" "
+  args="${COMP_WORDS[*]:1}"
+  IFS=$SAVE_IFS
 
-    COMPREPLY=( $(compgen -W "`geeknote autocomplete ${args}`" -- ${cur}) )
+  COMPREPLY=( $(compgen -W "`geeknote autocomplete ${args}`" -- ${cur}) )
 
-    return 0
+  return 0
 }
 complete -F _geeknote_command geeknote
+
+_go() {
+  COMPREPLY=()
+  cur="${COMP_WORDS[COMP_CWORD]}"
+  prev="${COMP_WORDS[COMP_CWORD-1]}"
+
+  opts="algo "
+
+  case "${prev}" in
+    algo)
+      IFS=$'\n' tmp=( $(compgen -W "$(ls ~/dev/Algotech/)" -- "${COMP_WORDS[$COMP_CWORD]}" ))
+      COMPREPLY=( "${tmp[@]// /\ }" )
+      return 0
+      ;;
+    go)
+      IFS=$'\n' tmp=( $(compgen -W "$(ls ~/dev/)" -- "${COMP_WORDS[$COMP_CWORD]}" ))
+      COMPREPLY=( "${tmp[@]// /\ }" )
+      return 0
+      ;;
+    *)
+      ;;
+  esac
+
+  COMPREPLY=($(compgen -W "${opts}" -- ${cur})) 
+}
+
+complete -F _go go

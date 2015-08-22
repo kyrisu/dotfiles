@@ -11,11 +11,11 @@ URxvt*loginShell:         true
 Urxvt*secondaryScroll:    true    # Enable Shift-PageUp/Down in screen
 URxvt*saveLines:          5000
 URxvt*termName:           rxvt-unicode
-URxvt*transparent:        true
+!URxvt*transparent:        true
 URxvt*shading:            10
 URxvt*clipboard.autocopy: true
 URxvt.perl-ext-common:    default,clipboard,matcher,font-size
-URxvt.url-launcher:       /usr/bin/chromium
+URxvt.url-launcher:       /usr/bin/google-chrome-beta
 URxvt.matcher.button:     1
 
 URxvt.keysym.C-equal:     perl:font-size:increase
@@ -24,7 +24,8 @@ URxvt.keysym.C-0:         perl:font-size:reset
 URxvt.keysym.Shift-Insert: perl:clipboard:paste
 
 URxvt.cursorColor: #06989a
-URxvt.background: #000000  
+!URxvt.background: #000000  
+URxvt.background: rgba:0000/0000/0200/c800
 URxvt.foreground: #cccccc  
 URxvt.color0:  #000000  
 URxvt.color8:  #555753  

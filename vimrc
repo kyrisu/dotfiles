@@ -52,9 +52,9 @@ NeoBundle 'milkypostman/vim-togglelist'
 "NeoBundle 'Lokaltog/vim-easymotion'
 
 " programming general
+NeoBundle 'airblade/vim-gitgutter'
 NeoBundle 'Yggdroot/indentLine'
 NeoBundle 'Raimondi/delimitMate'
-"NeoBundle 'ervandew/supertab'
 NeoBundle 'vim-scripts/SyntaxComplete'
 NeoBundle 'honza/vim-snippets'
 NeoBundle 'scrooloose/nerdcommenter'
@@ -197,6 +197,8 @@ let g:ctrlp_custom_ignore = {
   \ 'dir':  '\v[\/]\.?(node_modules|DS_Store|git|bower_components|jspm_packages)$',
   \ 'file': '\v\.(exe|so|dll|o)$'
   \ }
+
+set autowrite " autosave on ! and others
 " }}}
 
 " => VIM user interface {{{
@@ -259,7 +261,6 @@ if has("gui_running")
   set guioptions-=e
   set guioptions-=L "remove left scrollbar when there is vertical split
   set guioptions-=l "remove left scrollbar
-  "  set t_Co=256
 else
 endif
 
@@ -275,16 +276,12 @@ if has ("gui_running")
 else
   set background=dark
   set t_Co=256
-  let g:solarized_termcolors=256
 endif
-"colorscheme monokai
+let g:gruvbox_italic=0
+let g:gruvbox_contrast_dark='medium'
 colorscheme gruvbox
 
 " Popup menu hightLight Group
-"highlight Pmenu ctermbg=201 guibg=Magenta
-"highlight PmenuSel ctermbg=248 guibg=DarkGrey
-"highlight PmenuSbar ctermbg=250 guibg=Grey
-"highlight PmenuThumb cterm=reverse gui=reverse
 hi Pmenu  guifg=\#000000 guibg=\#F8F8F8 ctermfg=black ctermbg=Lightgray
 hi PmenuSbar  guifg=\#8A95A7 guibg=\#F8F8F8 gui=NONE ctermfg=darkcyan ctermbg=lightgray cterm=NONE
 hi PmenuThumb  guifg=\#F8F8F8 guibg=\#8A95A7 gui=NONE ctermfg=lightgray ctermbg=darkcyan cterm=NONE
@@ -426,9 +423,9 @@ catch
 endtry
 
 " tabs
-map <leader>tn :tabnew %<cr>
-map <leader>tc :tabclose<cr>
-map <leader>tm :tabmove 
+"map <leader>tn :tabnew %<cr>
+"map <leader>tc :tabclose<cr>
+"map <leader>tm :tabmove 
 
 "}}}
 
@@ -573,13 +570,13 @@ set tags+=./tags
 " => Programming general section {{{
 """""""""""""""""""""""""""""""
 autocmd Syntax c,cpp,vim,xml,html,xhtml setlocal foldmethod=syntax
+let g:rainbow_active = 1
 " }}}
-
 
 " => JavaScript section {{{
 """""""""""""""""""""""""""""""
 "let g:syntastic_javascript_checkers = ['jshint', 'jscs']
-let g:syntastic_javascript_checkers = ['jshint']
+let g:syntastic_javascript_checkers = ['eslint']
 map <leader>nn :!node %<CR>
 
 "au FileType javascript call JavaScriptFold()
@@ -597,16 +594,29 @@ let g:tern_map_keys=1
 autocmd FileType javascript inoremap {<CR>  {<CR>}<C-c><S-o>
 autocmd FileType javascript inoremap [<CR>  [<CR>]<C-c><S-o>
 
+autocmd! BufRead,BufNewFile,BufEnter *.test.js UltiSnipsAddFiletype javascript-jasmine
+
 let g:angular_source_directory = 'src/client/app'
 let g:angular_test_directory = 'tests/client'
 
 let g:indentLine_noConcealCursor=""
+
+let g:tagbar_type_javascript = {
+    \ 'ctagstype' : 'JavaScript',
+    \ 'kinds'     : [
+        \ 'o:objects',
+        \ 'f:functions',
+        \ 'a:arrays',
+        \ 's:strings'
+    \ ]
+\ }
 
 """"""""""""""""""""""""""""""
 " => HTML & CSS
 """""""""""""""""""""""""""""""
 let g:syntastic_html_checkers = ['tidy']
 "let g:user_emmet_expandabbr_key='<C-j>'
+let g:user_emmet_expandabbr_key='<C-x>'
 
 function! Expander()
   let line   = getline(".")
@@ -695,9 +705,10 @@ au BufRead,BufNewFile *.md setlocal spell
 " => C++ {{{
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-nmap <leader>tt :!make testAll<cr>
+nmap <leader>t :!make test<cr>
 "set makeprg=g++
 
+"let g:syntastic_cpp_checkers = ['gcc']
 
 "}}}
 

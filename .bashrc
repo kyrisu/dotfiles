@@ -41,8 +41,8 @@ go ()
     logs)
       cd ~/logs
       ;;
-    algo/*)
-      cd ~/dev/Algotech/${1#*/}
+    algo)
+      cd ~/dev/Algotech/${2}
       ;;
     [\/\.-]*)
       cd $1
@@ -64,3 +64,5 @@ if [ -f /path/to/meteorite/completions/mrt.bash ]; then
 fi
 
 PATH="$(ruby -e 'print Gem.user_dir')/bin:$PATH"
+
+#source "$HOME/.dotfiles/vim/gruvbox_256palette.sh"
