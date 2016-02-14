@@ -1,0 +1,3 @@
+set hlsearch "Highlight search things
+set incsearch "Make search act like search in modern browsers
+set smartcase

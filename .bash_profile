@@ -4,3 +4,9 @@
 
 [[ -f ~/.bashrc ]] && . ~/.bashrc
 [[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx && slock
+
+###-tns-completion-start-###
+if [ -f /home/kyrisu/.tnsrc ]; then 
+    source /home/kyrisu/.tnsrc 
+fi
+###-tns-completion-end-###

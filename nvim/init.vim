@@ -27,11 +27,11 @@ if has('vim_starting')
   endif
 
   " Required:
-  set runtimepath+=~/.dotfiles/vim/bundle/neobundle.vim/
+  set runtimepath+=~/.dotfiles/nvim/bundle/neobundle.vim/
 endif
 
 " Required:
-call neobundle#begin(expand('~/.dotfiles/vim/bundle/'))
+call neobundle#begin(expand('~/.dotfiles/nvim/bundle/'))
 
 " Let NeoBundle manage NeoBundle
 " Required:
@@ -43,15 +43,15 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 
 NeoBundle 'kien/ctrlp.vim'
 NeoBundle 'scrooloose/nerdtree'
-NeoBundle 'sickill/vim-monokai'
 NeoBundle 'morhetz/gruvbox'
 NeoBundle 'junegunn/vim-easy-align'
-NeoBundle 'airblade/vim-rooter'
 NeoBundle 'milkypostman/vim-togglelist'
-"NeoBundle 'vim-scripts/a.vim'
-"NeoBundle 'Lokaltog/vim-easymotion'
+NeoBundle 'MarcWeber/vim-addon-local-vimrc'
 
 " programming general
+NeoBundle 'SirVer/ultisnips'
+NeoBundle 'kshenoy/vim-signature'
+
 NeoBundle 'airblade/vim-gitgutter'
 NeoBundle 'Yggdroot/indentLine'
 NeoBundle 'Raimondi/delimitMate'
@@ -66,25 +66,27 @@ NeoBundle 'Valloric/YouCompleteMe', {
       \    }
       \ }
 NeoBundle 'vasconcelloslf/vim-interestingwords'
+NeoBundle 'terryma/vim-multiple-cursors'
 
-NeoBundle 'SirVer/ultisnips'
-"NeoBundle 'luochen1990/rainbow'
+NeoBundle 'luochen1990/rainbow'
 
 "Bundle 'tpope/vim-fugitive'
 NeoBundle 'majutsushi/tagbar'
-NeoBundle 'bling/vim-airline'
+NeoBundle 'vim-airline/vim-airline'
+NeoBundle 'vim-airline/vim-airline-themes'
 NeoBundle 'tpope/vim-surround'
 
 
 " Javascript
 "NeoBundle 'jelera/vim-javascript-syntax' , {'autoload':{'filetypes':['javascript']}}
+NeoBundle 'pangloss/vim-javascript'
 NeoBundle 'othree/yajs.vim', {'autoload':{'filetypes':['javascript']}}
 NeoBundle 'othree/javascript-libraries-syntax.vim', {'autoload':{'filetypes':['javascript']}}
 NeoBundle 'maksimr/vim-jsbeautify'
-NeoBundle 'burnettk/vim-angular'
-NeoBundle 'matthewsimo/angular-vim-snippets'
+NeoBundle 'heavenshell/vim-jsdoc'
+"NeoBundle 'burnettk/vim-angular'
+"NeoBundle 'matthewsimo/angular-vim-snippets'
 "NeoBundle 'claco/jasmine.vim', {'autoload':{'filetypes':['javascript']}}
-NeoBundle 'myhere/vim-nodejs-complete', {'autoload':{'filetypes':['javascript']}}
 NeoBundle 'marijnh/tern_for_vim', {
       \ 'build' : {
       \     'unix' : 'npm install',
@@ -94,20 +96,22 @@ NeoBundle 'marijnh/tern_for_vim', {
 
 " React
 NeoBundle 'mxw/vim-jsx'
+NeoBundle 'tfnico/vim-gradle'
 
-" Markdown
-"NeoBundle 'JamshedVesuna/vim-markdown-preview'
-"NeoBundle 'suan/vim-instant-markdown'
-NeoBundle 'shime/vim-livedown'
+NeoBundle 'kchmck/vim-coffee-script', {'autoload':{'filetypes':['coffee']}}
 
 " JAVA
+
+" Markdown
+"NeoBundle 'shime/vim-livedown'
+NeoBundle 'plasticboy/vim-markdown'
 
 " HTML & CSS
 "NeoBundle 'jimmyhchan/dustjs.vim'
 NeoBundle 'mustache/vim-mustache-handlebars'
 
 NeoBundle 'mattn/emmet-vim'
-NeoBundle 'groenewege/vim-less'
+NeoBundle 'groenewege/vim-less', {'autoload':{'filetypes':['less']}}
 NeoBundle 'wavded/vim-stylus', {'autoload':{'filetypes':['stylus']}}
 "NeoBundle 'tpope/vim-haml'
 
@@ -115,8 +119,8 @@ NeoBundle 'wavded/vim-stylus', {'autoload':{'filetypes':['stylus']}}
 "NeoBundle 'chrisbra/csv.vim'
 
 " CPP
-NeoBundle 'ciaranm/googletest-syntax'
-NeoBundle 'octol/vim-cpp-enhanced-highlight'
+"NeoBundle 'ciaranm/googletest-syntax'
+NeoBundle 'octol/vim-cpp-enhanced-highlight', {'autoload':{'filetypes':['stylus']}}
 
 " Dockerfile
 NeoBundle 'ekalinin/Dockerfile.vim'
@@ -148,8 +152,6 @@ set noswapfile
 "Persistent undo
 try
   set undodir=/tmp/
-  set runtimepath+=~/.vim/
-  set runtimepath+=~/.vim/after/
   set undofile
 catch
 endtry
@@ -180,10 +182,10 @@ let g:mapleader = ","
 nmap <leader>w :w!<cr>
 
 " Fast editing of the .vimrc
-map <leader>ee :e! ~/.vimrc<cr>
+map <leader>ee :e! ~/.config/nvim/init.vim<cr>
 
 " When vimrc is edited, reload it
-autocmd! bufwritepost .vimrc nested source ~/.vimrc
+autocmd! bufwritepost init.vim nested source ~/.config/nvim/init.vim
 
 " NERDTree
 map <C-e> :NERDTreeToggle<CR>:NERDTreeMirror<CR>
@@ -240,7 +242,11 @@ set magic "Set magic on, for regular expressions
 set showmatch "Show matching bracets when text indicator is over them
 set mat=2 "How many tenths of a second to blink
 
-set number
+set relativenumber
+autocmd FocusGained * :set number
+autocmd FocusLost * :set relativenumber
+autocmd InsertEnter * :set number
+autocmd InsertLeave * :set relativenumber
 
 " No sound on errors
 set noerrorbells
@@ -286,7 +292,7 @@ else
   set background=dark
   set t_Co=256
 endif
-let g:gruvbox_italic=0
+let g:gruvbox_italic=1
 let g:gruvbox_contrast_dark='medium'
 colorscheme gruvbox
 
@@ -444,8 +450,9 @@ endtry
 set laststatus=2
 
 " Format the statusline
-"let g:airline_theme = 'desert'
+let g:airline_theme = 'base16'
 let g:airline_powerline_fonts = 1
+let g:airline#extensions#tabline#enabled = 1
 
 function! HasPaste()
   if &paste
@@ -526,6 +533,10 @@ let g:syntastic_auto_loc_list = 0
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_java_javac_config_file_enabled=1
 
+"let g:UltiSnipsSnippetDirectories=["UltiSnips", $HOME.'/.dotfiles/nvim/bundle/vim-snippets/UltiSnips']
+"let g:UltiSnipsSnippetDirectories=[$HOME.'/.dotfiles/nvim/bundle/vim-snippets/UltiSnips']
+"let g:UltiSnipsUsePythonVersion = 2
+
 function! Neoj()
     if pumvisible() == 1
         return "\<C-n>"
@@ -565,7 +576,8 @@ function! NeoCR()
 
 let g:UltiSnipsJumpForwardTrigger = "<nop>"
 let g:UltiSnipsJumpBackwardTrigger = "<nop>"
-let g:UltiSnipsExpandTrigger="<nop>"
+"let g:UltiSnipsExpandTrigger="<nop>"
+let g:UltiSnipsExpandTrigger = "<C-k>"
 inoremap <silent> <C-j> <C-R>=Neoj()<CR>
 snoremap <silent> <C-j> <Esc>:call UltiSnips#JumpForwards()<CR>
 inoremap <silent> <C-k> <C-R>=Neok()<CR>
@@ -578,7 +590,7 @@ set tags+=./tags
 
 " => Programming general section {{{
 """""""""""""""""""""""""""""""
-autocmd Syntax c,cpp,vim,xml,html,xhtml setlocal foldmethod=syntax
+autocmd Syntax c,cpp,vim,xml,html,xhtml,javascript setlocal foldmethod=syntax
 let g:rainbow_active = 1
 " }}}
 
@@ -588,28 +600,36 @@ let g:rainbow_active = 1
 let g:syntastic_javascript_checkers = ['eslint']
 "let g:syntastic_javascript_checkers = ['jshint']
 map <leader>nn :!node %<CR>
+map <leader>nm :!mocha %<CR>
 
-"au FileType javascript call JavaScriptFold()
-
-let g:used_javascript_libs = 'underscore,angularjs,angularui,jquery,handlebars,chai'
+let g:used_javascript_libs = 'underscore,angularjs,angularui,jquery,handlebars,chai,react,flux,jasmine'
 
 let g:tern_show_argument_hints='on_hold'
 let g:tern_show_signature_in_pum =1
+let g:tern_map_keys=1
+let g:tern_map_prefix='<leader>'
+
+let g:tern#arguments=["--verbose"]
 
 autocmd FileType javascript nnoremap gd :TernDef<cr>
-" and 
-let g:tern_map_keys=1
 
 " insert newline when pressing enter between brackets
 autocmd FileType javascript inoremap {<CR>  {<CR>}<C-c><S-o>
 autocmd FileType javascript inoremap [<CR>  [<CR>]<C-c><S-o>
 
-"autocmd! BufRead,BufNewFile,BufEnter *.spec.js UltiSnipsAddFiletype javascript-jasmine
+autocmd! BufRead,BufNewFile,BufEnter *.spec.js UltiSnipsAddFiletype javascript-spec
+autocmd! BufRead,BufNewFile,BufEnter *.js UltiSnipsAddFiletype javascript-node javascript.es6
+
+autocmd! BufRead,BufNewFile,BufEnter webpack.config.babel.js UltiSnipsAddFiletype javascript-webpack
+autocmd! BufRead,BufNewFile,BufEnter package.json UltiSnipsAddFiletype javascript-package
+
+autocmd! BufRead,BufNewFile,BufEnter .eslintrc UltiSnipsAddFiletype javascript-eslint
 
 let g:angular_source_directory = 'src/client/app'
 let g:angular_test_directory = 'tests/client'
 
-let g:indentLine_noConcealCursor=""
+let g:indentLine_noConcealCursor=1
+let g:indentLine_concealcursor = 'vc'
 
 let g:tagbar_type_javascript = {
     \ 'ctagstype' : 'JavaScript',
@@ -623,6 +643,13 @@ let g:tagbar_type_javascript = {
 
 " JSX
 let g:jsx_ext_required = 0
+
+" => JSON section {{{
+"""""""""""""""""""""""""""""""
+"autocmd FileType json set conceallevel=0
+"autocmd BufNewFile,BufRead,FileReadPre *.json set conceallevel=0
+"let g:indentLine_conceallevel = 0
+"}}}
 
 """"""""""""""""""""""""""""""
 " => HTML & CSS
@@ -738,7 +765,6 @@ noremap <Leader>m mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
 
 " Remove polish characters
 " %!iconv -f cp1250 -t utf-8
-" %!iconv -f utf8 -t ascii//TRANSLIT
 
 "Quickly open a buffer for scripbble
 map <leader>q :e ~/buffer<cr>

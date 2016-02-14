@@ -7,3 +7,5 @@
 /.vimrc.local
 /vim/bundle/*
 !/vim/bundle/vundle
+/nvim/bundle/*
+!/nvim/bundle/vundle

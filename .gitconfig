@@ -3,3 +3,5 @@
 	name = Krystian Paszkiewicz
 [push]
 	default = simple
+[core]
+	autocrlf = input

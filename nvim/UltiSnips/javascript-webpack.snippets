@@ -1,0 +1,22 @@
+snippet ## "insert default config"
+import path from 'path';
+
+const paths = {
+	app: path.join(__dirname, '${1:app/client}'),
+	build: path.join(__dirname, '${2:build/client}')
+};
+
+export default {
+	entry: paths.app,
+	output: {
+		path: paths.build,
+		filename: 'bundle.js'
+	},
+	module: {
+		loaders: [
+			{ test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader' },
+			{ test: /\.css$/, exclude: /node_module/, loader: 'style-loader!css-loader'}
+		]
+	}
+};
+endsnippet

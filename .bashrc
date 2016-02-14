@@ -5,8 +5,8 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-export EDITOR=vim
-export PATH=$PATH:~/bin/
+export EDITOR=nvim
+export PATH=$PATH:~/bin/:~/bin/android-sdk-linux/tools:~/bin/android-sdk-linux/platform-tools
 # export CDPATH=.:~/dev:~/dev/Algotech
 
 # java
@@ -28,7 +28,7 @@ alias dc="docker-compose"
 alias gn1='geeknote find --tags 1-Now'
 alias gn2='geeknote find --tags 2-Next'
 
-PS1='[\u@\h \W]\$ '
+#export TERM=urxvtc
 
 
 go () 
@@ -59,10 +59,39 @@ go ()
 }
 
 # completions
-if [ -f /path/to/meteorite/completions/mrt.bash ]; then
-  . ~/.dotfiles/completions/meteor.bash
+if [ -f /usr/share/git/completion/git-completion.bash ]; then
+  . /usr/share/git/completion/git-completion.bash
 fi
 
-PATH="$(ruby -e 'print Gem.user_dir')/bin:$PATH"
+if [ -f ~/.dotfiles/completions/purevpn.sh ]; then
+  . ~/.dotfiles/completions/purevpn.sh
+fi
 
-#source "$HOME/.dotfiles/vim/gruvbox_256palette.sh"
+# completions that didn't load for some reason
+
+. /usr/share/bash-completion/completions/netctl
+
+#PATH="$(ruby -e 'print Gem.user_dir')/bin:$PATH"
+
+export CATALINA_HOME=/usr/share/tomcat8
+
+export UA_FOLDER=/home/kyrisu/dev/Algotech/unifiedagent/unifiedagent_java/src/main/java
+
+. /usr/share/git/completion/git-prompt.sh
+
+#PS1='[\u@\h \W]\n\$ '
+#PS1='[\u@\h [$MAGENTA]\W$(__git_ps1 " (%s)")]\[$WHITE]$ '
+#PS1='\u@\h \W\e[35m$(__git_ps1 " (%s)")\e[39m$ '
+#export PS1='`if [ $? = 0 ]; then echo "\[\033[01;32m\]✔"; else echo "\[\033[01;31m\]✘"; fi` \[\033[01;30m\]\h\[\033[01;34m\] \w\[\033[35m\]$(__git_ps1 " %s") \[\033[01;30m\]>\[\033[00m\] '
+#export PS1='\[\e[01;30m\]\t`if [ $? = 0 ]; then echo "\[\e[32m\] ✔ "; else echo "\[\e[31m\] ✘ "; fi`\[\e[00;37m\]\u\[\e[01;37m\]:`[[ $(git status 2> /dev/null | head -n3 | tail -n1) != "Changes to be committed:" ]] && echo "\[\e[31m\]" || echo "\[\e[33m\]"``[[ $(git status 2> /dev/null | head -n3 | tail -n1) != "nothing to commit (working directory clean)" ]] || echo "\[\e[32m\]"`$(__git_ps1 "(%s)\[\e[00m\]")\[\e[01;34m\]\w\[\e[00m\]\$ '
+export PS1='\[\e[01;30m\]\t`if [ $? = 0 ]; then echo "\[\e[32m\] ✔ "; else echo "\[\e[31m\] ✘ "; fi`\[\e[00;37m\]\u@\h \[\e[01;34m\]\W\e[35m$(__git_ps1 " (%s)")\n\[\e[00;39m\]\$ '
+
+export ANDROID_HOME=~/bin/android-sdk-linux
+
+###-tns-completion-start-###
+if [ -f /home/kyrisu/.tnsrc ]; then 
+    source /home/kyrisu/.tnsrc 
+fi
+###-tns-completion-end-###
+# Hook for desk activation
+[ ! -z "$DESK_ENV" ] && source "$DESK_ENV"

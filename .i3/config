@@ -6,7 +6,7 @@ font xft:Cousine, FontAwesome 8
 new_window pixel 2
 #new_float pixel 2
 
-focus_follows_mouse  yes
+focus_follows_mouse  no
 workspace_layout default
 
 #don't move to neighbouring screen with hjkl
@@ -30,7 +30,7 @@ floating_modifier $mod
 bindsym $mod+q kill
 
 # toggle border
-#bindsym $mod+b [class="^.*"] border toggle
+bindsym $mod+b [class="^.*"] border toggle
 
 # start dmenu (a program launcher)
 #bindsym $mod+p exec --no-startup-id j4-dmenu-desktop --dmenu='dmenu -i -b -fn '-*-terminus-*-*-*-*-12-*-*-*-*-*-*-*''
@@ -91,6 +91,17 @@ set $WS6 6
 set $WS7 7
 set $WS8 8
 set $WS9 9
+set $WS10 10
+set $WS11 11
+set $WS12 12
+set $WS13 13
+set $WS14 14
+set $WS15 15
+set $WS16 16
+set $WS17 17
+set $WS18 18
+set $WS19 19
+set $WS20 20
 
 # switch to workspace
 bindsym $mod+1 workspace $WS1
@@ -102,7 +113,18 @@ bindsym $mod+6 workspace $WS6
 bindsym $mod+7 workspace $WS7
 bindsym $mod+8 workspace $WS8
 bindsym $mod+9 workspace $WS9
-bindsym $mod+0 workspace 10
+bindsym $mod+0 workspace $WS10
+
+bindsym $mod+Control+1 workspace $WS11
+bindsym $mod+Control+2 workspace $WS12
+bindsym $mod+Control+3 workspace $WS13
+bindsym $mod+Control+4 workspace $WS14
+bindsym $mod+Control+5 workspace $WS15
+bindsym $mod+Control+6 workspace $WS16
+bindsym $mod+Control+7 workspace $WS17
+bindsym $mod+Control+8 workspace $WS18
+bindsym $mod+Control+9 workspace $WS19
+bindsym $mod+Control+0 workspace $WS20
 
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace $WS1
@@ -114,7 +136,18 @@ bindsym $mod+Shift+6 move container to workspace $WS6
 bindsym $mod+Shift+7 move container to workspace $WS7
 bindsym $mod+Shift+8 move container to workspace $WS8
 bindsym $mod+Shift+9 move container to workspace $WS9
-bindsym $mod+Shift+0 move container to workspace 10
+bindsym $mod+Shift+0 move container to workspace $WS10
+
+bindsym $mod+Shift+Control+1 move container to workspace $WS11
+bindsym $mod+Shift+Control+2 move container to workspace $WS12
+bindsym $mod+Shift+Control+3 move container to workspace $WS13
+bindsym $mod+Shift+Control+4 move container to workspace $WS14
+bindsym $mod+Shift+Control+5 move container to workspace $WS15
+bindsym $mod+Shift+Control+6 move container to workspace $WS16
+bindsym $mod+Shift+Control+7 move container to workspace $WS17
+bindsym $mod+Shift+Control+8 move container to workspace $WS18
+bindsym $mod+Shift+Control+9 move container to workspace $WS19
+bindsym $mod+Shift+Control+10 move container to workspace $WS20
 
 # custome keys
 bindsym XF86Display exec --no-startup-id $HOME/.screenlayout/laptop_only.sh
@@ -128,19 +161,30 @@ assign [class="NetBeans IDE*"] $WS4
 
 # float 
 for_window [class="VLC|MPlayer|Skype|xpad|Java|Spotify|Hamster|Systemadm|Modem-manager-gui|Screengrab|Shutter"] floating enable
-for_window [class="File-roller|Lxappearance|Nitrogen|Arandr|Caffeine|Pavucontrol|emulator64-arm|Transmission-gtk|sublime-text|VirtualBox"] floating enable
+for_window [class="File-roller|Lxappearance|Nitrogen|Arandr|Caffeine|Pavucontrol|emulator64-arm|Transmission-gtk|sublime-text|VirtualBox|Virt-manager"] floating enable
 for_window [instance="wync|sky|TeamViewer.exe"] floating enable
-for_window [title="Preferences|Xfce-notifyd|TrueCrypt|Catfish|Google Keep|Pocket|irssi|Xarchiver|Wync|Unetbootin"] floating enable
+for_window [title="Preferences|Xfce-notifyd|TrueCrypt|Catfish|Google Keep|irssi|Xarchiver|Wync|Unetbootin"] floating enable
 for_window [title="File Operation Progress" class="Thunar"] floating enable
 for_window [title="Share a link on Twitter - Mozilla Firefox" class="Firefox"] floating enable
 for_window [title="Press This - Mozilla Firefox" class="Firefox"] floating enable
 for_window [class="Gimp|Kitematic|Unetbootin.elf|Jitsi"] floating enable
 for_window [window_role="pop-up"] floating enable,move absolute center
 for_window [title="Messenger"] floating enable
+for_window [class="Wine"] floating enable
+for_window [class="com-lightcrafts-platform-linux-*"] floating enable
+for_window [class="Remmina"] floating enable
+for_window [class="Nylas N1"] floating enable
+for_window [class="CrashPlan"] floating enable
+for_window [class="Player"] floating enable
 
 # float projects
 for_window [title="EverGTD"] floating enable
-for_window [class="EvernoteGTD"] floating enable
+for_window [class="EvernoteGTD"] floating enable move right 330px,move down 70px
+for_window [class="Unified Agent*"] floating enable
+for_window [class="Gnomato"] floating enable
+
+# positions
+#for_window [title="Tomighty"] move absolute position 1830 px 22 px
 
 
 # reload the configuration file
@@ -189,7 +233,7 @@ bindsym Print exec scrot '%Y-%m-%d-%T.png' -e 'mv $f ~/pictures/screenshots/'
 
 # key bindings
 bindsym $mod+Return exec --no-startup-id urxvtc
-#bindsym Mod4+l exec ~/bin/lock
+bindsym XF86ScreenSaver exec ~/bin/lock
 
 # multimedia keys
 bindsym XF86AudioRaiseVolume exec --no-startup-id "ponymix increase 5"
@@ -201,6 +245,7 @@ bindsym XF86MonBrightnessUp exec --no-startup-id "xbacklight +10"
 bindsym XF86MonBrightnessDown exec --no-startup-id "xbacklight -10"
 
 bar {
+  tray_output eDP1
   position top
     status_command ~/.i3/conky
     colors { 
