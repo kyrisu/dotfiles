@@ -1,0 +1,125 @@
+# vim: ft=dosini
+# i3blocks config file
+#
+# Please see man i3blocks for a complete reference!
+# The man page is also hosted at http://vivien.github.io/i3blocks
+#
+# List of valid properties:
+#
+# align
+# color
+# background
+# border
+# command
+# full_text
+# instance
+# interval
+# label
+# min_width
+# name
+# separator
+# separator_block_width
+# short_text
+# signal
+# urgent
+
+# Global properties
+#
+# The top properties below are applied to every block, but can be overridden.
+# Each block command defaults to the script name to avoid boilerplate.
+command=~/.i3/i3blocks/scripts/$BLOCK_NAME
+markup=none
+
+full_text=〈
+align=center
+color=#666666
+separator=false
+separator_block_width=7
+
+#[window title]
+#command=xdotool getactivewindow getwindowname
+#interval=3
+#color=#A6D1FA
+#align=center
+
+[separator]
+
+[pomodoro]
+label=
+command=~/.i3/i3blocks/scripts/pymodoro
+interval=1
+
+[separator]
+
+[disk-home]
+label=
+command=/usr/lib/i3blocks/disk 1
+interval=30
+color=#859900
+
+[disk-root]
+label=
+instance=/
+command=/usr/lib/i3blocks/disk 3
+interval=30
+color=#1793D1
+
+[separator]
+
+[ssid]
+label=
+command=echo "$(iw dev wlp2s0 link | grep SSID | cut -d " " -f 2-)"
+color=#d33682
+interval=5
+
+[wireless]
+instance=wlp2s0
+command=/usr/lib/i3blocks/iface
+color=#00FF00
+interval=10
+
+[strength]
+command=echo "$(iw dev wlp2s0 link | grep signal | cut -d " " -f 2-)"
+interval=10
+color=#cb4b16
+
+[separator]
+
+[temp]
+label=
+command=echo "$(sensors coretemp-isa-0000 | awk '/Physical/ {print $4}')"
+interval=10
+color=#b58900
+
+[separator]
+
+[load]
+label=
+command=/usr/lib/i3blocks/load_average
+interval=10
+color=#6c71c4
+
+[separator]
+
+[battery]
+instance=1
+command=~/.i3/i3blocks/scripts/battery
+interval=30
+
+[separator]
+
+[volume]
+label=
+command=/usr/lib/i3blocks/volume
+interval=2
+signal=10
+color=#d70a53
+
+
+[separator]
+
+[time]
+#label=
+command=~/.i3/i3blocks/scripts/calendar-button
+interval=5
+color=#50C878

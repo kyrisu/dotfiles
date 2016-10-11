@@ -7,10 +7,9 @@
 
 export EDITOR=nvim
 export PATH=$PATH:~/bin/:~/bin/android-sdk-linux/tools:~/bin/android-sdk-linux/platform-tools
-# export CDPATH=.:~/dev:~/dev/Algotech
 
 # java
-export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel'
+#export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel'
 
 alias ls='ls --color=auto'
 alias ll='ls -l --color=auto'
@@ -18,23 +17,33 @@ alias pacman-disowned-dirs="comm -23 <(sudo find / \( -path '/dev' -o -path '/sy
 
 alias psc='ps xawf -eo pid,user,cgroup,args'
 
+alias pacman='pacman --color auto'
+alias grep='grep --color'
+alias grepc='grep --color -n --exclude-dir="node_modules" --exclude-dir="bower_components" --exclude-dir=".tmp" --exclude-dir="coverage" --exclude="bundle.js*"'
+
 # docker aliases
 alias dl='docker ps -l -q'
 alias dps='docker ps'
 alias dockip="docker inspect --format '{{ .NetworkSettings.IPAddress }}'"
+
 alias dc="docker-compose"
 
+# git aliases
+alias gst='git status'
+
+# node
+. /usr/share/nvm/init-nvm.sh
+export NVM_NODEJS_ORG_MIRROR=http://nodejs.org/dist
+
 # soft aliases
-alias gn1='geeknote find --tags 1-Now'
-alias gn2='geeknote find --tags 2-Next'
 
 #export TERM=urxvtc
 
 
-go () 
-{ 
+go ()
+{
   CURPWD=$PWD;
-  case "$1" in 
+  case "$1" in
     downloads)
       cd ~/Downloads
       ;;
@@ -43,6 +52,9 @@ go ()
       ;;
     algo)
       cd ~/dev/Algotech/${2}
+      ;;
+    satrails)
+      cd ~/dev/satrails/${2}
       ;;
     [\/\.-]*)
       cd $1
@@ -58,6 +70,8 @@ go ()
   fi
 }
 
+[ -r /usr/share/bash-completion/bash_completion   ] && . /usr/share/bash-completion/bash_completion
+
 # completions
 if [ -f /usr/share/git/completion/git-completion.bash ]; then
   . /usr/share/git/completion/git-completion.bash
@@ -67,31 +81,71 @@ if [ -f ~/.dotfiles/completions/purevpn.sh ]; then
   . ~/.dotfiles/completions/purevpn.sh
 fi
 
-# completions that didn't load for some reason
-
-. /usr/share/bash-completion/completions/netctl
+# docker-compose completions
+. /usr/share/bash-completion/completions/docker-compose
+complete -F _docker_compose dc
 
 #PATH="$(ruby -e 'print Gem.user_dir')/bin:$PATH"
 
 export CATALINA_HOME=/usr/share/tomcat8
 
-export UA_FOLDER=/home/kyrisu/dev/Algotech/unifiedagent/unifiedagent_java/src/main/java
+#export UA_FOLDER=/home/kyrisu/dev/Algotech/unifiedagent/unifiedagent_java/src/main/java
 
 . /usr/share/git/completion/git-prompt.sh
 
-#PS1='[\u@\h \W]\n\$ '
-#PS1='[\u@\h [$MAGENTA]\W$(__git_ps1 " (%s)")]\[$WHITE]$ '
-#PS1='\u@\h \W\e[35m$(__git_ps1 " (%s)")\e[39m$ '
-#export PS1='`if [ $? = 0 ]; then echo "\[\033[01;32m\]✔"; else echo "\[\033[01;31m\]✘"; fi` \[\033[01;30m\]\h\[\033[01;34m\] \w\[\033[35m\]$(__git_ps1 " %s") \[\033[01;30m\]>\[\033[00m\] '
-#export PS1='\[\e[01;30m\]\t`if [ $? = 0 ]; then echo "\[\e[32m\] ✔ "; else echo "\[\e[31m\] ✘ "; fi`\[\e[00;37m\]\u\[\e[01;37m\]:`[[ $(git status 2> /dev/null | head -n3 | tail -n1) != "Changes to be committed:" ]] && echo "\[\e[31m\]" || echo "\[\e[33m\]"``[[ $(git status 2> /dev/null | head -n3 | tail -n1) != "nothing to commit (working directory clean)" ]] || echo "\[\e[32m\]"`$(__git_ps1 "(%s)\[\e[00m\]")\[\e[01;34m\]\w\[\e[00m\]\$ '
 export PS1='\[\e[01;30m\]\t`if [ $? = 0 ]; then echo "\[\e[32m\] ✔ "; else echo "\[\e[31m\] ✘ "; fi`\[\e[00;37m\]\u@\h \[\e[01;34m\]\W\e[35m$(__git_ps1 " (%s)")\n\[\e[00;39m\]\$ '
 
 export ANDROID_HOME=~/bin/android-sdk-linux
 
-###-tns-completion-start-###
-if [ -f /home/kyrisu/.tnsrc ]; then 
-    source /home/kyrisu/.tnsrc 
-fi
-###-tns-completion-end-###
 # Hook for desk activation
 [ ! -z "$DESK_ENV" ] && source "$DESK_ENV"
+
+## gruvbox console colors
+#~/bin/gruvbox_256palette.sh
+
+export NVM_DIR="/home/kyrisu/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+
+# Base16 Shell
+
+BASE16_SHELL=$HOME/.dotfiles/base16-shell/
+[ -n "$PS1" ] && [ -s $BASE16_SHELL/profile_helper.sh ] && eval "$($BASE16_SHELL/profile_helper.sh)"
+
+# command not found hook
+[ -r /usr/share/doc/pkgfile/command-not-found.bash ] && . /usr/share/doc/pkgfile/command-not-found.bash
+
+# prepend cd to the path
+shopt -s autocd
+
+# hisory config
+HISTTIMEFORMAT='%F %T '
+HISTFILESIZE=-1
+HISTSIZE=-1
+HISTCONTROL=ignoredups
+HISTIGNORE=?:??
+shopt -s histappend                 # append to history, don't overwrite it
+# attempt to save all lines of a multiple-line command in the same history entry
+shopt -s cmdhist
+# save multi-line commands to the history with embedded newlines
+shopt -s lithist
+
+# get help for command pressing ALT+h
+bind '"\eh": "\C-a\eb\ed\C-y\e#man \C-y\C-m\C-p\C-p\C-a\C-d\C-e"'
+
+# forget the last history entry
+function forget() {
+  history -d $(expr $(history | tail -n 1 | grep -oP '^\s+\d+') - 1);
+}
+
+
+man() {
+  env \
+    LESS_TERMCAP_mb=$(printf "\e[1;31m") \
+    LESS_TERMCAP_md=$(printf "\e[1;31m") \
+    LESS_TERMCAP_me=$(printf "\e[0m") \
+    LESS_TERMCAP_se=$(printf "\e[0m") \
+    LESS_TERMCAP_so=$(printf "\e[1;44;33m") \
+    LESS_TERMCAP_ue=$(printf "\e[0m") \
+    LESS_TERMCAP_us=$(printf "\e[1;32m") \
+    man "$@"
+}

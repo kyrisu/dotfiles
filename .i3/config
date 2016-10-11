@@ -1,87 +1,15 @@
-set $mod Mod4
-#set $mod Mod1
+# ---------
+# BEHAVIOUR
+# ---------
 
-font xft:Cousine, FontAwesome 8
+# Application autostart.
+exec --no-startup-id "~/.i3/bin/startup"
 
-new_window pixel 2
-#new_float pixel 2
-
-focus_follows_mouse  no
+# Window manipulation.
+focus_follows_mouse no
 workspace_layout default
 
-#don't move to neighbouring screen with hjkl
-force_focus_wrapping yes
-
-set $blue #005588
-set $gray1 #484848
-set $gray2 #333333
-
-# class                 border  backgr. text    indicator
-#client.focused          #4c7899 #285577 #ffffff #2e9ef4
-client.focused          #4c7899 #fa162d #ffffff #2e9ef4
-client.focused_inactive #333333 #5f676a #ffffff #484e50
-client.unfocused        #333333 #222222 #888888 #292d2e
-client.urgent           #2f343a #900000 #ffffff #900000
-
-# Use Mouse+$mod to drag floating windows to their wanted position
-floating_modifier $mod
-
-# kill focused window
-bindsym $mod+q kill
-
-# toggle border
-bindsym $mod+b [class="^.*"] border toggle
-
-# start dmenu (a program launcher)
-#bindsym $mod+p exec --no-startup-id j4-dmenu-desktop --dmenu='dmenu -i -b -fn '-*-terminus-*-*-*-*-12-*-*-*-*-*-*-*''
-bindsym $mod+p exec --no-startup-id j4-dmenu-desktop --dmenu='xboomx'
-
-## KEY BINDINGS
-bindsym $mod+Tab workspace back_and_forth
-bindsym $mod+u [urgent=latest] focus
-
-# HANDLE POPUPS
-#popup_during_fullscreen smart
-
-# change focus
-bindsym $mod+h focus left
-bindsym $mod+j focus down
-bindsym $mod+k focus up
-bindsym $mod+l focus right
-
-# move focused window
-bindsym $mod+Shift+H move left
-bindsym $mod+Shift+J move down
-bindsym $mod+Shift+K move up
-bindsym $mod+Shift+L move right
-
-# split in horizontal orientation
-bindsym $mod+bar split h
-
-# split in vertical orientation
-bindsym $mod+underscore split v
-
-# enter fullscreen mode for the focused container
-bindsym $mod+f fullscreen
-
-# change container layout (stacked, tabbed, default)
-bindsym $mod+s layout stacking
-bindsym $mod+x layout tabbed
-bindsym $mod+z layout default
-
-# toggle tiling / floating
-bindsym $mod+Shift+space floating toggle
-
-# change focus between tiling / floating windows
-bindsym $mod+space focus mode_toggle
-
-# focus the parent container
-bindsym $mod+a focus parent
-
-# focus the child container
-bindsym $mod+d focus child
-
-# assign workspace variables
+# Workspace names.
 set $WS1 1
 set $WS2 2
 set $WS3 3
@@ -91,19 +19,104 @@ set $WS6 6
 set $WS7 7
 set $WS8 8
 set $WS9 9
-set $WS10 10
-set $WS11 11
-set $WS12 12
-set $WS13 13
-set $WS14 14
-set $WS15 15
-set $WS16 16
-set $WS17 17
-set $WS18 18
-set $WS19 19
-set $WS20 20
 
-# switch to workspace
+# Workspace assignments for applications
+assign [class="Wync|Sky"] $WS6
+assign [class="Thunderbird"] $WS7
+assign [class="jetbrains-idea-ce"] $WS5
+
+# Rules for specific window classes
+for_window [class="Connman-gtk"] floating enable
+for_window [class="Pavucontrol"] floating enable
+
+for_window [class="VLC|MPlayer|Skype|xpad|Java|Hamster|Systemadm|Modem-manager-gui|Screengrab|Shutter"] floating enable
+for_window [class="File-roller|Lxappearance|Nitrogen|Arandr|Caffeine|Pavucontrol|emulator64-arm|Transmission-gtk|sublime-text|VirtualBox|Virt-manager"] floating enable
+for_window [instance="wync|sky|TeamViewer.exe"] floating enable
+for_window [title="Preferences|Xfce-notifyd|TrueCrypt|Catfish|Google Keep|irssi|Xarchiver|Wync|Unetbootin"] floating enable
+for_window [title="File Operation Progress" class="Thunar"] floating enable
+for_window [title="Share a link on Twitter - Mozilla Firefox" class="Firefox"] floating enable
+for_window [title="Press This - Mozilla Firefox" class="Firefox"] floating enable
+for_window [title="QEMU"] floating enable
+for_window [title="Nirvana"] floating disable
+
+for_window [class="Gimp|Kitematic|Unetbootin.elf|Jitsi"] floating enable
+for_window [window_role="pop-up"] floating enable,move absolute center
+#for_window [title="Messenger"] floating enable
+for_window [class="Wine"] floating enable
+for_window [class="com-lightcrafts-platform-linux-*"] floating enable
+for_window [class="Remmina"] floating enable
+for_window [class="Nylas N1"] floating enable
+for_window [class="CrashPlan"] floating enable
+for_window [class="Player"] floating enable
+for_window [instance="gitg"] floating enable
+
+# doit.im
+for_window [instance="crx_cddjogbhlfmcgapnfineapehielpnkec"] floating disable
+
+
+# float projects
+for_window [class="Unified Agent*"] floating enable
+
+# -----------
+# KEYBINDINGS
+# -----------
+
+# Default modifier key is the 'Super' key.
+set $mod  Mod4
+
+# Application launching
+bindsym $mod+Return   exec --no-startup-id urxvtc
+bindsym $mod+p        exec "rofi -show run"
+bindsym $mod+Shift+p  exec i3-dmenu-desktop
+
+# Change focus
+bindsym $mod+h      focus left
+bindsym $mod+j      focus down
+bindsym $mod+k      focus up
+bindsym $mod+l      focus right
+
+# Move focused window
+bindsym $mod+Shift+h      move left
+bindsym $mod+Shift+j      move down
+bindsym $mod+Shift+k      move up
+bindsym $mod+Shift+l      move right
+
+# Split in horizontal orientation
+bindsym $mod+bar split h
+
+# Split in vertical orientation
+bindsym $mod+underscore split v
+
+# Window size
+bindsym $mod+f  fullscreen toggle
+
+# Horizontal/vertical orientation switching
+bindsym $mod+bracketleft   split h
+bindsym $mod+bracketright  split v
+
+# Change container layout (stacked, tabbed, toggle split)
+bindsym $mod+s layout stacking
+bindsym $mod+x layout tabbed
+bindsym $mod+z layout default
+
+# Toggle tiling/floating
+bindsym $mod+Shift+space  floating toggle
+bindsym $mod+space        focus mode_toggle
+
+# Focus the parent/child container.
+bindsym $mod+a  focus parent
+bindsym $mod+d  focus child
+
+# Switch to last workspace
+bindsym $mod+Tab workspace back_and_forth
+
+# Focus urgent window.
+bindsym $mod+u  [urgent=latest] focus
+
+# Resize floating windows with modifider + mouse.
+floating_modifier $mod
+
+# Switch to workspace
 bindsym $mod+1 workspace $WS1
 bindsym $mod+2 workspace $WS2
 bindsym $mod+3 workspace $WS3
@@ -115,18 +128,7 @@ bindsym $mod+8 workspace $WS8
 bindsym $mod+9 workspace $WS9
 bindsym $mod+0 workspace $WS10
 
-bindsym $mod+Control+1 workspace $WS11
-bindsym $mod+Control+2 workspace $WS12
-bindsym $mod+Control+3 workspace $WS13
-bindsym $mod+Control+4 workspace $WS14
-bindsym $mod+Control+5 workspace $WS15
-bindsym $mod+Control+6 workspace $WS16
-bindsym $mod+Control+7 workspace $WS17
-bindsym $mod+Control+8 workspace $WS18
-bindsym $mod+Control+9 workspace $WS19
-bindsym $mod+Control+0 workspace $WS20
-
-# move focused container to workspace
+# Move focused window to workspace
 bindsym $mod+Shift+1 move container to workspace $WS1
 bindsym $mod+Shift+2 move container to workspace $WS2
 bindsym $mod+Shift+3 move container to workspace $WS3
@@ -138,155 +140,119 @@ bindsym $mod+Shift+8 move container to workspace $WS8
 bindsym $mod+Shift+9 move container to workspace $WS9
 bindsym $mod+Shift+0 move container to workspace $WS10
 
-bindsym $mod+Shift+Control+1 move container to workspace $WS11
-bindsym $mod+Shift+Control+2 move container to workspace $WS12
-bindsym $mod+Shift+Control+3 move container to workspace $WS13
-bindsym $mod+Shift+Control+4 move container to workspace $WS14
-bindsym $mod+Shift+Control+5 move container to workspace $WS15
-bindsym $mod+Shift+Control+6 move container to workspace $WS16
-bindsym $mod+Shift+Control+7 move container to workspace $WS17
-bindsym $mod+Shift+Control+8 move container to workspace $WS18
-bindsym $mod+Shift+Control+9 move container to workspace $WS19
-bindsym $mod+Shift+Control+10 move container to workspace $WS20
+# Window manager
+bindsym $mod+w             exec "rofi -show window"
+bindsym $mod+q             kill
+bindsym $mod+Shift+c       reload
+bindsym $mod+Shift+r       restart
+bindsym XF86ScreenSaver    exec --no-startup-id ~/.i3/bin/session lock
 
-# custome keys
-bindsym XF86Display exec --no-startup-id $HOME/.screenlayout/laptop_only.sh
-#bindcode --release 530 exec --no-startup-id $HOME/bin/touchpad_toggle
-#bindcode --release 530 exec --no-startup-id notify-send "keycode 530 pressed"
+# Volume keys
+bindsym XF86AudioRaiseVolume  exec --no-startup-id "~/.i3/bin/volume up && pkill -RTMIN+10 i3blocks"
+bindsym XF86AudioLowerVolume  exec --no-startup-id "~/.i3/bin/volume down && pkill -RTMIN+10 i3blocks"
+bindsym XF86AudioMute         exec --no-startup-id "~/.i3/bin/volume mute && pkill -RTMIN+10 i3blocks"
 
-# workspaces 
-assign [class="Wync|Sky"] $WS6
-assign [class="Thunderbird"] $WS7
-assign [class="NetBeans IDE*"] $WS4
+# Brightness
+bindsym XF86MonBrightnessUp exec --no-startup-id "xbacklight +10"
+bindsym XF86MonBrightnessDown exec --no-startup-id "xbacklight -10"
 
-# float 
-for_window [class="VLC|MPlayer|Skype|xpad|Java|Spotify|Hamster|Systemadm|Modem-manager-gui|Screengrab|Shutter"] floating enable
-for_window [class="File-roller|Lxappearance|Nitrogen|Arandr|Caffeine|Pavucontrol|emulator64-arm|Transmission-gtk|sublime-text|VirtualBox|Virt-manager"] floating enable
-for_window [instance="wync|sky|TeamViewer.exe"] floating enable
-for_window [title="Preferences|Xfce-notifyd|TrueCrypt|Catfish|Google Keep|irssi|Xarchiver|Wync|Unetbootin"] floating enable
-for_window [title="File Operation Progress" class="Thunar"] floating enable
-for_window [title="Share a link on Twitter - Mozilla Firefox" class="Firefox"] floating enable
-for_window [title="Press This - Mozilla Firefox" class="Firefox"] floating enable
-for_window [class="Gimp|Kitematic|Unetbootin.elf|Jitsi"] floating enable
-for_window [window_role="pop-up"] floating enable,move absolute center
-for_window [title="Messenger"] floating enable
-for_window [class="Wine"] floating enable
-for_window [class="com-lightcrafts-platform-linux-*"] floating enable
-for_window [class="Remmina"] floating enable
-for_window [class="Nylas N1"] floating enable
-for_window [class="CrashPlan"] floating enable
-for_window [class="Player"] floating enable
+# Media keys
+bindsym $mod+Ctrl+Up     exec --no-startup-id "mpc stop"
+bindsym $mod+Ctrl+Down   exec --no-startup-id "mpc toggle"
+bindsym $mod+Ctrl+Left   exec --no-startup-id "mpc next"
+bindsym $mod+Ctrl+Right  exec --no-startup-id "mpc prev"
 
-# float projects
-for_window [title="EverGTD"] floating enable
-for_window [class="EvernoteGTD"] floating enable move right 330px,move down 70px
-for_window [class="Unified Agent*"] floating enable
-for_window [class="Gnomato"] floating enable
+# Modes
+bindsym $mod+r        mode "resize"
+bindsym $mod+Shift+q  mode $session
 
-# positions
-#for_window [title="Tomighty"] move absolute position 1830 px 22 px
+# ----------
+# APPEARANCE
+# ----------
 
+# Default font.
+#font pango: Futura Bk BT, Material Design Icons 13
+font pango:Inconsolata 11
 
-# reload the configuration file
-bindsym $mod+Shift+C reload
-# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
-bindsym $mod+Shift+R restart
-# exit i3 (logs you out of your X session)
-bindsym $mod+Shift+E exit
+# Border style for new windows.
+new_window pixel 2
+bindsym $mod+b [class="^.*"] border toggle
+
+## Color names.
+set $background  #282828
+set $foreground  #d8d8d8
+set $focused     #2d2d2d
+set $unfocused   #585858
+set $urgent      #ab4642
+
+## Window manager colors.
+# class                 border  backgr. text    indicator
+client.focused          #4c7899 #fa162d #ffffff #2e9ef4
+client.focused_inactive #333333 #5f676a #ffffff #484e50
+client.unfocused        #333333 #222222 #888888 #292d2e
+client.urgent           #2f343a #900000 #ffffff #900000
+client.background                     $background
+
+# ---------------
+# MODES & MODULES
+# ---------------
 
 mode "resize" {
-# These bindings trigger as soon as you enter the resize mode
+        # These bindings trigger as soon as you enter the resize mode.
 
-    bindsym h resize shrink width 10 px or 10 ppt
-    bindsym j resize grow height 10 px or 10 ppt
-    bindsym k resize shrink height 10 px or 10 ppt
-    bindsym l resize grow width 10 px or 10 ppt 
-# arrow keys #        
-# bindsym 113 right
+        bindsym h resize shrink width 10 px or 10 ppt
+        bindsym j resize grow height 10 px or 10 ppt
+        bindsym k resize shrink height 10 px or 10 ppt
+        bindsym l resize grow width 10 px or 10 ppt
 
-# back to normal: Enter or Escape
+        # Back to normal mode: Enter or Escape
+        bindsym  Return       mode "default"
+        bindsym  Escape       mode "default"
+}
+
+set $session "Session (s) Suspend, (l) lock, (r) Reboot, (p) Power off"
+
+mode $session {
+    bindsym s  exec --no-startup-id ~/.i3/bin/session suspend, mode "default"
+    bindsym l  exec --no-startup-id ~/.i3/bin/session lock, mode "default"
+    bindsym r  exec --no-startup-id ~/.i3/bin/session reboot, mode "default"
+    bindsym p  exec --no-startup-id ~/.i3/bin/session poweroff, mode "default"
+
+    # Back to normal mode: Enter or Escape
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
 
-bindsym $mod+r mode "resize"
-
-# Create Log out, Reboot, Poweroff bindings
-#set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (Shift+s) shutdown
-#mode "$mode_system" {
-#    bindsym l exec --no-startup-id $HOME/bin/i3exit lock, mode "default"
-#    bindsym e exec --no-startup-id $HOME/bin/i3exit logout, mode "default"
-#    bindsym s exec --no-startup-id $HOME/bin/i3exit suspend, mode "default"
-#    bindsym h exec --no-startup-id $HOME/bin/i3exit hibernate, mode "default"
-#    bindsym r exec --no-startup-id $HOME/bin/i3exit reboot, mode "default"
-#    bindsym Shift+s exec --no-startup-id $HOME/bin/i3exit shutdown, mode "default"  
-#
-#    # back to normal: Enter or Escape
-#    bindsym Return mode "default"
-#    bindsym Escape mode "default"
-#}
-#bindsym $mod+Shift+Q mode "$mode_system"
-
-# take screenshot
-bindsym Print exec scrot '%Y-%m-%d-%T.png' -e 'mv $f ~/pictures/screenshots/'
-#bindsym Mod1+Print exec $HOME/bin/screen.sh active
-
-# key bindings
-bindsym $mod+Return exec --no-startup-id urxvtc
-bindsym XF86ScreenSaver exec ~/bin/lock
-
-# multimedia keys
-bindsym XF86AudioRaiseVolume exec --no-startup-id "ponymix increase 5"
-bindsym XF86AudioLowerVolume exec --no-startup-id "ponymix decrease 5"
-bindsym XF86AudioMute exec "ponymix toggle"
-
-# brightness
-bindsym XF86MonBrightnessUp exec --no-startup-id "xbacklight +10"
-bindsym XF86MonBrightnessDown exec --no-startup-id "xbacklight -10"
-
 bar {
-  tray_output eDP1
-  position top
-    status_command ~/.i3/conky
-    colors { 
-      statusline #AAAAAA
-        background #333333
-        focused_workspace  #4c7899 #285577 #ffffff
-        active_workspace   #333333 #5f676a #ffffff
-        inactive_workspace #333333 #222222 #888888
-        urgent_workspace   #2f343a #900000 #ffffff
+    output eDP1
+    output DP1
+
+    tray_output eDP1
+
+    mode dock
+    position top
+
+    font pango:Inconsolata, i3cons 10
+    #separator_symbol " • "
+    #separator_symbol "〈"
+
+    workspace_buttons yes
+    binding_mode_indicator yes
+    strip_workspace_numbers yes
+
+    #status_command "~/.i3/bin/statusbar player cpu memory network battery volume clock"
+    #status_command ~/.i3/conky
+    status_command i3blocks -c ~/.i3/i3blocks/config
+
+    colors {
+        background  $background
+        statusline  $foreground
+        separator   $unfocused
+
+        # Class             Border       Background   Text
+        focused_workspace   $background  $background  $foreground
+        active_workspace    $background  $background  $foreground
+        inactive_workspace  $background  $background  $unfocused
+        urgent_workspace    $background  $background  $urgent
     }
 }
-
-# autostart
-
-# background
-#exec --no-startup-id feh --bg-fill --no-xinerama ~/pictures/level_up_by_deadslug.jpg
-exec --no-startup-id feh --bg-fill --no-xinerama ~/pictures/sky_lanterns.jpg
-
-# wireless
-#exec --no-startup-id nm-applet
-
-# volume Control
-exec --no-startup-id pasystray
-
-# dropbox
-exec --no-startup-id dropbox
-
-# parcellite
-exec --no-startup-id parcellite
-
-# urxvtc
-exec --no-startup-id /usr/bin/urxvtd
-
-# run synademon
-exec --no-startup-id syndaemon -K -i 1 -R -d
-
-#HAL
-#exec --no-startup-id /usr/sbin/hald --daemon=yes
-
-# Mount Google Drive
-#exec --no-startup-id /usr/bin/google-drive-ocamlfuse ~/gdrive/
-
-# run compton
-exec --no-startup-id compton -c -b

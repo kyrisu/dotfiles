@@ -26,120 +26,137 @@ if has('vim_starting')
     set nocompatible               " Be iMproved
   endif
 
+  set encoding=utf8
+
   " Required:
-  set runtimepath+=~/.dotfiles/nvim/bundle/neobundle.vim/
+  set runtimepath+=~/.dotfiles/nvim/dein/repos/github.com/Shougo/dein.vim
 endif
 
+"dein Scripts-----------------------------
 " Required:
-call neobundle#begin(expand('~/.dotfiles/nvim/bundle/'))
+call dein#begin(expand('~/.dotfiles/nvim/dein'))
 
-" Let NeoBundle manage NeoBundle
+" Let dein manage dein
 " Required:
-NeoBundleFetch 'Shougo/neobundle.vim'
+call dein#add('Shougo/dein.vim')
 
-" My Bundles here:
-" Refer to |:NeoBundle-examples|.
-" Note: You don't set neobundle setting in .gvimrc!
+" Add or remove your plugins here:
+"call dein#add('Shougo/neosnippet.vim')
+"call dein#add('Shougo/neosnippet-snippets')
 
-NeoBundle 'kien/ctrlp.vim'
-NeoBundle 'scrooloose/nerdtree'
-NeoBundle 'morhetz/gruvbox'
-NeoBundle 'junegunn/vim-easy-align'
-NeoBundle 'milkypostman/vim-togglelist'
-NeoBundle 'MarcWeber/vim-addon-local-vimrc'
+" You can specify revision/branch/tag.
+"call dein#add('Shougo/vimshell', { 'rev': '3787e5' })
 
-" programming general
-NeoBundle 'SirVer/ultisnips'
-NeoBundle 'kshenoy/vim-signature'
+""
+call dein#add('ctrlpvim/ctrlp.vim')
+call dein#add('scrooloose/nerdtree')
+"call dein#add('morhetz/gruvbox')
+call dein#add('chriskempson/base16-vim')
+call dein#add('junegunn/vim-easy-align')
+call dein#add('milkypostman/vim-togglelist')
+call dein#add('MarcWeber/vim-addon-local-vimrc')
+""
+""" programming general
+call dein#add('SirVer/ultisnips')
+call dein#add('kshenoy/vim-signature')
+call dein#add('terryma/vim-expand-region')
+call dein#add('editorconfig/editorconfig-vim')
+call dein#add('ruanyl/vim-fixmyjs')
+call dein#add('mileszs/ack.vim')
+call dein#add('AndrewRadev/splitjoin.vim')
+call dein#add('wakatime/vim-wakatime')
+call dein#add('terryma/vim-multiple-cursors')
+""
+call dein#add('airblade/vim-gitgutter')
+call dein#add('Yggdroot/indentLine')
+call dein#add('Raimondi/delimitMate')
+""
+call dein#add('honza/vim-snippets')
+call dein#add('scrooloose/nerdcommenter')
+call dein#add('scrooloose/syntastic')
+call dein#add('vasconcelloslf/vim-interestingwords')
+""
+call dein#add('Shougo/deoplete.nvim')
+call dein#add('carlitux/deoplete-ternjs',
+      \{
+      \ 'build': 'npm install -g tern',
+      \ 'on_ft': [ 'javascript', 'javascript.jsx' ]
+      \})
 
-NeoBundle 'airblade/vim-gitgutter'
-NeoBundle 'Yggdroot/indentLine'
-NeoBundle 'Raimondi/delimitMate'
-NeoBundle 'vim-scripts/SyntaxComplete'
-NeoBundle 'honza/vim-snippets'
-NeoBundle 'scrooloose/nerdcommenter'
-NeoBundle 'scrooloose/syntastic'
-NeoBundle 'Valloric/YouCompleteMe', {
-      \ 'build' : {
-      \     'unix' : './install.sh --clang-completer --system-libclang --omnisharp-completer',
-      \     'windows' : './install.sh --clang-completer --system-libclang --omnisharp-completer',
-      \    }
-      \ }
-NeoBundle 'vasconcelloslf/vim-interestingwords'
-NeoBundle 'terryma/vim-multiple-cursors'
+call dein#add('rhysd/devdocs.vim')
 
-NeoBundle 'luochen1990/rainbow'
-
-"Bundle 'tpope/vim-fugitive'
-NeoBundle 'majutsushi/tagbar'
-NeoBundle 'vim-airline/vim-airline'
-NeoBundle 'vim-airline/vim-airline-themes'
-NeoBundle 'tpope/vim-surround'
-
+call dein#add('Chiel92/vim-autoformat')
+call dein#add('majutsushi/tagbar')
+call dein#add('vim-airline/vim-airline')
+call dein#add('vim-airline/vim-airline-themes')
+call dein#add('tpope/vim-surround')
+call dein#add('tpope/vim-unimpaired')
+call dein#add('tpope/vim-vinegar')
+call dein#add('tpope/vim-fugitive')
 
 " Javascript
-"NeoBundle 'jelera/vim-javascript-syntax' , {'autoload':{'filetypes':['javascript']}}
-NeoBundle 'pangloss/vim-javascript'
-NeoBundle 'othree/yajs.vim', {'autoload':{'filetypes':['javascript']}}
-NeoBundle 'othree/javascript-libraries-syntax.vim', {'autoload':{'filetypes':['javascript']}}
-NeoBundle 'maksimr/vim-jsbeautify'
-NeoBundle 'heavenshell/vim-jsdoc'
-"NeoBundle 'burnettk/vim-angular'
-"NeoBundle 'matthewsimo/angular-vim-snippets'
-"NeoBundle 'claco/jasmine.vim', {'autoload':{'filetypes':['javascript']}}
-NeoBundle 'marijnh/tern_for_vim', {
-      \ 'build' : {
-      \     'unix' : 'npm install',
-      \    },
-      \ 'autoload':{'filetypes':['javascript']}
-      \ }
-
-" React
-NeoBundle 'mxw/vim-jsx'
-NeoBundle 'tfnico/vim-gradle'
-
-NeoBundle 'kchmck/vim-coffee-script', {'autoload':{'filetypes':['coffee']}}
-
-" JAVA
-
-" Markdown
-"NeoBundle 'shime/vim-livedown'
-NeoBundle 'plasticboy/vim-markdown'
-
-" HTML & CSS
-"NeoBundle 'jimmyhchan/dustjs.vim'
-NeoBundle 'mustache/vim-mustache-handlebars'
-
-NeoBundle 'mattn/emmet-vim'
-NeoBundle 'groenewege/vim-less', {'autoload':{'filetypes':['less']}}
-NeoBundle 'wavded/vim-stylus', {'autoload':{'filetypes':['stylus']}}
-"NeoBundle 'tpope/vim-haml'
-
-" CSV
-"NeoBundle 'chrisbra/csv.vim'
-
-" CPP
-"NeoBundle 'ciaranm/googletest-syntax'
-NeoBundle 'octol/vim-cpp-enhanced-highlight', {'autoload':{'filetypes':['stylus']}}
-
-" Dockerfile
-NeoBundle 'ekalinin/Dockerfile.vim'
+call dein#add('pangloss/vim-javascript', { 'rev': 'develop' })
+call dein#add('mvolkmann/vim-js-arrow-function')
+call dein#add('mxw/vim-jsx')
+"call dein#add('othree/yajs.vim', {'on_ft': 'javascript'})
+"call dein#add('othree/javascript-libraries-syntax.vim', {'on_ft': 'javascript'})
+"call dein#add('heavenshell/vim-jsdoc')
+call dein#add('marijnh/tern_for_vim', {
+      \ 'build' : 'npm install; npm i tern-node-express',
+      \ 'on_ft': ['javascript', 'javascript.jsx']
+      \ })
+call dein#add('othree/jspc.vim', { 'on_ft': [ 'javascript', 'javascript.jsx' ] })
 
 " config files
-NeoBundle 'vim-scripts/nginx.vim'
+call dein#add('kyrisu/vim-mikrotik')
+call dein#add('vim-scripts/openvpn')
+
+" Markdown
+call dein#add('shime/vim-livedown')
+call dein#add('plasticboy/vim-markdown')
+
+" HTML & CSS
+call dein#add('mustache/vim-mustache-handlebars')
+call dein#add('digitaltoad/vim-pug')
+call dein#add('othree/html5.vim')
+
+call dein#add('mattn/emmet-vim')
+call dein#add('groenewege/vim-less', {'on_ft': 'less'})
+call dein#add('wavded/vim-stylus', {'on_ft': 'stylus'})
+
+" CPP
+"call dein#add('ciaranm/googletest-syntax')
+call dein#add('octol/vim-cpp-enhanced-highlight', {'on_ft': 'stylus'})
+
+" Dockerfile
+call dein#add('ekalinin/Dockerfile.vim')
+
+" config files
+call dein#add('vim-scripts/nginx.vim')
+call dein#add('tmatilai/gitolite.vim')
+
+" syntax
+call dein#add('vim-scripts/confluencewiki.vim')
+call dein#add('lusis/confluence-vim')
 
 " vim
-NeoBundle 'vim-scripts/vimwiki'
+call dein#add('vim-scripts/vimwiki')
 
-call neobundle#end()
+call dein#add('ryanoasis/vim-devicons')
+
+" Required:
+call dein#end()
 
 " Required:
 filetype plugin indent on
+syntax enable
 
-" If there are uninstalled bundles found on startup,
-" this will conveniently prompt you to install them.
+" If you want to install not installed plugins on startup.
+if dein#check_install()
+  call dein#install()
+endif
 
-NeoBundleCheck
+"End dein Scripts-------------------------
 " }}}
 
 " => Files, backups and undo {{{
@@ -203,11 +220,15 @@ let g:nerdtree_tabs_open_on_gui_startup=0
 
 " CtrlP
 map <c-b> :CtrlPBuffer<CR>
+map <c-/> :CtrlPBufTagAll<CR>
+map <leader><leader> :CtrlPTag<CR>
 "let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git\|bower_components\|jspm_packages'
 let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\v[\/]\.?(node_modules|DS_Store|git|bower_components|jspm_packages|build)$',
+  \ 'dir':  '\v[\/]\.?(node_modules|DS_Store|git|bower_components|jspm_packages|build|dist|logs)$',
   \ 'file': '\v\.(exe|so|dll|o)$'
   \ }
+let g:ctrlp_extensions = ['mru', 'files', 'buf', 'buffertag']
+
 
 set autowrite " autosave on ! and others
 " }}}
@@ -235,24 +256,35 @@ set smartcase
 set hlsearch "Highlight search things
 
 set incsearch "Make search act like search in modern browsers
-set nolazyredraw "Don't redraw while executing macros
+set lazyredraw "Don't redraw while executing macros
 
 set magic "Set magic on, for regular expressions
 
 set showmatch "Show matching bracets when text indicator is over them
 set mat=2 "How many tenths of a second to blink
 
-set relativenumber
-autocmd FocusGained * :set number
-autocmd FocusLost * :set relativenumber
-autocmd InsertEnter * :set number
-autocmd InsertLeave * :set relativenumber
+set rnu
+function! ToggleNumbersOn()
+    set rnu!
+    set nu
+endfunction
+function! ToggleRelativeOn()
+    set nu!
+    set rnu
+endfunction
+autocmd FocusLost * call ToggleNumbersOn()
+autocmd FocusGained * call ToggleRelativeOn()
+autocmd InsertEnter * call ToggleNumbersOn()
+autocmd InsertLeave * call ToggleRelativeOn()
 
 " No sound on errors
 set noerrorbells
 set novisualbell
 set t_vb=
 set tm=500
+
+autocmd BufEnter * let &titlestring = 'NVIM ' . expand("%:t")
+set title
 
 "set cul " highlight current line
 " }}}
@@ -280,10 +312,7 @@ else
 endif
 
 " highlight current line
-"hi clear CursorLine
-"augroup CLClear
-"  autocmd! ColorScheme * hi CursorLine ctermbg=0 guibg=Grey40 cterm=NONE
-"augroup END
+set cursorline
 
 
 if has ("gui_running")
@@ -292,17 +321,23 @@ else
   set background=dark
   set t_Co=256
 endif
-let g:gruvbox_italic=1
-let g:gruvbox_contrast_dark='medium'
-colorscheme gruvbox
+"let g:gruvbox_italic=1
+"let g:gruvbox_contrast_dark='medium'
+"colorscheme gruvbox
+
+let g:base16_shell_path="~/.dotfiles/base16-shell/"
+hi Search ctermfg=black
+if filereadable(expand("~/.vimrc_background"))
+  let base16colorspace=256
+  source ~/.vimrc_background
+endif
 
 " Popup menu hightLight Group
-hi Pmenu  guifg=\#000000 guibg=\#F8F8F8 ctermfg=black ctermbg=Lightgray
-hi PmenuSbar  guifg=\#8A95A7 guibg=\#F8F8F8 gui=NONE ctermfg=darkcyan ctermbg=lightgray cterm=NONE
-hi PmenuThumb  guifg=\#F8F8F8 guibg=\#8A95A7 gui=NONE ctermfg=lightgray ctermbg=darkcyan cterm=NONE
+"hi Pmenu  guifg=\#000000 guibg=\#F8F8F8 ctermfg=black ctermbg=Lightgray
+"hi PmenuSbar  guifg=\#8A95A7 guibg=\#F8F8F8 gui=NONE ctermfg=darkcyan ctermbg=lightgray cterm=NONE
+"hi PmenuThumb  guifg=\#F8F8F8 guibg=\#8A95A7 gui=NONE ctermfg=lightgray ctermbg=darkcyan cterm=NONE
 
 
-set encoding=utf8
 try
   lang en_US
 catch
@@ -349,7 +384,7 @@ vnoremap <silent> # :call VisualSearch('b')<CR>
 
 " When you press gv you vimgrep after the selected text
 vnoremap <silent> gv :call VisualSearch('gv')<CR>
-map <leader>g :vimgrep // **/*.<left><left><left><left><left><left><left>
+map <leader>g :vimgrep // ./**/*.<left><left><left><left><left><left><left><left><left>
 
 
 function! CmdLine(str)
@@ -383,6 +418,10 @@ vnoremap < <gv
 vnoremap > >gv
 "}}}
 
+nnoremap * :normal! *``<cr>
+
+vnoremap // y/<C-R>"<CR>``
+
 " => Moving around, tabs and buffers {{{
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Map space to / (search) and c-space to ? (backgwards search)
@@ -395,7 +434,7 @@ map <leader>bd :Bclose<cr>
 map <leader>c :bp\|bd #<cr>
 
 " Close all the buffers
-map <leader>ba :1,300 bd!<cr>
+map <leader>ba :NERDTreeClose<bar>bufdo bd<cr>
 
 " Use the arrows to something usefull
 map <right> :bn<cr>
@@ -407,7 +446,7 @@ nnoremap <leader>l :ls<CR>:b<space>
 nnoremap <leader>a <C-^>
 
 " When pressing <leader>cd switch to the directory of the open buffer
-"map <leader>cd :cd %:p:h<cr>
+map <leader>cd :cd %:p:h<cr>
 
 
 command! Bclose call <SID>BufcloseCloseIt()
@@ -430,17 +469,12 @@ function! <SID>BufcloseCloseIt()
   endif
 endfunction
 
-" Specify the behavior when switching between buffers 
+" Specify the behavior when switching between buffers
 try
   set switchbuf=usetab
   set stal=2
 catch
 endtry
-
-" tabs
-"map <leader>tn :tabnew %<cr>
-"map <leader>tc :tabclose<cr>
-"map <leader>tm :tabmove 
 
 "}}}
 
@@ -450,9 +484,11 @@ endtry
 set laststatus=2
 
 " Format the statusline
+"let g:airline_theme = 'gruvbox'
 let g:airline_theme = 'base16'
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
+"
 
 function! HasPaste()
   if &paste
@@ -497,12 +533,28 @@ set listchars=tab:›\ ,trail:•,extends:#,nbsp:. " Highlight problematic white
 
 " => Omni complete functions {{{
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" deoplete
+let g:deoplete#enable_at_startup = 1
+" let g:deoplete#disable_auto_complete = 1
+if !exists('g:deoplete#omni#input_patterns')
+  let g:deoplete#omni#input_patterns = {}
+endif
+
+let g:deoplete#sources = {}
+
+let g:deoplete#sources['javascript.jsx'] = ['file', 'ultisnips', 'ternjs']
+
+let g:deoplete#omni#functions = {}
+let g:deoplete#omni#functions.javascript = [
+  \ 'tern#Complete',
+  \ 'jspc#omni'
+\]
+
 "autocmd FileType cpp set omnifunc=omni#cpp#complete#Main
 autocmd FileType sql set omnifunc=sqlComplete#CompleteSQL
 autocmd FileType python set omnifunc=pythoncomplete#Complete
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
 autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-"autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType javascript setlocal omnifunc=tern#Complete
 autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
@@ -510,7 +562,7 @@ autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
 autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
 
 " YCM
-let g:ycm_add_preview_to_completeopt=1
+let g:ycm_add_preview_to_completeopt=0
 let g:ycm_global_ycm_extra_conf = '~/.dotfiles/.ycm_extra_conf.py'
 let g:ycm_confirm_extra_conf = 1
 let g:ycm_extra_conf_globlist = ['~/.dotfiles', '~/dev/*']
@@ -518,6 +570,9 @@ let g:ycm_autoclose_preview_window_after_completion = 1
 let g:ycm_server_user_vim_stdout = 1
 let g:ycm_key_list_select_completion = ['<Tab>']
 let g:ycm_key_list_previous_completion = ['<C-Tab>']
+let g:ycm_server_python_interpreter = '/usr/bin/python2'
+"let g:ycm_auto_trigger = 0
+
 
 "let g:SuperTabDefaultCompletionType = '<C-n>'
 "let g:SuperTabDefaultCompletionType = 'context'
@@ -533,7 +588,7 @@ let g:syntastic_auto_loc_list = 0
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_java_javac_config_file_enabled=1
 
-"let g:UltiSnipsSnippetDirectories=["UltiSnips", $HOME.'/.dotfiles/nvim/bundle/vim-snippets/UltiSnips']
+let g:UltiSnipsSnippetDirectories=[$HOME.'/.dotfiles/nvim/UltiSnips', $HOME.'/.dotfiles/nvim/bundle/vim-snippets/UltiSnips']
 "let g:UltiSnipsSnippetDirectories=[$HOME.'/.dotfiles/nvim/bundle/vim-snippets/UltiSnips']
 "let g:UltiSnipsUsePythonVersion = 2
 
@@ -582,6 +637,7 @@ inoremap <silent> <C-j> <C-R>=Neoj()<CR>
 snoremap <silent> <C-j> <Esc>:call UltiSnips#JumpForwards()<CR>
 inoremap <silent> <C-k> <C-R>=Neok()<CR>
 snoremap <silent> <C-k> <Esc>:call UltiSnips#JumpBackwards()<CR>
+inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 
 au BufEnter * exec "inoremap <silent> <CR> <C-R>=NeoCR()<CR>"
 
@@ -591,25 +647,44 @@ set tags+=./tags
 " => Programming general section {{{
 """""""""""""""""""""""""""""""
 autocmd Syntax c,cpp,vim,xml,html,xhtml,javascript setlocal foldmethod=syntax
-let g:rainbow_active = 1
+autocmd Syntax c,cpp,vim,xml,html,xhtml,javascript setlocal foldlevel=2
+
+" set completeopt-=preview
+set completeopt=longest,menuone,preview
+
+let g:autoformat_autoindent = 0
+let g:autoformat_retab = 0
+let g:autoformat_remove_trailing_spaces = 0
+"let g:formatdef_jsbeautify_javascript = '"js-beautify"'
+
+nmap K <Plug>(devdocs-under-cursor)
+
+let g:NERDSpaceDelims = 1
+let g:NERDCompactSexyComs = 1
+
 " }}}
 
 " => JavaScript section {{{
 """""""""""""""""""""""""""""""
 "let g:syntastic_javascript_checkers = ['jshint', 'jscs']
 let g:syntastic_javascript_checkers = ['eslint']
-"let g:syntastic_javascript_checkers = ['jshint']
 map <leader>nn :!node %<CR>
 map <leader>nm :!mocha %<CR>
 
-let g:used_javascript_libs = 'underscore,angularjs,angularui,jquery,handlebars,chai,react,flux,jasmine'
+"let g:used_javascript_libs = 'underscore,angularjs,angularui,jquery,handlebars,chai,react,flux,jasmine'
+"let g:used_javascript_libs = 'underscore,angularjs,handlebars'
 
 let g:tern_show_argument_hints='on_hold'
-let g:tern_show_signature_in_pum =1
+let g:tern_show_signature_in_pum=1
 let g:tern_map_keys=1
 let g:tern_map_prefix='<leader>'
+"let g:tern_show_argument_hints=1
 
-let g:tern#arguments=["--verbose"]
+"let g:tern#arguments=["--verbose"]
+
+" Use tern_for_vim.with deoplete
+let g:tern#command = ["tern"]
+let g:tern#arguments = ["--persistent"]
 
 autocmd FileType javascript nnoremap gd :TernDef<cr>
 
@@ -618,7 +693,8 @@ autocmd FileType javascript inoremap {<CR>  {<CR>}<C-c><S-o>
 autocmd FileType javascript inoremap [<CR>  [<CR>]<C-c><S-o>
 
 autocmd! BufRead,BufNewFile,BufEnter *.spec.js UltiSnipsAddFiletype javascript-spec
-autocmd! BufRead,BufNewFile,BufEnter *.js UltiSnipsAddFiletype javascript-node javascript.es6
+
+autocmd! BufRead,BufNewFile,BufEnter *.js UltiSnipsAddFiletype javascript-es6
 
 autocmd! BufRead,BufNewFile,BufEnter webpack.config.babel.js UltiSnipsAddFiletype javascript-webpack
 autocmd! BufRead,BufNewFile,BufEnter package.json UltiSnipsAddFiletype javascript-package
@@ -630,6 +706,7 @@ let g:angular_test_directory = 'tests/client'
 
 let g:indentLine_noConcealCursor=1
 let g:indentLine_concealcursor = 'vc'
+let g:indentLine_faster = 1
 
 let g:tagbar_type_javascript = {
     \ 'ctagstype' : 'JavaScript',
@@ -637,12 +714,24 @@ let g:tagbar_type_javascript = {
         \ 'o:objects',
         \ 'f:functions',
         \ 'a:arrays',
+        \ 'v:variable',
         \ 's:strings'
     \ ]
 \ }
 
+" generate ctags
+command! JStags !find . -type f -iregex ".*\.js$" -not -path "./node_modules/*" -exec jsctags {} -f \; | sed '/^$/d' | sort > tags
+
+" this will be usefull in the feature when jsctags has append option
+"autocmd BufWritePost *
+      "\ if filereadable('tags') |
+      "\   call system('ctags -a '.expand('%')) |
+      "\ endif
+
 " JSX
 let g:jsx_ext_required = 0
+
+noremap <leader>ff :JsAnonFnToArrowFn<CR>
 
 " => JSON section {{{
 """""""""""""""""""""""""""""""
@@ -655,6 +744,7 @@ let g:jsx_ext_required = 0
 " => HTML & CSS
 """""""""""""""""""""""""""""""
 let g:syntastic_html_checkers = ['tidy']
+let g:syntastic_less_checkers = ['lessc']
 "let g:user_emmet_expandabbr_key='<C-p>'
 "let g:user_emmet_expandabbr_key='<C-x>'
 
@@ -687,7 +777,17 @@ au BufNewFile,BufRead *.ejs set filetype=html
 "automatically jump to the error when saving the file
 let g:syntastic_auto_jump=0
 
-"let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute \"ng-","<ion-", "</ion-"]
+let g:syntastic_html_tidy_ignore_errors=[
+  \ 'proprietary attribute',
+  \ '<ion-',
+  \ '</ion-',
+  \ '<md-',
+  \ '</md-',
+  \ '<ng-',
+  \ '</ng-',
+  \ '<wb-',
+  \ '</wb-'
+  \ ]
 "allow for ionic html attributes
 let g:syntastic_html_tidy_blocklevel_tags = [
   \'ion-checkbox',
@@ -724,7 +824,11 @@ let g:syntastic_html_tidy_blocklevel_tags = [
   \'md-button',
   \'md-icon',
   \'md-sidenav',
+  \'md-*',
+  \'ng-*',
+  \'wb-*',
   \'webview',
+  \'ui-*',
   \]
 " }}}
 
@@ -746,8 +850,15 @@ au BufRead,BufNewFile *.log set ft=log
 " => Markdown {{{
 """"""""""""""""""""""""""""""
 au BufRead,BufNewFile *.md setlocal spell
+au BufRead,BufNewFile COMMIT_EDITMSG setlocal spell
+let g:vim_markdown_folding_disabled = 1
 " }}}
 
+" => YAML {{{
+""""""""""""""""""""""""""""""
+"autocmd FileType yaml setl indentkeys-=<:>
+" }}}
+"
 " => C++ {{{
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -762,6 +873,13 @@ au BufRead,BufNewFile *.md setlocal spell
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Remove the Windows ^M - when the encodings gets messed up
 noremap <Leader>m mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
+
+func! DeleteTrailingWS()
+  exe "normal mz"
+  %s/\s\+$//ge
+  exe "normal `z"
+endfunc
+noremap <Leader>xt :call DeleteTrailingWS()<CR>
 
 " Remove polish characters
 " %!iconv -f cp1250 -t utf-8
@@ -784,6 +902,8 @@ endif
 nnoremap <silent> <F8> :TagbarToggle<CR>
 
 cmap w!! w !sudo tee % > /dev/null %
+
+
 
 "set autochdir
 

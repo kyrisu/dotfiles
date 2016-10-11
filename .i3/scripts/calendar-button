@@ -1,0 +1,5 @@
+#!/bin/bash
+echo "/uf073-"$(date "+%A, %e. %B, %H:%M")
+if [[ $BLOCK_BUTTON == '1' ]]; then
+        chromium https://www.google.com/calendar
+fi

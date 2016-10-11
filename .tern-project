@@ -1,14 +1,19 @@
 {
+  "ecmaVersion": 6,
   "libs": [
+    "ecma5",
+    "ecma6",
     "browser"
   ],
-  "ecmaVersion": 6,
   "loadEagerly": [],
   "plugins": {
     "node": {},
-    "complete_strings": {},
+    "node-express": {},
+    "angular": {},
+    "webpack": {},
     "es_modules": {},
     "doc_comment": {
+      "fullDocs": true,
       "strong": true
     }
   }

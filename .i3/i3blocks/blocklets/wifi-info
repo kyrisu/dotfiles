@@ -1,0 +1,11 @@
+#!/bin/bash
+
+SSID=`iwconfig wlp2s0 | grep "ESSID" | cut -d ":" -f2`
+FREQ=`iwconfig wlp2s0 | grep Frequency | cut -d 'G' -f1 | cut -d ':' -f3`
+LOCAL_IP=`ifconfig wlp2s0 | grep 'inet' | cut -d ":" -f2 | cut -d "B" -f1`
+
+echo "SSID:" $SSID
+echo "Frequency:    "
+echo $FREQ
+echo "Local IP:     " $LOCAL_IP
+macchanger wlan0 -s

@@ -8,4 +8,8 @@
 /vim/bundle/*
 !/vim/bundle/vundle
 /nvim/bundle/*
+/nvim/dein/*
 !/nvim/bundle/vundle
+__pycache__/
+nvim_working/
+.i3/assets/lock-overlay.png

@@ -1,3 +1,4 @@
+# vim: ft=sh
 xrdb -merge ~/.Xresources
 #source ./.profile
 
@@ -5,9 +6,9 @@ xrdb -merge ~/.Xresources
 #xset +fp /usr/share/fonts/local &
 #xset fp rehash &
 
-# Set some defaults 
-export BROWSER=chrome & 
-export EDITOR=vim &
+# Set some defaults
+export BROWSER=chrome &
+export EDITOR=nvim &
 
 #start-pulseaudio-x11 &
 # set background
@@ -22,11 +23,14 @@ export EDITOR=vim &
 #eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)
 #export SSH_AUTH_SOCK
 
-export `grep ^DBUS_SESSION_BUS ~/.dbus/session-bus/*-0`
+#export `grep ^DBUS_SESSION_BUS ~/.dbus/session-bus/*-0`
 
-lock &
+~/.i3/bin/session lock &
 ~/bin/stick_toggle &
 
 while true; do
-  exec dbus-launch --exit-with-session /usr/bin/i3 2> ~/i3.log
+  #exec dbus-launch --exit-with-session /usr/bin/i3 &> ~/i3.log
+  #exec dbus-launch --exit-with-session /usr/bin/i3 -V -d all >~/i3log-$(date +'%F-%k-%M-%S') 2>&1
+  #exec /usr/bin/i3 -V &> ~/i3.log
+  exec /usr/bin/i3 &> ~/i3.log
 done

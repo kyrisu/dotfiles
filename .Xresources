@@ -1,16 +1,16 @@
-! urxvt
+!! urxvt
 URxvt*buffered:           true
 URxvt*cursorBlink:        true
-URxvt*underlineColor:     yellow
-!URxvt*font:               xft:Source\ Code\ Pro\ Medium:pixelsize=13:antialias=true:hinting=true,xft:Source\ Code\ Pro\ Medium:pixelsize=13:antialias=true:hinting=true
-URxvt*font:               xft:Monaco\ for\ Powerline:pixelsize=13:antialias=true
+!URxvt*underlineColor:     yellow
+!URxvt*font:               xft:Monaco for Powerline:size=11
+URxvt*font:               xft:SauceCodePro Nerd Font:size=11
 URxvt*depth:              32
 URxvt*borderless:         1
 URxvt*scrollBar:          false
 URxvt*loginShell:         true
 Urxvt*secondaryScroll:    true    # Enable Shift-PageUp/Down in screen
 URxvt*saveLines:          5000
-URxvt*termName:           rxvt-unicode
+!URxvt*termName:           rxvt-unicode
 !URxvt*transparent:        true
 URxvt*shading:            10
 URxvt*clipboard.autocopy: true
@@ -23,23 +23,98 @@ URxvt.keysym.C-minus:     perl:font-size:decrease
 URxvt.keysym.C-0:         perl:font-size:reset
 URxvt.keysym.Shift-Insert: perl:clipboard:paste
 
-URxvt.cursorColor: #06989a
-!URxvt.background: #000000  
-URxvt.background: rgba:0000/0000/0200/c800
-URxvt.foreground: #cccccc  
-URxvt.color0:  #000000  
-URxvt.color1:  #cc0000  
-URxvt.color2:  #4E9A06  
-URxvt.color3:  #C4A000  
-URxvt.color4:  #3465A4  
-URxvt.color5:  #75507B  
-URxvt.color6:  #06989A  
-URxvt.color7:  #D3D7CF  
-URxvt.color8:  #555753  
-URxvt.color9:  #EF2929  
-URxvt.color10: #8AE234  
-URxvt.color11: #FCE94F  
-URxvt.color12: #739FCF  
-URxvt.color13: #AD7FA8  
-URxvt.color14: #34E2E2  
-URxvt.color15: #EEEEEC  
+!URxvt.cursorColor: #06989a
+!!URxvt.background: #000000
+!URxvt.background: rgba:0000/0000/0200/eeee
+!URxvt.foreground: #cccccc
+!URxvt.color0:  #000000
+!URxvt.color1:  #cc0000
+!URxvt.color2:  #4E9A06
+!URxvt.color3:  #C4A000
+!URxvt.color4:  #3465A4
+!URxvt.color5:  #75507B
+!URxvt.color6:  #06989A
+!URxvt.color7:  #D3D7CF
+!URxvt.color8:  #555753
+!URxvt.color9:  #EF2929
+!URxvt.color10: #8AE234
+!URxvt.color11: #FCE94F
+!URxvt.color12: #739FCF
+!URxvt.color13: #AD7FA8
+!URxvt.color14: #34E2E2
+!URxvt.color15: #EEEEEC
+
+/*********************************************************************
+ *                              colors                               *
+ *********************************************************************/
+
+! special
+*.foreground:  #c5c8c6
+*.background:  #1d1f21
+*.cursorColor: #c5c8c6
+
+! black
+*.color0:      #282a2e
+*.color8:      #373b41
+
+! red
+*.color1:      #a54242
+*.color9:      #cc6666
+
+! green
+*.color2:      #8c9440
+*.color10:     #b5bd68
+
+! yellow
+*.color3:      #de935f
+*.color11:     #f0c674
+
+! blue
+*.color4:      #5f819d
+*.color12:     #81a2be
+
+! magenta
+*.color5:      #85678f
+*.color13:     #b294bb
+
+! cyan
+*.color6:      #5e8d87
+*.color14:     #8abeb7
+
+! white
+*.color7:      #707880
+*.color15:     #c5c8c6
+
+/*********************************************************************
+ *                               rofi                                *
+ *********************************************************************/
+
+rofi.font:            Inconsolata 11
+rofi.terminal:        urxvt
+rofi.lines:           10
+rofi.columns:         1
+rofi.eh:              2
+rofi.width:           50
+rofi.padding:         0
+rofi.location:        0
+rofi.line-margin:     0
+rofi.fullscreen:      false
+rofi.opacity:         100
+rofi.bw:              0
+rofi.sidebar-mode:    false
+rofi.separator-style: none
+rofi.hide-scrollbar:  true
+rofi.fuzzy:           true
+rofi.color-enabled:   true
+
+#define bg_external argb:bb282828
+#define bg_internal #282828
+#define bg_active   #ab4642
+#define text_normal #d8d8d8
+#define text_active #282828
+
+/* Class           BG           FG           Alt BG       Active BG  Active FG */
+rofi.color-normal: bg_internal, text_normal, bg_internal, bg_active, text_active
+rofi.color-urgent: bg_internal, text_normal, bg_internal, bg_active, text_active
+rofi.color-active: bg_internal, text_normal, bg_internal, bg_active, text_active
+rofi.color-window: bg_external, bg_internal

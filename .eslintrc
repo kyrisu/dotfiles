@@ -1,23 +1,49 @@
 {
-    "parser": "babel-eslint",
-    "extends": "airbnb/base",
-    "env": {
-        "browser": true,
-        "node": true,
-        "mocha": true
-    },
-    "settings": {
-        "ecmascript": 6,
-        "jsx": true
-    },
-    "plugins": [
+  "parser": "babel-eslint",
+  "extends": "airbnb/base",
+  "env": {
+    "browser": true,
+    "node": true,
+    "mocha": true
+  },
+  "settings": {
+    "ecmascript": 6,
+    "jsx": true
+  },
+  "plugins": [
         "react"
     ],
-    "rules": {
-        "strict": 0,
-        "quotes": 0,
-        "no-unused-vars": 0,
-        "camelcase": 0,
-        "no-underscore-dangle": 0
-    }
+  "rules": {
+    "arrow-body-style": ["error", "as-needed"],
+    "camelcase": 0,
+    "comma-dangle": ["error", "only-multiline"],
+    "consistent-return": 0,
+    "default-case": 0,
+    "max-len": 0,
+    "no-param-reassign": ["error", {
+      "props": false
+    }],
+    "no-shadow": ["error", {
+      "allow": ["done", "err", "cb", "res", "req"]
+    }],
+    "no-underscore-dangle": 0,
+    "no-unused-vars": 0,
+    "no-use-before-define": 0,
+    "prefer-arrow-callback": [2, {
+      "allowNamedFunctions": true
+    }],
+    "prefer-template": 0,
+    "quote-props": ["error", "consistent"],
+    "quotes": 0,
+    "strict": 0,
+    "no-plusplus": 0,
+    "import/imports-first": ["warn", "DISABLE-absolute-first"],
+    "class-methods-use-this": "warn",
+    "wrap-iife": ["error", "inside"]
+  },
+  "globals": {
+    "inject": true,
+    "expect": true,
+    "angular": true
+  }
 }

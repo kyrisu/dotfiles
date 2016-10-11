@@ -1,0 +1,66 @@
+#!/bin/sh
+# Session management script for i3.
+
+# Lock screen with i3lock.
+session_lock() {
+	# Suspend notifications while locked.
+	killall -SIGUSR1 dunst
+
+	# Unsuspend notifications on exit.
+	trap 'killall -SIGUSR2 dunst' exit
+
+  # Create blurred-out screenshot of current screen.
+  scrot -z -e 'convert -resize 20% -fill "#222" -colorize 50% -blur 0x1 -resize 500% $f ~/.cache/i3/_i3lock.png' ~/.cache/i3/__i3lock.png
+  convert -gravity center -composite ~/.cache/i3/_i3lock.png ~/.i3/assets/lock-overlay.png ~/.cache/i3/i3lock.png
+
+  # Lock screen.
+  logger "Running i3lock... "
+  pidof i3lock || i3lock -u -i ~/.cache/i3/i3lock.png
+
+  # Remove cached file on exit.
+  trap 'rm ~/.cache/i3/*i3lock.png' EXIT
+}
+
+# Suspend and lock screen.
+session_suspend() {
+	#session_lock
+	systemctl suspend
+}
+
+# Close all running applications and log out.
+session_logout() {
+	i3-msg exit
+}
+
+# Close all running applications and reboot.
+session_reboot() {
+	systemctl reboot
+}
+
+# Close all running applications and power off.
+session_poweroff() {
+	systemctl poweroff -i
+}
+
+ACTION=${1}
+
+case ${ACTION} in
+lock)
+	session_lock
+	;;
+suspend)
+	session_suspend
+	;;
+logout)
+	session_logout
+	;;
+reboot)
+	session_reboot
+	;;
+poweroff)
+	session_poweroff
+	;;
+*)
+	echo 'Unknown command, please use one of the following:'
+	echo "'lock', 'suspend', 'logout', 'reboot', 'poweroff'"
+esac
