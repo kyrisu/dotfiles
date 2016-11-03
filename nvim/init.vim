@@ -57,11 +57,11 @@ call dein#add('milkypostman/vim-togglelist')
 call dein#add('MarcWeber/vim-addon-local-vimrc')
 ""
 """ programming general
+
 call dein#add('SirVer/ultisnips')
 call dein#add('kshenoy/vim-signature')
 call dein#add('terryma/vim-expand-region')
 call dein#add('editorconfig/editorconfig-vim')
-call dein#add('ruanyl/vim-fixmyjs')
 call dein#add('mileszs/ack.vim')
 call dein#add('AndrewRadev/splitjoin.vim')
 call dein#add('wakatime/vim-wakatime')
@@ -95,30 +95,26 @@ call dein#add('tpope/vim-vinegar')
 call dein#add('tpope/vim-fugitive')
 
 " Javascript
-call dein#add('pangloss/vim-javascript', { 'rev': 'develop' })
-call dein#add('mvolkmann/vim-js-arrow-function')
+call dein#add('othree/yajs.vim')
+" call dein#add('pangloss/vim-javascript')
 call dein#add('mxw/vim-jsx')
-"call dein#add('othree/yajs.vim', {'on_ft': 'javascript'})
+" call dein#add('mvolkmann/vim-js-arrow-function')
 "call dein#add('othree/javascript-libraries-syntax.vim', {'on_ft': 'javascript'})
+call dein#add('ruanyl/vim-fixmyjs')
 "call dein#add('heavenshell/vim-jsdoc')
 call dein#add('marijnh/tern_for_vim', {
       \ 'build' : 'npm install; npm i tern-node-express',
       \ 'on_ft': ['javascript', 'javascript.jsx']
       \ })
-call dein#add('othree/jspc.vim', { 'on_ft': [ 'javascript', 'javascript.jsx' ] })
-
-" config files
-call dein#add('kyrisu/vim-mikrotik')
-call dein#add('vim-scripts/openvpn')
 
 " Markdown
-call dein#add('shime/vim-livedown')
-call dein#add('plasticboy/vim-markdown')
+call dein#add('shime/vim-livedown', {'on_ft': 'markdown'})
+call dein#add('plasticboy/vim-markdown', {'on_ft': 'markdown'})
 
 " HTML & CSS
 call dein#add('mustache/vim-mustache-handlebars')
 call dein#add('digitaltoad/vim-pug')
-call dein#add('othree/html5.vim')
+" call dein#add('othree/html5.vim')
 
 call dein#add('mattn/emmet-vim')
 call dein#add('groenewege/vim-less', {'on_ft': 'less'})
@@ -126,7 +122,7 @@ call dein#add('wavded/vim-stylus', {'on_ft': 'stylus'})
 
 " CPP
 "call dein#add('ciaranm/googletest-syntax')
-call dein#add('octol/vim-cpp-enhanced-highlight', {'on_ft': 'stylus'})
+call dein#add('octol/vim-cpp-enhanced-highlight', {'on_ft': 'cpp'})
 
 " Dockerfile
 call dein#add('ekalinin/Dockerfile.vim')
@@ -134,10 +130,11 @@ call dein#add('ekalinin/Dockerfile.vim')
 " config files
 call dein#add('vim-scripts/nginx.vim')
 call dein#add('tmatilai/gitolite.vim')
+call dein#add('kyrisu/vim-mikrotik')
+call dein#add('vim-scripts/openvpn')
+
 
 " syntax
-call dein#add('vim-scripts/confluencewiki.vim')
-call dein#add('lusis/confluence-vim')
 
 " vim
 call dein#add('vim-scripts/vimwiki')
@@ -175,7 +172,7 @@ endtry
 
 " Session
 set ssop-=options
-set ssop-=folds
+" set ssop-=folds
 
 "}}}
 
@@ -187,6 +184,8 @@ set history=700
 " Set to auto read when a file is changed from the outside
 set autoread
 set exrc
+
+set diffopt+=vertical
 
 " With a map leader it's possible to do extra key combinations
 " like <leader>w saves the current file
@@ -219,15 +218,15 @@ let NERDTreeQuitOnOpen=1
 let g:nerdtree_tabs_open_on_gui_startup=0
 
 " CtrlP
-map <c-b> :CtrlPBuffer<CR>
-map <c-/> :CtrlPBufTagAll<CR>
+map <C-b> :CtrlPBuffer<CR>
+map <C-_> :CtrlPBufTagAll<CR>
 map <leader><leader> :CtrlPTag<CR>
 "let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git\|bower_components\|jspm_packages'
 let g:ctrlp_custom_ignore = {
   \ 'dir':  '\v[\/]\.?(node_modules|DS_Store|git|bower_components|jspm_packages|build|dist|logs)$',
   \ 'file': '\v\.(exe|so|dll|o)$'
   \ }
-let g:ctrlp_extensions = ['mru', 'files', 'buf', 'buffertag']
+let g:ctrlp_extensions = ['mru', 'files', 'buffertag', 'buf']
 
 
 set autowrite " autosave on ! and others
@@ -536,19 +535,12 @@ set listchars=tab:›\ ,trail:•,extends:#,nbsp:. " Highlight problematic white
 " deoplete
 let g:deoplete#enable_at_startup = 1
 " let g:deoplete#disable_auto_complete = 1
-if !exists('g:deoplete#omni#input_patterns')
-  let g:deoplete#omni#input_patterns = {}
-endif
+" if !exists('g:deoplete#omni#input_patterns')
+  " let g:deoplete#omni#input_patterns = {}
+" endif
 
-let g:deoplete#sources = {}
-
-let g:deoplete#sources['javascript.jsx'] = ['file', 'ultisnips', 'ternjs']
-
-let g:deoplete#omni#functions = {}
-let g:deoplete#omni#functions.javascript = [
-  \ 'tern#Complete',
-  \ 'jspc#omni'
-\]
+" let g:deoplete#sources = {}
+" let g:deoplete#sources['javascript.jsx'] = ['file', 'ultisnips', 'ternjs']
 
 "autocmd FileType cpp set omnifunc=omni#cpp#complete#Main
 autocmd FileType sql set omnifunc=sqlComplete#CompleteSQL
@@ -560,19 +552,6 @@ autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
 autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
-
-" YCM
-let g:ycm_add_preview_to_completeopt=0
-let g:ycm_global_ycm_extra_conf = '~/.dotfiles/.ycm_extra_conf.py'
-let g:ycm_confirm_extra_conf = 1
-let g:ycm_extra_conf_globlist = ['~/.dotfiles', '~/dev/*']
-let g:ycm_autoclose_preview_window_after_completion = 1
-let g:ycm_server_user_vim_stdout = 1
-let g:ycm_key_list_select_completion = ['<Tab>']
-let g:ycm_key_list_previous_completion = ['<C-Tab>']
-let g:ycm_server_python_interpreter = '/usr/bin/python2'
-"let g:ycm_auto_trigger = 0
-
 
 "let g:SuperTabDefaultCompletionType = '<C-n>'
 "let g:SuperTabDefaultCompletionType = 'context'
@@ -649,8 +628,7 @@ set tags+=./tags
 autocmd Syntax c,cpp,vim,xml,html,xhtml,javascript setlocal foldmethod=syntax
 autocmd Syntax c,cpp,vim,xml,html,xhtml,javascript setlocal foldlevel=2
 
-" set completeopt-=preview
-set completeopt=longest,menuone,preview
+set completeopt=longest,menuone
 
 let g:autoformat_autoindent = 0
 let g:autoformat_retab = 0
@@ -700,6 +678,7 @@ autocmd! BufRead,BufNewFile,BufEnter webpack.config.babel.js UltiSnipsAddFiletyp
 autocmd! BufRead,BufNewFile,BufEnter package.json UltiSnipsAddFiletype javascript-package
 
 autocmd! BufRead,BufNewFile,BufEnter .eslintrc UltiSnipsAddFiletype javascript-eslint
+autocmd! BufRead,BufNewFile,BufEnter .eslintrc setlocal ft=json
 
 let g:angular_source_directory = 'src/client/app'
 let g:angular_test_directory = 'tests/client'
@@ -718,6 +697,8 @@ let g:tagbar_type_javascript = {
         \ 's:strings'
     \ ]
 \ }
+
+let g:webdevicons_enable_ctrlp = 0
 
 " generate ctags
 command! JStags !find . -type f -iregex ".*\.js$" -not -path "./node_modules/*" -exec jsctags {} -f \; | sed '/^$/d' | sort > tags
@@ -743,7 +724,7 @@ noremap <leader>ff :JsAnonFnToArrowFn<CR>
 """"""""""""""""""""""""""""""
 " => HTML & CSS
 """""""""""""""""""""""""""""""
-let g:syntastic_html_checkers = ['tidy']
+let g:syntastic_html_checkers = ['eslint']
 let g:syntastic_less_checkers = ['lessc']
 "let g:user_emmet_expandabbr_key='<C-p>'
 "let g:user_emmet_expandabbr_key='<C-x>'
@@ -885,8 +866,8 @@ noremap <Leader>xt :call DeleteTrailingWS()<CR>
 " %!iconv -f cp1250 -t utf-8
 
 "Quickly open a buffer for scripbble
-map <leader>q :e ~/buffer<cr>
-au BufRead,BufNewFile ~/buffer iab <buffer> xh1 ===========================================
+map <leader>qq :e ~/buffer.wiki<cr>
+au BufRead,BufNewFile ~/buffer.wiki iab <buffer> xh1 ===========================================
 
 map <leader>pp :setlocal paste!<cr>
 

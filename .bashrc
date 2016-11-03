@@ -33,7 +33,7 @@ alias gst='git status'
 
 # node
 . /usr/share/nvm/init-nvm.sh
-export NVM_NODEJS_ORG_MIRROR=http://nodejs.org/dist
+export NVM_NODEJS_ORG_MIRROR=https://nodejs.org/dist
 
 # soft aliases
 

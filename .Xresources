@@ -14,14 +14,19 @@ URxvt*saveLines:          5000
 !URxvt*transparent:        true
 URxvt*shading:            10
 URxvt*clipboard.autocopy: true
-URxvt.perl-ext-common:    default,clipboard,matcher,font-size
-URxvt.url-launcher:       /usr/bin/google-chrome-beta
+URxvt.perl-ext-common:    default,clipboard,font-size,url-select
+URxvt.url-launcher:       /usr/bin/xdg-open
 URxvt.matcher.button:     1
 
 URxvt.keysym.C-equal:     perl:font-size:increase
 URxvt.keysym.C-minus:     perl:font-size:decrease
 URxvt.keysym.C-0:         perl:font-size:reset
 URxvt.keysym.Shift-Insert: perl:clipboard:paste
+
+! URxvt.perl-ext:             default,url-select
+URxvt.keysym.M-u:           perl:url-select:select_next
+URxvt.url-select.launcher:  /usr/bin/xdg-open
+URxvt.url-select.underline: true
 
 !URxvt.cursorColor: #06989a
 !!URxvt.background: #000000

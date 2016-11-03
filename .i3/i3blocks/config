@@ -101,8 +101,15 @@ color=#6c71c4
 
 [separator]
 
+[memory]
+label=
+interval=10
+color=#6c71c4
+
+[separator]
+
 [battery]
-instance=1
+instance=0
 command=~/.i3/i3blocks/scripts/battery
 interval=30
 

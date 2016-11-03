@@ -28,6 +28,7 @@ assign [class="jetbrains-idea-ce"] $WS5
 # Rules for specific window classes
 for_window [class="Connman-gtk"] floating enable
 for_window [class="Pavucontrol"] floating enable
+for_window [class="Linphone"] floating enable
 
 for_window [class="VLC|MPlayer|Skype|xpad|Java|Hamster|Systemadm|Modem-manager-gui|Screengrab|Shutter"] floating enable
 for_window [class="File-roller|Lxappearance|Nitrogen|Arandr|Caffeine|Pavucontrol|emulator64-arm|Transmission-gtk|sublime-text|VirtualBox|Virt-manager"] floating enable
