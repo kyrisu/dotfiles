@@ -1,5 +1,7 @@
 priority 5
 
+extends javascript
+
 snippet const
 const ${1} = ${0};
 endsnippet
@@ -9,7 +11,11 @@ let ${1} = ${0};
 endsnippet
 
 snippet im
-import ${1} from '${0}';
+import ${1} from '${0:$1}';
+endsnippet
+
+snippet imn
+import { ${1} } from '${0}';
 endsnippet
 
 snippet cla
@@ -48,3 +54,43 @@ snippet ${
   ${${1}}${0}
 endsnippet
 
+snippet ctr
+constructor($1) {
+  $0
+}
+endsnippet
+
+
+snippet ##gqlschema
+export default [\`
+  # $2
+  type $1 {
+    id: Int!
+    $3
+  }
+
+  type Query {
+    $4
+  }
+
+  type Mutation {
+    $5
+  }
+
+  schema {
+    query: Query
+    mutation: Mutation
+  }
+\`];
+endsnippet
+
+snippet ##agql
+export const type = [\`
+  # $1
+  type $2
+\`];
+
+export const query = [\`
+  $3
+\`];
+endsnippet

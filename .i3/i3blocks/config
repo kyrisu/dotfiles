@@ -44,13 +44,6 @@ separator_block_width=7
 
 [separator]
 
-[pomodoro]
-label=
-command=~/.i3/i3blocks/scripts/pymodoro
-interval=1
-
-[separator]
-
 [disk-home]
 label=
 command=/usr/lib/i3blocks/disk 1

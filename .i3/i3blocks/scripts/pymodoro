@@ -1,8 +1,0 @@
-#!/bin/bash
-~/bin/pymodoro/pymodoroi3blocks.py
-if [[ $BLOCK_BUTTON == '1' ]]; then
-  touch ~/.pomodoro_session
-fi
-if [[ $BLOCK_BUTTON == '3' ]]; then
-  rm ~/.pomodoro_session
-fi

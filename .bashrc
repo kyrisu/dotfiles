@@ -6,10 +6,14 @@
 [[ $- != *i* ]] && return
 
 export EDITOR=nvim
-export PATH=$PATH:~/bin/:~/bin/android-sdk-linux/tools:~/bin/android-sdk-linux/platform-tools
+export PATH=$PATH:~/bin/:~/.local/bin/:~/bin/android-sdk-linux/tools:~/bin/android-sdk-linux/platform-tools
+
+# METEOR
+export PATH=$PATH:$HOME/.meteor
 
 # java
 #export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel'
+export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=setting'
 
 alias ls='ls --color=auto'
 alias ll='ls -l --color=auto'
@@ -30,6 +34,15 @@ alias dc="docker-compose"
 
 # git aliases
 alias gst='git status'
+
+alias pygjs='pygmentize -f terminal -l js'
+
+# node aliasees
+alias watch_todos="WATCH='\"src/**/*\"' chokidar --silent $WATCH --initial -c \"clear && leasot $WATCH -S --ignore node_modules\""
+
+# utilities
+alias where_am_i="geoiplookup `curl ifconfig.io 2> /dev/null`"
+
 
 # node
 . /usr/share/nvm/init-nvm.sh
@@ -55,6 +68,9 @@ go ()
       ;;
     satrails)
       cd ~/dev/satrails/${2}
+      ;;
+    born)
+      cd ~/dev/BORN/${2}
       ;;
     [\/\.-]*)
       cd $1
@@ -93,23 +109,23 @@ export CATALINA_HOME=/usr/share/tomcat8
 
 . /usr/share/git/completion/git-prompt.sh
 
-export PS1='\[\e[01;30m\]\t`if [ $? = 0 ]; then echo "\[\e[32m\] ✔ "; else echo "\[\e[31m\] ✘ "; fi`\[\e[00;37m\]\u@\h \[\e[01;34m\]\W\e[35m$(__git_ps1 " (%s)")\n\[\e[00;39m\]\$ '
+export PS1='\[\e[2;90m\]\t\e[22m`if [ $? = 0 ]; then echo "\[\e[32m\] ✔ "; else echo "\[\e[31m\] ✘ "; fi`\[\e[00;37m\]\u@\h \[\e[01;34m\]\W\e[35m$(__git_ps1 " (%s)")\n\[\e[00;39m\]\$ '
 
 export ANDROID_HOME=~/bin/android-sdk-linux
 
 # Hook for desk activation
 [ ! -z "$DESK_ENV" ] && source "$DESK_ENV"
 
-## gruvbox console colors
-#~/bin/gruvbox_256palette.sh
-
 export NVM_DIR="/home/kyrisu/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 
+# gruvbox console colors
+~/bin/gruvbox_256palette.sh
+
 # Base16 Shell
 
-BASE16_SHELL=$HOME/.dotfiles/base16-shell/
-[ -n "$PS1" ] && [ -s $BASE16_SHELL/profile_helper.sh ] && eval "$($BASE16_SHELL/profile_helper.sh)"
+# BASE16_SHELL=$HOME/.dotfiles/base16-shell/
+# [ -n "$PS1" ] && [ -s $BASE16_SHELL/profile_helper.sh ] && eval "$($BASE16_SHELL/profile_helper.sh)"
 
 # command not found hook
 [ -r /usr/share/doc/pkgfile/command-not-found.bash ] && . /usr/share/doc/pkgfile/command-not-found.bash
@@ -149,3 +165,10 @@ man() {
     LESS_TERMCAP_us=$(printf "\e[1;32m") \
     man "$@"
 }
+
+export FZF_DEFAULT_COMMAND='ag -Q -g ""'
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+# export WORKON_HOME=~/.virtualenvs
+source /usr/bin/virtualenvwrapper.sh

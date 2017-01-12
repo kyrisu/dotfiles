@@ -48,64 +48,89 @@ call dein#add('Shougo/dein.vim')
 "call dein#add('Shougo/vimshell', { 'rev': '3787e5' })
 
 ""
-call dein#add('ctrlpvim/ctrlp.vim')
+" call dein#add('ctrlpvim/ctrlp.vim')
+call dein#add('junegunn/fzf', {'build': './install --all'} )
+call dein#add('junegunn/fzf.vim')
 call dein#add('scrooloose/nerdtree')
-"call dein#add('morhetz/gruvbox')
-call dein#add('chriskempson/base16-vim')
 call dein#add('junegunn/vim-easy-align')
+call dein#add('airblade/vim-rooter')
+call dein#add('dbakker/vim-projectroot')
 call dein#add('milkypostman/vim-togglelist')
 call dein#add('MarcWeber/vim-addon-local-vimrc')
-""
+
+call dein#add('morhetz/gruvbox')
+" call dein#add('altercation/vim-colors-solarized')
+
 """ programming general
 
 call dein#add('SirVer/ultisnips')
-call dein#add('kshenoy/vim-signature')
-call dein#add('terryma/vim-expand-region')
+call dein#add('kshenoy/vim-signature') " displays markers on the left margin
+call dein#add('terryma/vim-expand-region') " + expands region, _ shrinks it
 call dein#add('editorconfig/editorconfig-vim')
 call dein#add('mileszs/ack.vim')
 call dein#add('AndrewRadev/splitjoin.vim')
 call dein#add('wakatime/vim-wakatime')
 call dein#add('terryma/vim-multiple-cursors')
+call dein#add('kien/rainbow_parentheses.vim')
+call dein#add('vim-scripts/TaskList.vim')
 ""
-call dein#add('airblade/vim-gitgutter')
-call dein#add('Yggdroot/indentLine')
-call dein#add('Raimondi/delimitMate')
+call dein#add('airblade/vim-gitgutter') " places vim +- marks on the left gutter
+call dein#add('Yggdroot/indentLine') " prints vertical indentation lines
+call dein#add('Raimondi/delimitMate') " automatic closing of quotes, brackets etc
+call dein#add('Konfekt/FastFold')
 ""
 call dein#add('honza/vim-snippets')
-call dein#add('scrooloose/nerdcommenter')
-call dein#add('scrooloose/syntastic')
-call dein#add('vasconcelloslf/vim-interestingwords')
-""
+call dein#add('scrooloose/nerdcommenter') " commands for commenting selected text / row
+" call dein#add('scrooloose/syntastic') " syntax checking with plugins
+" call dein#add('neomake/neomake') " async syntax checking
+call dein#add('w0rp/ale') " async linting
+call dein#add('vasconcelloslf/vim-interestingwords') " keyword selection with <leader>k
+
+""" Autocomplete
 call dein#add('Shougo/deoplete.nvim')
+call dein#add('Shougo/echodoc.vim')
 call dein#add('carlitux/deoplete-ternjs',
       \{
       \ 'build': 'npm install -g tern',
       \ 'on_ft': [ 'javascript', 'javascript.jsx' ]
       \})
 
-call dein#add('rhysd/devdocs.vim')
+call dein#add('rhysd/devdocs.vim') " opens devdocs with shift K
 
-call dein#add('Chiel92/vim-autoformat')
+" call dein#add('Chiel92/vim-autoformat')
+call dein#add('maksimr/vim-jsbeautify')
 call dein#add('majutsushi/tagbar')
 call dein#add('vim-airline/vim-airline')
 call dein#add('vim-airline/vim-airline-themes')
 call dein#add('tpope/vim-surround')
-call dein#add('tpope/vim-unimpaired')
-call dein#add('tpope/vim-vinegar')
-call dein#add('tpope/vim-fugitive')
+call dein#add('tpope/vim-unimpaired') " cool bindings that I need to read more about
+call dein#add('tpope/vim-fugitive') " git wrapper
+call dein#add('ervandew/supertab')
 
 " Javascript
-call dein#add('othree/yajs.vim')
-" call dein#add('pangloss/vim-javascript')
-call dein#add('mxw/vim-jsx')
-" call dein#add('mvolkmann/vim-js-arrow-function')
-"call dein#add('othree/javascript-libraries-syntax.vim', {'on_ft': 'javascript'})
-call dein#add('ruanyl/vim-fixmyjs')
-"call dein#add('heavenshell/vim-jsdoc')
+" call dein#add('othree/yajs.vim')
+call dein#add('pangloss/vim-javascript', { 'on_ft': ['javascript', 'javascript.jsx'] })
+call dein#add('mxw/vim-jsx', { 'on_ft': ['javascript', 'javascript.jsx'] })
+" call dein#add('maxmellon/vim-jsx-pretty', { 'on_ft': ['javascript', 'javascript.jsx'] })
+call dein#add('othree/javascript-libraries-syntax.vim', { 'on_ft': ['javascript', 'javascript.jsx'] })
+
+call dein#add('ruanyl/vim-fixmyjs', { 'on_ft': ['javascript', 'javascript.jsx'] })
+call dein#add('heavenshell/vim-jsdoc', { 'on_ft': ['javascript', 'javascript.jsx'] })
 call dein#add('marijnh/tern_for_vim', {
       \ 'build' : 'npm install; npm i tern-node-express',
       \ 'on_ft': ['javascript', 'javascript.jsx']
       \ })
+
+" Typescript
+call dein#add('leafgarland/typescript-vim', { 'on_ft': ['typescript'] })
+call dein#add('Shougo/vimproc.vim', {'build' : 'make'})
+call dein#add('Quramy/tsuquyomi', { 'on_ft': ['typescript'] })
+call dein#add('mhartington/deoplete-typescript', { 'on_ft': [ 'typescript' ] })
+call dein#add('ianks/vim-tsx', { 'on_ft': ['typescript'] })
+" call dein#add('Shougo/unite.vim')
+" call dein#add('mhartington/vim-typings')
+
+call dein#add('jparise/vim-graphql')
 
 " Markdown
 call dein#add('shime/vim-livedown', {'on_ft': 'markdown'})
@@ -114,11 +139,15 @@ call dein#add('plasticboy/vim-markdown', {'on_ft': 'markdown'})
 " HTML & CSS
 call dein#add('mustache/vim-mustache-handlebars')
 call dein#add('digitaltoad/vim-pug')
-" call dein#add('othree/html5.vim')
+call dein#add('ap/vim-css-color', { 'on_ft': ['css', 'less', 'scss', 'stylus'] })
+call dein#add('cakebaker/scss-syntax.vim')
+call dein#add('Valloric/MatchTagAlways')
 
 call dein#add('mattn/emmet-vim')
 call dein#add('groenewege/vim-less', {'on_ft': 'less'})
 call dein#add('wavded/vim-stylus', {'on_ft': 'stylus'})
+
+call dein#add('digitaltoad/vim-pug')
 
 " CPP
 "call dein#add('ciaranm/googletest-syntax')
@@ -133,13 +162,19 @@ call dein#add('tmatilai/gitolite.vim')
 call dein#add('kyrisu/vim-mikrotik')
 call dein#add('vim-scripts/openvpn')
 
+" PYTHON
+call dein#add('davidhalter/jedi-vim', {'on_ft': 'python'})
+call dein#add('zchee/deoplete-jedi', {'on_ft': 'python'})
 
 " syntax
 
 " vim
 call dein#add('vim-scripts/vimwiki')
+call dein#add('Shougo/neco-vim', {'on_ft': 'vim'})
 
 call dein#add('ryanoasis/vim-devicons')
+call dein#add('tiagofumo/vim-nerdtree-syntax-highlight')
+call dein#add('Yabes/vim-complete-commit-type')
 
 " Required:
 call dein#end()
@@ -187,10 +222,6 @@ set exrc
 
 set diffopt+=vertical
 
-" With a map leader it's possible to do extra key combinations
-" like <leader>w saves the current file
-"let mapleader = "\<Space>"
-"let g:mapleader = "\<Space>"
 let mapleader = ","
 let g:mapleader = ","
 
@@ -202,11 +233,15 @@ map <leader>ee :e! ~/.config/nvim/init.vim<cr>
 
 " When vimrc is edited, reload it
 autocmd! bufwritepost init.vim nested source ~/.config/nvim/init.vim
+set inccommand=split
+set noshowmode
 
-" NERDTree
+map <leader>xx :.w !bash<cr>
+" }}}
+
+" NERDTree {{{
 map <C-e> :NERDTreeToggle<CR>:NERDTreeMirror<CR>
 map <leader>e :NERDTreeFind<CR>
-nmap <leader>nt :NERDTreeFind<CR>
 
 let NERDTreeShowBookmarks=1
 let NERDTreeIgnore=['\.\.$', '\.$', '\.pyc', '\~$', '\.swo$', '\.swp$', '\.git', '\.hg', '\.svn', '\.bzr']
@@ -216,20 +251,48 @@ let NERDTreeShowHidden=1
 let NERDTreeKeepTreeInNewTab=1
 let NERDTreeQuitOnOpen=1
 let g:nerdtree_tabs_open_on_gui_startup=0
+" autocmd VimEnter * NERDTree
+" autocmd VimEnter * NERDTreeClose
 
-" CtrlP
-map <C-b> :CtrlPBuffer<CR>
-map <C-_> :CtrlPBufTagAll<CR>
-map <leader><leader> :CtrlPTag<CR>
-"let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git\|bower_components\|jspm_packages'
-let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\v[\/]\.?(node_modules|DS_Store|git|bower_components|jspm_packages|build|dist|logs)$',
-  \ 'file': '\v\.(exe|so|dll|o)$'
-  \ }
-let g:ctrlp_extensions = ['mru', 'files', 'buffertag', 'buf']
+" }}}
 
+" CtrlP {{{
+"
+" map <C-b> :CtrlPBuffer<CR>
+" map <C-_> :CtrlPBufTagAll<CR>
+" map <leader><leader> :CtrlPTag<CR>
+
+" let g:ctrlp_custom_ignore = {
+  " \ 'dir':  '\v[\/]\.?(node_modules|DS_Store|git|bower_components|jspm_packages|build|dist|logs)$',
+  " \ 'file': '\v\.(exe|so|dll|o)$'
+  " \ }
+
+" let g:ctrlp_extensions = ['mru', 'files', 'buffertag', 'buf']
+
+" set autowrite " autosave on ! and others
+" }}}
+
+" FZF {{{
+command! FZFMru call fzf#run({
+\  'source':  v:oldfiles,
+\  'sink':    'e',
+\  'options': '-m -x +s',
+\  'down':    '40%'})
+
+map <C-p> :Files<CR>
+map <C-b> :Buffers<CR>
+map <C-_> :Ag<CR>
+map <C-m> :FZFMru<CR>
 
 set autowrite " autosave on ! and others
+" }}}
+
+" Easy align {{{
+" Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
+vmap <Enter> <Plug>(EasyAlign)
+
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
 " }}}
 
 " => VIM user interface {{{
@@ -285,7 +348,6 @@ set tm=500
 autocmd BufEnter * let &titlestring = 'NVIM ' . expand("%:t")
 set title
 
-"set cul " highlight current line
 " }}}
 
 " => Colors and Fonts {{{
@@ -310,32 +372,20 @@ if has("gui_running")
 else
 endif
 
-" highlight current line
-set cursorline
-
-
 if has ("gui_running")
   set background=dark
 else
   set background=dark
   set t_Co=256
 endif
-"let g:gruvbox_italic=1
-"let g:gruvbox_contrast_dark='medium'
-"colorscheme gruvbox
 
-let g:base16_shell_path="~/.dotfiles/base16-shell/"
-hi Search ctermfg=black
-if filereadable(expand("~/.vimrc_background"))
-  let base16colorspace=256
-  source ~/.vimrc_background
-endif
+let g:gruvbox_contrast_dark='medium'
+let g:gruvbox_contrast_light='hard'
 
-" Popup menu hightLight Group
-"hi Pmenu  guifg=\#000000 guibg=\#F8F8F8 ctermfg=black ctermbg=Lightgray
-"hi PmenuSbar  guifg=\#8A95A7 guibg=\#F8F8F8 gui=NONE ctermfg=darkcyan ctermbg=lightgray cterm=NONE
-"hi PmenuThumb  guifg=\#F8F8F8 guibg=\#8A95A7 gui=NONE ctermfg=lightgray ctermbg=darkcyan cterm=NONE
+colorscheme gruvbox
 
+" let g:hybrid_custom_term_colors = 1
+" colorscheme hybrid
 
 try
   lang en_US
@@ -361,16 +411,6 @@ set wrap "Wrap lines
 
 set list
 
-" Easy align
-" Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
-vmap <Enter> <Plug>(EasyAlign)
-
-" Start interactive EasyAlign for a motion/text object (e.g. gaip)
-nmap ga <Plug>(EasyAlign)
-
-"autocmd FileType javascript vnoremap <buffer>  = :call RangeJsBeautify()<cr>
-"autocmd FileType html vnoremap <buffer> = :call RangeHtmlBeautify()<cr>
-"autocmd FileType css vnoremap <buffer> = :call RangeCSSBeautify()<cr>
 
 " }}}
 
@@ -383,8 +423,7 @@ vnoremap <silent> # :call VisualSearch('b')<CR>
 
 " When you press gv you vimgrep after the selected text
 vnoremap <silent> gv :call VisualSearch('gv')<CR>
-map <leader>g :vimgrep // ./**/*.<left><left><left><left><left><left><left><left><left>
-
+" map <leader>g :vimgrep // ./**/*.<left><left><left><left><left><left><left><left><left>
 
 function! CmdLine(str)
   exe "menu Foo.Bar :" . a:str
@@ -417,15 +456,10 @@ vnoremap < <gv
 vnoremap > >gv
 "}}}
 
-nnoremap * :normal! *``<cr>
-
-vnoremap // y/<C-R>"<CR>``
-
 " => Moving around, tabs and buffers {{{
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Map space to / (search) and c-space to ? (backgwards search)
 nnoremap <silent> <space> :nohlsearch<Bar>:echo<CR>
-map <c-space> ?
 map <silent> <leader><cr> :noh<cr>
 
 " Close the current buffer
@@ -435,11 +469,22 @@ map <leader>c :bp\|bd #<cr>
 " Close all the buffers
 map <leader>ba :NERDTreeClose<bar>bufdo bd<cr>
 
+" Close all the buffers but current
+function! CloseAllBuffersButCurrent()
+  let curr = bufnr("%")
+  let last = bufnr("$")
+
+  if curr > 1    | silent! execute "1,".(curr-1)."bd"     | endif
+  if curr < last | silent! execute (curr+1).",".last."bd" | endif
+endfunction
+
+map <leader>bo :NERDTreeClose <bar> call CloseAllBuffersButCurrent()<cr>
+
 " Use the arrows to something usefull
 map <right> :bn<cr>
 map <left> :bp<cr>
-
-nnoremap <leader>l :ls<CR>:b<space>
+map <S-l> :bn<cr>
+map <S-h> :bp<cr>
 
 "jump to alternative file
 nnoremap <leader>a <C-^>
@@ -487,6 +532,7 @@ set laststatus=2
 let g:airline_theme = 'base16'
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#fnamemod = ':t' " show only filename in the tabline
 "
 
 function! HasPaste()
@@ -534,29 +580,63 @@ set listchars=tab:›\ ,trail:•,extends:#,nbsp:. " Highlight problematic white
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " deoplete
 let g:deoplete#enable_at_startup = 1
+let g:deoplete#file#enable_buffer_path = 1
+
+function! Multiple_cursors_before()
+  let b:deoplete_disable_auto_complete=2
+endfunction
+function! Multiple_cursors_after()
+  let b:deoplete_disable_auto_complete=0
+endfunction
+
+call deoplete#custom#set('buffer', 'mark', 'buffer')
+call deoplete#custom#set('ternjs', 'mark', '')
+call deoplete#custom#set('typescript', 'mark', '')
+call deoplete#custom#set('omni', 'mark', 'omni')
+call deoplete#custom#set('file', 'mark', 'file')
+
+function! Preview_func()
+  if &pvw
+    setlocal nonumber norelativenumber
+  endif
+endfunction
+autocmd WinEnter * call Preview_func()
+
+autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
+autocmd InsertLeave * if pumvisible() == 0|pclose|endif
+
 " let g:deoplete#disable_auto_complete = 1
 " if !exists('g:deoplete#omni#input_patterns')
   " let g:deoplete#omni#input_patterns = {}
 " endif
 
+" let g:deoplete#omni#input_patterns.typescript = '[^. *\t]\.\w*'
+
+" let g:deoplete#omni#functions = {}
+" let g:deoplete#omni#functions.javascript = [
+  " \ 'tern#Complete',
+  " \ 'jspc#omni'
+  " \]
+
 " let g:deoplete#sources = {}
-" let g:deoplete#sources['javascript.jsx'] = ['file', 'ultisnips', 'ternjs']
+" let g:deoplete#sources['javascript'] = ['file', 'ultisnips', 'omni']
+" let g:deoplete#sources['javascript.jsx'] = ['file', 'ultisnips', 'omni']
 
 "autocmd FileType cpp set omnifunc=omni#cpp#complete#Main
 autocmd FileType sql set omnifunc=sqlComplete#CompleteSQL
 autocmd FileType python set omnifunc=pythoncomplete#Complete
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
 autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-autocmd FileType javascript setlocal omnifunc=tern#Complete
+autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType typescript setlocal omnifunc=tsuquyomi#complete
 autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
 autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
 
-"let g:SuperTabDefaultCompletionType = '<C-n>'
+let g:SuperTabDefaultCompletionType = '<C-n>'
+let g:SuperTabClosePreviewOnPopupClose = 1
 "let g:SuperTabDefaultCompletionType = 'context'
-
-"let g:EclimCompletionMethod = 'omnifunc'
 
 " better key bindings for UltiSnipsExpandTrigger
 "let g:UltiSnipsExpandTrigger = "<C-k>"
@@ -568,8 +648,6 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_java_javac_config_file_enabled=1
 
 let g:UltiSnipsSnippetDirectories=[$HOME.'/.dotfiles/nvim/UltiSnips', $HOME.'/.dotfiles/nvim/bundle/vim-snippets/UltiSnips']
-"let g:UltiSnipsSnippetDirectories=[$HOME.'/.dotfiles/nvim/bundle/vim-snippets/UltiSnips']
-"let g:UltiSnipsUsePythonVersion = 2
 
 function! Neoj()
     if pumvisible() == 1
@@ -606,7 +684,8 @@ function! NeoCR()
     endif
   else
     return "\<CR>"
-  endfunction
+  endif
+endfunction
 
 let g:UltiSnipsJumpForwardTrigger = "<nop>"
 let g:UltiSnipsJumpBackwardTrigger = "<nop>"
@@ -625,38 +704,57 @@ set tags+=./tags
 
 " => Programming general section {{{
 """""""""""""""""""""""""""""""
-autocmd Syntax c,cpp,vim,xml,html,xhtml,javascript setlocal foldmethod=syntax
-autocmd Syntax c,cpp,vim,xml,html,xhtml,javascript setlocal foldlevel=2
+" autocmd Syntax c,cpp,vim,xml,html,xhtml,javascript setlocal foldmethod=syntax
+" autocmd Syntax c,cpp,vim,xml,html,xhtml,javascript setlocal foldlevel=2
+
+
+autocmd FileType javascript,html,css,scss,typescript setlocal foldlevel=99
+autocmd FileType javascript,typescript,css,scss,json setlocal foldmethod=marker
+autocmd FileType javascript,typescript,css,scss,json setlocal foldmarker={,}
+autocmd FileType javascript,typescript,css,scss,json EchoDocEnable
 
 set completeopt=longest,menuone
+set splitbelow
 
-let g:autoformat_autoindent = 0
-let g:autoformat_retab = 0
-let g:autoformat_remove_trailing_spaces = 0
+" let g:autoformat_autoindent = 0
+" let g:autoformat_retab = 0
+" let g:autoformat_remove_trailing_spaces = 0
 "let g:formatdef_jsbeautify_javascript = '"js-beautify"'
 
 nmap K <Plug>(devdocs-under-cursor)
 
-let g:NERDSpaceDelims = 1
-let g:NERDCompactSexyComs = 1
+let g:syntastic_aggregate_errors = 1
 
+" autocmd BufWritePost * Neomake
+
+let g:NERDSpaceDelims = 1
+" let g:NERDCompactSexyComs = 1
+"
+let g:ale_linters = {
+\   'typescript': ['tslint'],
+\}
+" Asynchronous Lint Engine
+let g:ale_sign_error = '✖✖'
+let g:ale_sigin_warning = '⚠⚠'
+" nmap <silent> <C-k> <Plug>(ale_previous_wrap)
+" nmap <silent> <C-j> <Plug>(ale_next_wrap)
 " }}}
 
 " => JavaScript section {{{
 """""""""""""""""""""""""""""""
-"let g:syntastic_javascript_checkers = ['jshint', 'jscs']
 let g:syntastic_javascript_checkers = ['eslint']
+" let g:neomake_javascript_enabled_makers = ['eslint']
 map <leader>nn :!node %<CR>
 map <leader>nm :!mocha %<CR>
 
-"let g:used_javascript_libs = 'underscore,angularjs,angularui,jquery,handlebars,chai,react,flux,jasmine'
+let g:used_javascript_libs = ''
 "let g:used_javascript_libs = 'underscore,angularjs,handlebars'
 
 let g:tern_show_argument_hints='on_hold'
+"let g:tern_show_argument_hints=1
 let g:tern_show_signature_in_pum=1
 let g:tern_map_keys=1
 let g:tern_map_prefix='<leader>'
-"let g:tern_show_argument_hints=1
 
 "let g:tern#arguments=["--verbose"]
 
@@ -673,12 +771,14 @@ autocmd FileType javascript inoremap [<CR>  [<CR>]<C-c><S-o>
 autocmd! BufRead,BufNewFile,BufEnter *.spec.js UltiSnipsAddFiletype javascript-spec
 
 autocmd! BufRead,BufNewFile,BufEnter *.js UltiSnipsAddFiletype javascript-es6
+autocmd! BufRead,BufNewFile,BufEnter *.ts UltiSnipsAddFiletype javascript javascript-es6
 
 autocmd! BufRead,BufNewFile,BufEnter webpack.config.babel.js UltiSnipsAddFiletype javascript-webpack
 autocmd! BufRead,BufNewFile,BufEnter package.json UltiSnipsAddFiletype javascript-package
 
 autocmd! BufRead,BufNewFile,BufEnter .eslintrc UltiSnipsAddFiletype javascript-eslint
 autocmd! BufRead,BufNewFile,BufEnter .eslintrc setlocal ft=json
+autocmd! BufRead,BufNewFile,BufEnter .babelrc setlocal ft=json
 
 let g:angular_source_directory = 'src/client/app'
 let g:angular_test_directory = 'tests/client'
@@ -711,8 +811,11 @@ command! JStags !find . -type f -iregex ".*\.js$" -not -path "./node_modules/*" 
 
 " JSX
 let g:jsx_ext_required = 0
+let g:xml_syntax_folding = 0
+autocmd FileType javascript.jsx UltiSnipsAddFiletype javascript-react
 
-noremap <leader>ff :JsAnonFnToArrowFn<CR>
+autocmd FileType javascript vnoremap <buffer>  <leader>ff :call JsBeautify()<cr>
+autocmd FileType javascript vnoremap <buffer>  <leader>ff :call RangeJsBeautify()<cr>
 
 " => JSON section {{{
 """""""""""""""""""""""""""""""
@@ -726,8 +829,7 @@ noremap <leader>ff :JsAnonFnToArrowFn<CR>
 """""""""""""""""""""""""""""""
 let g:syntastic_html_checkers = ['eslint']
 let g:syntastic_less_checkers = ['lessc']
-"let g:user_emmet_expandabbr_key='<C-p>'
-"let g:user_emmet_expandabbr_key='<C-x>'
+let g:syntastic_scss_checkers = ['sass_lint']
 
 function! Expander()
   let line   = getline(".")
@@ -751,6 +853,53 @@ inoremap <expr> <CR> Expander()
 
 au BufNewFile,BufRead *.ejs set filetype=html
 
+" }}}
+
+
+" => Typescript section {{{
+"""""""""""""""""""""""""""""""
+" let g:syntastic_typescript_checkers = ['tsuquyomi']
+" let g:syntastic_typescript_checkers = ['tsc', 'tslint']
+" let g:neomake_typescript_enabled_makers = ['tsc', 'tslint']
+" let g:neomake_typescript_enabled_makers = []
+
+"function! neomake#makers#ft#typescript#tsc() abort
+"    " tsc should not be passed a single file.  Changing to the file's dir will
+"    " make it look upwards for a tsconfig.json file.
+"    return {
+"        \ 'args': ['--noEmit', '--jsx', 'react'],
+"        \ 'append_file': 0,
+"        \ 'errorformat':
+"            \ '%E%f %#(%l\,%c): error %m,' .
+"            \ '%E%f %#(%l\,%c): %m,' .
+"            \ '%Eerror %m,' .
+"            \ '%C%\s%\+%m'
+"        \ }
+"        " \ 'append_file': 0,
+"" \ 'cwd': projectroot#guess(),
+"" \ 'cwd': getcwd(),
+"endfunction
+"
+"function! neomake#makers#ft#tsx#tsc() abort
+"    " tsc should not be passed a single file.  Changing to the file's dir will
+"    " make it look upwards for a tsconfig.json file.
+"    return {
+"        \ 'args': ['--noEmit', '--jsx', 'react'],
+"        \ 'append_file': 0,
+"        \ 'errorformat':
+"            \ '%E%f %#(%l\,%c): error %m,' .
+"            \ '%E%f %#(%l\,%c): %m,' .
+"            \ '%Eerror %m,' .
+"            \ '%C%\s%\+%m'
+"        \ }
+"endfunction
+
+" let g:tsuquyomi_completion_preview = 1
+let g:tsuquyomi_single_quote_import = 1
+let g:tsuquyomi_disable_quickfix = 1
+" autocmd FileType typescript nnoremap gd :TsuDefinition<CR>
+" autocmd FileType typescript nnoremap gr :TsuReferences<CR>
+" autocmd FileType typescript nmap <buffer> <Leader>t : <C-u>echo tsuquyomi#hint()<CR>
 " }}}
 
 " => Ionic Framework section {{{
@@ -815,7 +964,7 @@ let g:syntastic_html_tidy_blocklevel_tags = [
 
 " => Vim grep {{{
 """"""""""""""""""""""""""""""
-let Grep_Skip_Dirs = 'RCS CVS SCCS .svn generated'
+let Grep_Skip_Dirs = 'RCS CVS SCCS .svn generated .git'
 set grepprg=/bin/grep\ -nH
 
 " }}}
@@ -846,7 +995,7 @@ let g:vim_markdown_folding_disabled = 1
 "nmap <leader>t :!make test<cr>
 "set makeprg=g++
 
-"let g:syntastic_cpp_checkers = ['gcc']
+let g:syntastic_cpp_checkers = ['gcc']
 
 "}}}
 
@@ -881,12 +1030,12 @@ elseif LINUX()
 endif
 
 nnoremap <silent> <F8> :TagbarToggle<CR>
+map <F3> "zyiw:exe "h ".@z.""<CR>
 
 cmap w!! w !sudo tee % > /dev/null %
 
-
-
-"set autochdir
+" set autochdir
+" autocmd BufEnter * if &ft !~ '^nerdtree$' | silent! lcd %:p:h | endif
 
 "}}}
 

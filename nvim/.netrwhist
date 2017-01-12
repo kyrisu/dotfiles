@@ -1,3 +1,11 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =1
+let g:netrw_dirhist_cnt =9
 let g:netrw_dirhist_1='/home/kyrisu/dev/satrails_nginx-config'
+let g:netrw_dirhist_2='/home/kyrisu/dev/toptal_project_timetracker'
+let g:netrw_dirhist_3='/home/kyrisu'
+let g:netrw_dirhist_4='/home/kyrisu/Templates'
+let g:netrw_dirhist_5='/home/kyrisu/dev/toptal_project_timetracker'
+let g:netrw_dirhist_6='/home/kyrisu/dev/toptal_project_timetracker/.git'
+let g:netrw_dirhist_7='/home/kyrisu/dev/toptal_project_timetracker/.git/objects'
+let g:netrw_dirhist_8='/home/kyrisu/dev/toptal_project_timetracker/.git'
+let g:netrw_dirhist_9='/home/kyrisu/dev/toptal_project_timetracker'

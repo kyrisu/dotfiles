@@ -9,3 +9,5 @@
 	tool = meld
 [mergetool]
 	keepBackup = false
+[alias]
+	whatadded = log --diff-filter=A
