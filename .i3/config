@@ -21,16 +21,17 @@ set $WS8 8
 set $WS9 9
 
 # Workspace assignments for applications
-assign [class="Wync|Sky"] $WS6
+assign [class="Wync|Sky|skypeforlinux"] $WS6
 assign [class="Thunderbird"] $WS7
 assign [class="jetbrains-idea-ce"] $WS5
+assign [class="Slack"] $WS10
 
 # Rules for specific window classes
 for_window [class="Connman-gtk"] floating enable
 for_window [class="Pavucontrol"] floating enable
 for_window [class="Linphone"] floating enable
 
-for_window [class="Vlc|VLSub 0.9|MPlayer|Skype|xpad|Java|Hamster|Systemadm|Modem-manager-gui|Screengrab|Shutter"] floating enable
+for_window [class="Vlc|VLSub 0.9|MPlayer|Peek|Gtk-recordMyDesktop|Skype|xpad|Java|Hamster|Systemadm|Modem-manager-gui|Screengrab|Shutter"] floating enable
 for_window [class="File-roller|Lxappearance|Nitrogen|Arandr|Caffeine|Pavucontrol|emulator64-arm|Transmission-gtk|sublime-text|VirtualBox|Virt-manager"] floating enable
 for_window [instance="wync|sky|TeamViewer.exe"] floating enable
 for_window [title="Preferences|Xfce-notifyd|TrueCrypt|Catfish|Google Keep|irssi|Xarchiver|Wync|Unetbootin"] floating enable
@@ -141,6 +142,11 @@ bindsym $mod+Shift+8 move container to workspace $WS8
 bindsym $mod+Shift+9 move container to workspace $WS9
 bindsym $mod+Shift+0 move container to workspace $WS10
 
+# Move workspace between monitors
+bindsym $mod+Shift+Right move workspace to output right
+bindsym $mod+Shift+Left move workspace to output right
+
+
 # Window manager
 bindsym $mod+w             exec "rofi -show window"
 bindsym $mod+q             kill
@@ -227,6 +233,7 @@ mode $session {
 bar {
     output eDP1
     output DP1
+    output HDMI2
 
     tray_output eDP1
 
@@ -234,15 +241,11 @@ bar {
     position top
 
     font pango:Inconsolata, i3cons 10
-    #separator_symbol " • "
-    #separator_symbol "〈"
 
     workspace_buttons yes
     binding_mode_indicator yes
     strip_workspace_numbers yes
 
-    #status_command "~/.i3/bin/statusbar player cpu memory network battery volume clock"
-    #status_command ~/.i3/conky
     status_command i3blocks -c ~/.i3/i3blocks/config
 
     colors {

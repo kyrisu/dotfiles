@@ -1,0 +1,60 @@
+" Set main configuration directory, and where cache is stored.
+let $VIMPATH = fnamemodify(resolve(expand('<sfile>:p')), ':h:h')
+let $VARPATH = expand(($XDG_CACHE_HOME ? $XDG_CACHE_HOME : '~/.cache').'/vim')
+
+" Ensure cache directory "{{{
+if ! isdirectory(expand($VARPATH))
+  " Create missing dirs i.e. cache/{undo,backup}
+  call mkdir(expand('$VARPATH/undo'), 'p')
+  call mkdir(expand('$VARPATH/backup'))
+endif
+
+" }}}
+
+function! s:source_file(path, ...) abort "{{{
+  let use_global = get(a:000, 0, ! has('vim_starting'))
+  let abspath = resolve(expand($VIMPATH.'/config/'.a:path))
+  if ! use_global
+    execute 'source' fnameescape(abspath)
+    return
+  endif
+
+  let content = map(readfile(abspath),
+        \ "substitute(v:val, '^\\W*\\zsset\\ze\\W', 'setglobal', '')")
+  let tempfile = tempname()
+  try
+    call writefile(content, tempfile)
+    execute printf('source %s', fnameescape(tempfile))
+  finally
+    if filereadable(tempfile)
+      call delete(tempfile)
+    endif
+  endtry
+endfunction "}}}
+
+" Set augroup
+augroup MyAutoCmd
+	autocmd!
+	autocmd CursorHold *? syntax sync minlines=300
+augroup END
+
+" Initialize base requirements
+if has('vim_starting')
+  call s:source_file('init.vim')
+  if has('nvim')
+    call s:source_file('neovim.vim')
+  endif
+endif
+
+call s:source_file('plugins.vim')
+
+" Loading configuration modules {{{
+call s:source_file('general.vim')
+"call s:source_file('terminal.vim')
+call s:source_file('filetype.vim')
+"call s:source_file('mappings.vim')
+"call s:source_file('theme.vim')
+" }}}
+
+set secure
+" vim: set ts=2 sw=2 tw=80 noet :

@@ -12,8 +12,8 @@ export PATH=$PATH:~/bin/:~/.local/bin/:~/bin/android-sdk-linux/tools:~/bin/andro
 export PATH=$PATH:$HOME/.meteor
 
 # java
-#export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel'
-export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=setting'
+export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel'
+#export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on'
 
 alias ls='ls --color=auto'
 alias ll='ls -l --color=auto'
@@ -37,21 +37,17 @@ alias gst='git status'
 
 alias pygjs='pygmentize -f terminal -l js'
 
+alias server='python -m SimpleHTTPServer'
+
 # node aliasees
 alias watch_todos="WATCH='\"src/**/*\"' chokidar --silent $WATCH --initial -c \"clear && leasot $WATCH -S --ignore node_modules\""
 
 # utilities
 alias where_am_i="geoiplookup `curl ifconfig.io 2> /dev/null`"
 
-
-# node
-. /usr/share/nvm/init-nvm.sh
-export NVM_NODEJS_ORG_MIRROR=https://nodejs.org/dist
-
 # soft aliases
 
 #export TERM=urxvtc
-
 
 go ()
 {
@@ -86,28 +82,18 @@ go ()
   fi
 }
 
-[ -r /usr/share/bash-completion/bash_completion   ] && . /usr/share/bash-completion/bash_completion
-
 # completions
-if [ -f /usr/share/git/completion/git-completion.bash ]; then
-  . /usr/share/git/completion/git-completion.bash
-fi
+[ -r /usr/share/bash-completion/bash_completion   ] && . /usr/share/bash-completion/bash_completion
+[ -f /usr/share/git/completion/git-completion.bash ] && . /usr/share/git/completion/git-completion.bash
+[ -f /usr/share/git/completion/git-prompt.sh ] && . /usr/share/git/completion/git-prompt.sh
+[ -f ~/.dotfiles/completions/purevpn.sh ] && . ~/.dotfiles/completions/purevpn.sh
+[ -f /usr/share/bash-completion/completions/docker-compose ] && . /usr/share/bash-completion/completions/docker-compose
 
-if [ -f ~/.dotfiles/completions/purevpn.sh ]; then
-  . ~/.dotfiles/completions/purevpn.sh
-fi
-
-# docker-compose completions
-. /usr/share/bash-completion/completions/docker-compose
 complete -F _docker_compose dc
 
 #PATH="$(ruby -e 'print Gem.user_dir')/bin:$PATH"
 
-export CATALINA_HOME=/usr/share/tomcat8
-
-#export UA_FOLDER=/home/kyrisu/dev/Algotech/unifiedagent/unifiedagent_java/src/main/java
-
-. /usr/share/git/completion/git-prompt.sh
+#export CATALINA_HOME=/usr/share/tomcat8
 
 export PS1='\[\e[2;90m\]\t\e[22m`if [ $? = 0 ]; then echo "\[\e[32m\] ✔ "; else echo "\[\e[31m\] ✘ "; fi`\[\e[00;37m\]\u@\h \[\e[01;34m\]\W\e[35m$(__git_ps1 " (%s)")\n\[\e[00;39m\]\$ '
 
@@ -116,16 +102,14 @@ export ANDROID_HOME=~/bin/android-sdk-linux
 # Hook for desk activation
 [ ! -z "$DESK_ENV" ] && source "$DESK_ENV"
 
+# node
+. /usr/share/nvm/init-nvm.sh
+export NVM_NODEJS_ORG_MIRROR=https://nodejs.org/dist
 export NVM_DIR="/home/kyrisu/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+
 
 # gruvbox console colors
 ~/bin/gruvbox_256palette.sh
-
-# Base16 Shell
-
-# BASE16_SHELL=$HOME/.dotfiles/base16-shell/
-# [ -n "$PS1" ] && [ -s $BASE16_SHELL/profile_helper.sh ] && eval "$($BASE16_SHELL/profile_helper.sh)"
 
 # command not found hook
 [ -r /usr/share/doc/pkgfile/command-not-found.bash ] && . /usr/share/doc/pkgfile/command-not-found.bash
@@ -148,12 +132,6 @@ shopt -s lithist
 # get help for command pressing ALT+h
 bind '"\eh": "\C-a\eb\ed\C-y\e#man \C-y\C-m\C-p\C-p\C-a\C-d\C-e"'
 
-# forget the last history entry
-function forget() {
-  history -d $(expr $(history | tail -n 1 | grep -oP '^\s+\d+') - 1);
-}
-
-
 man() {
   env \
     LESS_TERMCAP_mb=$(printf "\e[1;31m") \
@@ -171,4 +149,4 @@ export FZF_DEFAULT_COMMAND='ag -Q -g ""'
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
 # export WORKON_HOME=~/.virtualenvs
-source /usr/bin/virtualenvwrapper.sh
+# source /usr/bin/virtualenvwrapper.sh

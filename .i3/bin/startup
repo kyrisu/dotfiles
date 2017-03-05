@@ -28,7 +28,8 @@ dunst -config ~/.i3/dunstrc &
 # Set default background via 'feh'.
 #feh --no-fehbg --bg-fill --no-xinerama ~/pictures/arch_01.jpg
 # feh --no-fehbg --bg-fill --no-xinerama ~/pictures/wallpapers/solar_system.jpg
-feh --no-fehbg --bg-fill ~/pictures/wallpapers/solar_system.jpg
+# feh --no-fehbg --bg-fill ~/pictures/wallpapers/solar_system.jpg
+feh --no-fehbg --bg-fill ~/pictures/wallpapers/gigant.png
 
 #gnome-keyring-daemon &
 
