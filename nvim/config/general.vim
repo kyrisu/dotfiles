@@ -12,7 +12,13 @@ set path=.,**                " Directories to search when using gf
 set virtualedit=block        " Position cursor anywhere in visual block
 set synmaxcol=1000           " Don't syntax highlight long lines
 set formatoptions+=1         " Don't break lines after a one-letter word
-set formatoptions-=t         " Don't auto-wrap text
+"set formatoptions-=t         " Don't auto-wrap text
+
+" No sound on errors
+"set noerrorbells
+"set novisualbell
+"set t_vb=
+"set tm=500
 
 " What to save for views:
 set viewoptions-=options
@@ -68,7 +74,6 @@ let g:nerdtree_tabs_open_on_gui_startup=0
 
 " }}}
 
-" }}}
 " Wildmenu {{{
 " --------
 if has('wildmenu')
@@ -77,7 +82,7 @@ if has('wildmenu')
 	set wildoptions=tagfile
 	set wildignorecase
 	set wildignore+=.git,.hg,.svn,.stversions,*.pyc,*.spl,*.o,*.out,*~,%*
-	set wildignore+=*.jpg,*.jpeg,*.png,*.gif,*.zip,**/tmp/**,*.DS_Store
+	set wildignore+=*.jpg,*.jpeg,*.png,*.gif,*.zip,*.DS_Store
 	set wildignore+=**/node_modules/**,**/bower_modules/**,*/.sass-cache/*
 	set wildignore+=__pycache__,*.egg-info
 endif
@@ -94,7 +99,7 @@ command! FZFMru call fzf#run({
 map <C-p> :Files<CR>
 map <C-b> :Buffers<CR>
 map <C-_> :Ag<CR>
-map <C-m> :FZFMru<CR>
+"map <C-m> :FZFMru<CR>
 
 set autowrite " autosave on ! and others
 " }}}
@@ -155,12 +160,6 @@ autocmd FocusGained * call ToggleRelativeOn()
 autocmd InsertEnter * call ToggleNumbersOn()
 autocmd InsertLeave * call ToggleRelativeOn()
 
-" No sound on errors
-set noerrorbells
-set novisualbell
-set t_vb=
-set tm=500
-
 autocmd BufEnter * let &titlestring = 'NVIM ' . expand("%:t")
 set title
 
@@ -169,14 +168,14 @@ set title
 " }}}
 " Behavior {{{
 " --------
-set nowrap                      " No wrap by default
+"set nowrap                      " No wrap by default
 set linebreak                   " Break long lines at 'breakat'
 set breakat=\ \	;:,!?           " Long lines break chars
 set nostartofline               " Cursor in same column for few commands
 set whichwrap+=h,l,<,>,[,],~    " Move to following line on certain keys
-set splitbelow splitright       " Splits open bottom right
+"set splitbelow splitright       " Splits open bottom right
 set switchbuf=useopen,usetab    " Jump to the first open window in any tab
-set switchbuf+=vsplit           " Switch buffer behavior to vsplit
+"set switchbuf+=vsplit           " Switch buffer behavior to vsplit
 set backspace=indent,eol,start  " Intuitive backspacing in insert mode
 set diffopt=filler,iwhite       " Diff mode: show fillers, ignore white
 set showfulltag                 " Show tag and tidy search in completion
@@ -221,10 +220,29 @@ set noequalalways       " Don't resize windows on split or close
 set laststatus=2        " Always show a status line
 set display=lastline
 
-" Highlight the 81st column
-highlight ColorColumn ctermbg=magenta
-call matchadd('ColorColumn', '\%81v', 100)
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"====[ Show when lines extend past column 80 ]=================================>-<=====================
+" copied from great config of Damian Conway found here: https://github.com/thoughtstream/Damian-Conway-s-Vim-Setup
+
+highlight ColorColumn ctermfg=208 ctermbg=Black
+
+function! MarkMargin (on)
+    if exists('b:MarkMargin')
+        try
+            call matchdelete(b:MarkMargin)
+        catch /./
+        endtry
+        unlet b:MarkMargin
+    endif
+    if a:on
+        let b:MarkMargin = matchadd('ColorColumn', '\%81v\s*\S', 100)
+    endif
+endfunction
+
+augroup MarkMargin
+    autocmd!
+    autocmd  BufEnter  *       :call MarkMargin(1)
+    autocmd  BufEnter  *.vp*   :call MarkMargin(0)
+augroup END
 
 " Do not display completion messages
 " Patch: https://groups.google.com/forum/#!topic/vim_dev/WeBBjkXE8H8
@@ -236,12 +254,6 @@ endif
 if has('patch-7.4.1570')
 	set shortmess+=F
 endif
-
-" For snippet_complete marker
-if has('conceal') && v:version >= 703
-  set conceallevel=2 concealcursor=niv
-endif
-
 " }}}
 
 " => Colors and Fonts {{{
@@ -275,7 +287,7 @@ else
   set t_Co=256
 endif
 
-let g:gruvbox_contrast_dark='medium'
+let g:gruvbox_contrast_dark='hard'
 let g:gruvbox_contrast_light='hard'
 
 colorscheme gruvbox
@@ -687,6 +699,7 @@ autocmd FileType javascript,typescript,css,scss,json setlocal foldmarker={,}
 let g:syntastic_javascript_checkers = ['eslint']
 " let g:neomake_javascript_enabled_makers = ['eslint']
 map <leader>nn :!node %<CR>
+map <leader>nb :!babel-node %<CR>
 map <leader>nm :!mocha %<CR>
 
 " vim-javascript options
@@ -702,10 +715,10 @@ let g:jsdoc_enable_es6 = 1
 let g:used_javascript_libs = ''
 "let g:used_javascript_libs = 'underscore,angularjs,handlebars'
 
-let g:tern_show_argument_hints='on_hold'
+"let g:tern_show_argument_hints='no'
 let g:tern_request_timeout = 1
 "let g:tern_show_argument_hints=1
-let g:tern_show_signature_in_pum=1
+let g:tern_show_signature_in_pum = '0'
 let g:tern_map_keys=1
 let g:tern_map_prefix='<leader>'
 
@@ -765,7 +778,7 @@ autocmd FileType javascript vnoremap <buffer>  <leader>ff :call RangeJsBeautify(
 """""""""""""""""""""""""""""""
 "autocmd FileType json set conceallevel=0
 "autocmd BufNewFile,BufRead,FileReadPre *.json set conceallevel=0
-"let g:indentLine_conceallevel = 0
+let g:indentLine_conceallevel = 0
 "}}}
 
 """"""""""""""""""""""""""""""

@@ -14,6 +14,8 @@ augroup filetypedetect " {{{
 	autocmd BufNewFile,BufRead .eslintrc setf json
 	autocmd BufNewFile,BufRead .babelrc setf json
 
+	autocmd BufNewFile,BufRead *.csv,*.dat setf csv
+
 augroup END " }}}
 
 " vim: set ts=2 sw=2 tw=80 noet :

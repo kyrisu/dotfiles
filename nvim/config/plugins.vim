@@ -3,6 +3,8 @@
 " Specify a directory for plugins (for Neovim: ~/.local/share/nvim/plugged)
 call plug#begin('~/.local/share/nvim/plugged')
 
+let g:plug_window = 'new'
+
 Plug 'junegunn/fzf', {'do': './install --all'}
 Plug 'junegunn/fzf.vim'
 Plug 'scrooloose/nerdtree'
@@ -37,9 +39,6 @@ Plug 'Shougo/echodoc.vim'
 
 """ Autocomplete
 Plug 'Shougo/deoplete.nvim'
-
-Plug 'maksimr/vim-jsbeautify'
-Plug 'majutsushi/tagbar'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'tpope/vim-surround'
@@ -53,6 +52,7 @@ Plug 'othree/javascript-libraries-syntax.vim', { 'for': ['javascript', 'javascri
 
 Plug 'ruanyl/vim-fixmyjs', { 'for': ['javascript', 'javascript.jsx'] }
 Plug 'heavenshell/vim-jsdoc', { 'for': ['javascript', 'javascript.jsx'] }
+
 Plug 'marijnh/tern_for_vim', {
       \ 'do' : 'npm install; npm i tern-node-express',
       \ 'for': ['javascript', 'javascript.jsx']
@@ -65,12 +65,9 @@ Plug 'carlitux/deoplete-ternjs',
 
 " Typescript
 Plug 'leafgarland/typescript-vim', { 'for': ['typescript'] }
-Plug 'Shougo/vimproc.vim', {'do' : 'make'}
-Plug 'Quramy/tsuquyomi', { 'for': ['typescript'] }
 Plug 'mhartington/deoplete-typescript', { 'for': [ 'typescript' ] }
 Plug 'ianks/vim-tsx', { 'for': ['typescript'] }
 
-Plug 'jparise/vim-graphql'
 
 " Markdown
 Plug 'shime/vim-livedown', {'for': 'markdown'}
@@ -87,6 +84,9 @@ Plug 'mattn/emmet-vim'
 Plug 'groenewege/vim-less', {'for': 'less'}
 Plug 'wavded/vim-stylus', {'for': 'stylus'}
 
+" CSV
+Plug 'chrisbra/csv.vim', {'for': 'csv'}
+
 " CPP
 "Plug 'ciaranm/googletest-syntax'
 Plug 'octol/vim-cpp-enhanced-highlight', {'for': 'cpp'}
@@ -98,13 +98,14 @@ Plug 'ekalinin/Dockerfile.vim'
 Plug 'vim-scripts/nginx.vim'
 Plug 'tmatilai/gitolite.vim'
 Plug 'kyrisu/vim-mikrotik'
-Plug 'vim-scripts/openvpn'
+Plug 'vim-scripts/openvpn', {'for': 'openvpn'}
 
 " PYTHON
 Plug 'davidhalter/jedi-vim', {'for': 'python'}
 Plug 'zchee/deoplete-jedi', {'for': 'python'}
 
 " syntax
+Plug 'jparise/vim-graphql'
 
 " vim
 Plug 'vim-scripts/vimwiki'

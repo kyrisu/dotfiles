@@ -5,6 +5,11 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
+# BASH profiling start
+#PS4='+ $(date "+%s.%N")\011 '
+#exec 3>&2 2>/tmp/bashstart.$$.log
+#set -x
+
 export EDITOR=nvim
 export PATH=$PATH:~/bin/:~/.local/bin/:~/bin/android-sdk-linux/tools:~/bin/android-sdk-linux/platform-tools
 
@@ -43,7 +48,7 @@ alias server='python -m SimpleHTTPServer'
 alias watch_todos="WATCH='\"src/**/*\"' chokidar --silent $WATCH --initial -c \"clear && leasot $WATCH -S --ignore node_modules\""
 
 # utilities
-alias where_am_i="geoiplookup `curl ifconfig.io 2> /dev/null`"
+alias whereami='geoiplookup $(curl ifconfig.io 2> /dev/null)'
 
 # soft aliases
 
@@ -88,8 +93,10 @@ go ()
 [ -f /usr/share/git/completion/git-prompt.sh ] && . /usr/share/git/completion/git-prompt.sh
 [ -f ~/.dotfiles/completions/purevpn.sh ] && . ~/.dotfiles/completions/purevpn.sh
 [ -f /usr/share/bash-completion/completions/docker-compose ] && . /usr/share/bash-completion/completions/docker-compose
+[ -f /usr/share/bash-completion/completions/docker ] && . /usr/share/bash-completion/completions/docker
 
 complete -F _docker_compose dc
+complete -F _docker_exec dockip
 
 #PATH="$(ruby -e 'print Gem.user_dir')/bin:$PATH"
 
@@ -150,3 +157,7 @@ export FZF_DEFAULT_COMMAND='ag -Q -g ""'
 
 # export WORKON_HOME=~/.virtualenvs
 # source /usr/bin/virtualenvwrapper.sh
+
+# BASH profiling end
+#set +x
+#exec 2>&3 3>&-
