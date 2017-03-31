@@ -146,23 +146,22 @@ set lazyredraw "Don't redraw while executing macros
 
 set mat=2 "How many tenths of a second to blink
 
-set rnu
-function! ToggleNumbersOn()
-    set rnu!
-    set nu
-endfunction
-function! ToggleRelativeOn()
-    set nu!
-    set rnu
-endfunction
-autocmd FocusLost * call ToggleNumbersOn()
-autocmd FocusGained * call ToggleRelativeOn()
-autocmd InsertEnter * call ToggleNumbersOn()
-autocmd InsertLeave * call ToggleRelativeOn()
+"set rnu
+"function! ToggleNumbersOn()
+    "set rnu!
+    "set nu
+"endfunction
+"function! ToggleRelativeOn()
+    "set nu!
+    "set rnu
+"endfunction
+"autocmd FocusLost * call ToggleNumbersOn()
+"autocmd FocusGained * call ToggleRelativeOn()
+"autocmd InsertEnter * call ToggleNumbersOn()
+"autocmd InsertLeave * call ToggleRelativeOn()
 
 autocmd BufEnter * let &titlestring = 'NVIM ' . expand("%:t")
 set title
-
 " }}}
 
 " }}}
@@ -292,8 +291,9 @@ let g:gruvbox_contrast_light='hard'
 
 colorscheme gruvbox
 
-" let g:hybrid_custom_term_colors = 1
-" colorscheme hybrid
+highlight Pmenu ctermbg=8 guibg=#606060
+highlight PmenuSel ctermbg=1 guifg=#dddd00 guibg=#1f82cd
+highlight PmenuSbar ctermbg=0 guibg=#d6d6d6
 
 try
   lang en_US
@@ -488,6 +488,8 @@ let g:airline_theme = 'base16'
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#fnamemod = ':t' " show only filename in the tabline
+let g:airline#extensions#branch#enabled = 0
+let g:airline#extensions#hunks#enabled = 0
 "
 
 function! HasPaste()
@@ -550,6 +552,8 @@ call deoplete#custom#set('file', 'mark', 'file')
 " ignore UltiSnips in completion
 let g:deoplete#ignore_sources = {}
 let g:deoplete#ignore_sources._ = ["ultisnips"]
+let g:deoplete#ignore_sources['javascript'] = ["omni"]
+let g:deoplete#ignore_sources['javascript.jsx'] = ["omni"]
 
 function! Preview_func()
   if &pvw
@@ -567,7 +571,7 @@ autocmd FileType python set omnifunc=pythoncomplete#Complete
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
 autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
 autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType typescript setlocal omnifunc=tsuquyomi#complete
+"autocmd FileType typescript setlocal omnifunc=tsuquyomi#complete
 autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
@@ -596,12 +600,12 @@ function! s:is_whitespace() "{{{
 endfunction "}}}
 
 imap <silent><expr><Tab> pumvisible() ? "\<C-n>"
-	\ : (<SID>is_whitespace() ? "\<Tab>"
-	\ : deoplete#manual_complete())
+      \ : (<SID>is_whitespace() ? "\<Tab>"
+      \ : deoplete#manual_complete())
 
 smap <silent><expr><Tab> pumvisible() ? "\<C-n>"
-	\ : (<SID>is_whitespace() ? "\<Tab>"
-	\ : deoplete#manual_complete())
+      \ : (<SID>is_whitespace() ? "\<Tab>"
+      \ : deoplete#manual_complete())
 
 inoremap <expr><S-Tab>  pumvisible() ? "\<C-p>" : "\<C-h>"
 
@@ -660,9 +664,9 @@ let g:UltiSnipsJumpBackwardTrigger = "<nop>"
 "let g:UltiSnipsExpandTrigger="<nop>"
 let g:UltiSnipsExpandTrigger = "<C-k>"
 inoremap <silent> <C-j> <C-R>=Neoj()<CR>
-snoremap <silent> <C-j> <Esc>:call UltiSnips#JumpForwards()<CR>
+"snoremap <silent> <C-j> <Esc>:call UltiSnips#JumpForwards()<CR>
 inoremap <silent> <C-k> <C-R>=Neok()<CR>
-snoremap <silent> <C-k> <Esc>:call UltiSnips#JumpBackwards()<CR>
+"snoremap <silent> <C-k> <Esc>:call UltiSnips#JumpBackwards()<CR>
 " inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 
 au BufEnter * exec "inoremap <silent> <CR> <C-R>=NeoCR()<CR>"
@@ -675,9 +679,24 @@ let g:deoplete#file#enable_buffer_path = 1
 let g:deoplete#auto_complete_delay = 300
 "let g:deoplete#enable_refresh_always = 1
 "let g:deoplete#auto_refresh_delay = 1000
-let g:deoplete#enable_camel_case = 1
+let g:deoplete#enable_ignore_case = 1
+let g:deoplete#enable_smart_case = 1
+"let g:deoplete#enable_camel_case = 1
 
 let g:deoplete#skip_chars = ['(', ')']
+
+"if !exists('g:deoplete#keyword_patterns')
+    "let g:deoplete#keyword_patterns = {}
+"endif
+"let g:deoplete#keyword_patterns.default = '[a-zA-Z_]\w{2,}?'
+
+let g:deoplete#max_abbr_width = 0
+let g:deoplete#max_menu_width = 0
+"let g:deoplete#omni#input_patterns = get(g:,'deoplete#omni#input_patterns',{})
+"let g:deoplete#omni#input_patterns.javascript = '[^. \t]\.\%(\h\w*\)\?'
+"let g:deoplete#omni#input_patterns['javascript.jsx'] = '[^. \t]\.\%(\h\w*\)\?'
+"let g:deoplete#omni#input_patterns['javascript.jsx'] = '[^. \t0-9]\.\w*'
+"let g:deoplete#omni#input_patterns.typescript = '[^. \t]\.\%(\h\w*\)\?'
 
 let g:deoplete#sources#jedi#statement_length = 1
 let g:deoplete#sources#jedi#show_docstring = 1
@@ -688,6 +707,9 @@ let g:deoplete#omni#functions.css = 'csscomplete#CompleteCSS'
 
 let g:deoplete#tag#cache_limit_size = 5000000
 
+"let g:deoplete#enable_debug = 1
+"let g:deoplete#enable_profile = 1
+"call deoplete#enable_logging('DEBUG', '/tmp/deoplete.log')
 "}}
 
 " => JavaScript section {{{
@@ -718,7 +740,7 @@ let g:used_javascript_libs = ''
 "let g:tern_show_argument_hints='no'
 let g:tern_request_timeout = 1
 "let g:tern_show_argument_hints=1
-let g:tern_show_signature_in_pum = '0'
+let g:tern_show_signature_in_pum = 0
 let g:tern_map_keys=1
 let g:tern_map_prefix='<leader>'
 
@@ -729,6 +751,7 @@ let g:tern#command = ["tern"]
 let g:tern#arguments = ["--persistent"]
 
 autocmd FileType javascript nnoremap gd :TernDef<cr>
+"autocmd FileType javascript nnoremap gd :TSDef<cr>
 
 " insert newline when pressing enter between brackets
 autocmd FileType javascript inoremap {<CR>  {<CR>}<C-c><S-o>
@@ -823,13 +846,9 @@ let g:mta_filetypes = {
 
 " => Typescript section {{{
 """""""""""""""""""""""""""""""
-" let g:syntastic_typescript_checkers = ['tsuquyomi']
-" let g:syntastic_typescript_checkers = ['tsc', 'tslint']
-" let g:neomake_typescript_enabled_makers = ['tsc', 'tslint']
-" let g:neomake_typescript_enabled_makers = []
-
 let g:tsuquyomi_single_quote_import = 1
 let g:tsuquyomi_disable_quickfix = 1
+
 " autocmd FileType typescript nnoremap gd :TsuDefinition<CR>
 " autocmd FileType typescript nnoremap gr :TsuReferences<CR>
 " autocmd FileType typescript nmap <buffer> <Leader>t : <C-u>echo tsuquyomi#hint()<CR>

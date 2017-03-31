@@ -19,17 +19,17 @@ Plug 'morhetz/gruvbox'
 """ programming general
 
 Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
 Plug 'kshenoy/vim-signature' " displays markers on the left margin
 Plug 'editorconfig/editorconfig-vim'
 Plug 'mileszs/ack.vim'
 Plug 'AndrewRadev/splitjoin.vim'
-Plug 'wakatime/vim-wakatime'
+"Plug 'wakatime/vim-wakatime'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'airblade/vim-gitgutter' " places vim +- marks on the left gutter
 Plug 'Yggdroot/indentLine' " prints vertical indentation lines
 Plug 'Raimondi/delimitMate' " automatic closing of quotes, brackets etc
 Plug 'Konfekt/FastFold' " Speed up Vim by updating folds only when called-for.
-Plug 'honza/vim-snippets'
 Plug 'scrooloose/nerdcommenter' " commands for commenting selected text / row
 Plug 'w0rp/ale' " async linting
 Plug 'vasconcelloslf/vim-interestingwords' " keyword selection with <leader>k
@@ -38,7 +38,7 @@ Plug 'rhysd/devdocs.vim' " opens devdocs with shift K
 Plug 'Shougo/echodoc.vim'
 
 """ Autocomplete
-Plug 'Shougo/deoplete.nvim'
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'tpope/vim-surround'
@@ -65,7 +65,8 @@ Plug 'carlitux/deoplete-ternjs',
 
 " Typescript
 Plug 'leafgarland/typescript-vim', { 'for': ['typescript'] }
-Plug 'mhartington/deoplete-typescript', { 'for': [ 'typescript' ] }
+"Plug 'mhartington/nvim-typescript', { 'for': [ 'typescript', 'javascript', 'javascript.jsx' ] }
+Plug 'mhartington/nvim-typescript', { 'for': [ 'typescript' ] }
 Plug 'ianks/vim-tsx', { 'for': ['typescript'] }
 
 
@@ -75,10 +76,10 @@ Plug 'plasticboy/vim-markdown', {'for': 'markdown'}
 
 " HTML & CSS
 Plug 'mustache/vim-mustache-handlebars'
-Plug 'digitaltoad/vim-pug'
+Plug 'digitaltoad/vim-pug', { 'for': ['jade', 'pug'] }
 Plug 'ap/vim-css-color', { 'for': ['css', 'less', 'scss', 'stylus'] }
-Plug 'cakebaker/scss-syntax.vim'
-Plug 'Valloric/MatchTagAlways'
+Plug 'cakebaker/scss-syntax.vim', { 'for': ['scss'] }
+"Plug 'Valloric/MatchTagAlways'
 
 Plug 'mattn/emmet-vim'
 Plug 'groenewege/vim-less', {'for': 'less'}
@@ -96,8 +97,8 @@ Plug 'ekalinin/Dockerfile.vim'
 
 " config files
 Plug 'vim-scripts/nginx.vim'
-Plug 'tmatilai/gitolite.vim'
-Plug 'kyrisu/vim-mikrotik'
+"Plug 'tmatilai/gitolite.vim'
+"Plug 'kyrisu/vim-mikrotik'
 Plug 'vim-scripts/openvpn', {'for': 'openvpn'}
 
 " PYTHON
@@ -112,7 +113,7 @@ Plug 'vim-scripts/vimwiki'
 Plug 'Shougo/neco-vim', {'for': 'vim'}
 
 Plug 'ryanoasis/vim-devicons'
-Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+"Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 
 " Required:
 filetype plugin indent on
@@ -132,4 +133,13 @@ let g:echodoc_enable_at_startup = 1
 " VMATH {{{
 vmap <silent><expr> ++  VMATH_YankAndAnalyse()
 nmap <silent>       ++  vip++
+" }}}
+
+" nvim-typescript {{{
+"let g:nvim_typescript#javascript_support = 1
+let g:nvim_typescript#max_completion_detail=100
+" }}}
+
+" EasyMotion {{{
+let g:EasyMotion_smartcase = 1
 " }}}

@@ -5,13 +5,15 @@ URxvt*cursorBlink:        true
 !URxvt*font:               xft:Monaco for Powerline:size=11
 ! URxvt*font:               xft:SauceCodePro Nerd Font:size=11
 ! URxvt*font:               xft:InconsolataForPowerline Nerd Font:size=14
-URxvt*font:               xft:DroidSansMonoForPowerline Nerd Font:size=12
+URxvt*font:               xft:DroidSansMonoForPowerline Nerd Font:antialias=true:size=12
+URxvt*bodFont:               xft:DroidSansMonoForPowerline Nerd Font:style=bold:size=12:antialias=true
 URxvt*depth:              32
 URxvt*borderless:         1
 URxvt*scrollBar:          false
 URxvt*loginShell:         true
 Urxvt*secondaryScroll:    true    # Enable Shift-PageUp/Down in screen
 URxvt*saveLines:          5000
+URxvt.letterSpace: -1
 !URxvt*termName:           rxvt-unicode
 !URxvt*transparent:        true
 URxvt*shading:            10
@@ -30,6 +32,14 @@ URxvt.keysym.Shift-Insert: perl:clipboard:paste
 URxvt.keysym.M-u:           perl:url-select:select_next
 URxvt.url-select.launcher:  /usr/bin/xdg-open
 URxvt.url-select.underline: true
+
+! Fonts {{{
+Xft.antialias: true
+Xft.hinting:   true
+Xft.rgba:      rgb
+Xft.hintstyle: hintfull
+Xft.dpi:       96
+! }}}
 
 !URxvt.cursorColor: #06989a
 !!URxvt.background: #000000
