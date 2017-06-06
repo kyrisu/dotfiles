@@ -42,6 +42,11 @@ separator_block_width=7
 #color=#A6D1FA
 #align=center
 
+[pomodoro]
+label=
+command=~/.i3/i3blocks/scripts/pymodoro
+interval=1
+
 [separator]
 
 [disk-home]
@@ -80,7 +85,7 @@ color=#cb4b16
 
 [temp]
 label=
-command=echo "$(sensors coretemp-isa-0000 | awk '/Physical/ {print $4}')"
+command=echo "$(sensors coretemp-isa-0000 | awk '/Package/ {print $4}')"
 interval=10
 color=#b58900
 

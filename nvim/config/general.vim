@@ -39,6 +39,7 @@ set history=700
 " Set to auto read when a file is changed from the outside
 set autoread
 set exrc
+set autowrite " autosave on ! and others
 
 set diffopt+=vertical
 
@@ -59,57 +60,68 @@ set splitbelow
 map <leader>xx :.w !bash<cr>
 " }}}
 
-" NERDTree {{{
-map <C-e> :NERDTreeToggle<CR>:NERDTreeMirror<CR>
-map <leader>e :NERDTreeFind<CR>
-
-let NERDTreeShowBookmarks=1
-let NERDTreeIgnore=['\.\.$', '\.$', '\.pyc', '\~$', '\.swo$', '\.swp$', '\.git', '\.hg', '\.svn', '\.bzr']
-let NERDTreeChDirMode=0
-let NERDTreeMouseMode=2
-let NERDTreeShowHidden=1
-let NERDTreeKeepTreeInNewTab=1
-let NERDTreeQuitOnOpen=1
-let g:nerdtree_tabs_open_on_gui_startup=0
-
-" }}}
-
 " Wildmenu {{{
 " --------
-if has('wildmenu')
-	set nowildmenu
-	set wildmode=list:longest,full
-	set wildoptions=tagfile
-	set wildignorecase
-	set wildignore+=.git,.hg,.svn,.stversions,*.pyc,*.spl,*.o,*.out,*~,%*
-	set wildignore+=*.jpg,*.jpeg,*.png,*.gif,*.zip,*.DS_Store
-	set wildignore+=**/node_modules/**,**/bower_modules/**,*/.sass-cache/*
-	set wildignore+=__pycache__,*.egg-info
+"if has('wildmenu')
+	"set nowildmenu
+	"set wildmode=list:longest,full
+	"set wildoptions=tagfile
+	"set wildignorecase
+	"set wildignore+=.git,.hg,.svn,.stversions,*.pyc,*.spl,*.o,*.out,*~,%*
+	"set wildignore+=*.jpg,*.jpeg,*.png,*.gif,*.zip,*.DS_Store
+	"set wildignore+=**/node_modules/**,**/bower_modules/**,*/.sass-cache/*
+	"set wildignore+=__pycache__,*.egg-info
+"endif
+
+" }}}
+
+" => Colors and Fonts {{{
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+syntax enable "Enable syntax hl
+
+if LINUX() && has("gui_running")
+  set guifont=Inconsolata\ 12,Andale\ Mono\ Regular\ 16,Menlo\ Regular\ 15,Consolas\ Regular\ 16,Courier\ New\ Regular\ 18
+elseif OSX() && has("gui_running")
+  set guifont=Andale\ Mono\ Regular:h16,Menlo\ Regular:h15,Consolas\ Regular:h16,Courier\ New\ Regular:h18
+elseif WINDOWS() && has("gui_running")
+  set guifont=Andale_Mono:h10,Menlo:h10,Consolas:h10,Courier_New:h10
 endif
 
-" }}}
+" set termguicolors
 
-" FZF {{{
-command! FZFMru call fzf#run({
-\  'source':  v:oldfiles,
-\  'sink':    'e',
-\  'options': '-m -x +s',
-\  'down':    '40%'})
+if has("gui_running")
+  set guioptions-=T
+  set guioptions-=m
+  set guioptions-=r
+  set guioptions-=e
+  set guioptions-=L "remove left scrollbar when there is vertical split
+  set guioptions-=l "remove left scrollbar
+else
+endif
 
-map <C-p> :Files<CR>
-map <C-b> :Buffers<CR>
-map <C-_> :Ag<CR>
-"map <C-m> :FZFMru<CR>
+if has ("gui_running")
+  set background=dark
+else
+  set background=dark
+  set t_Co=256
+endif
 
-set autowrite " autosave on ! and others
-" }}}
+let g:gruvbox_contrast_dark='hard'
+let g:gruvbox_contrast_light='hard'
 
-" Easy align {{{
-" Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
-vmap <Enter> <Plug>(EasyAlign)
+colorscheme gruvbox
+hi Comment cterm=italic
 
-" Start interactive EasyAlign for a motion/text object (e.g. gaip)
-nmap ga <Plug>(EasyAlign)
+highlight Pmenu ctermbg=8 guibg=#606060
+highlight PmenuSel ctermbg=1 guifg=#dddd00 guibg=#1f82cd
+highlight PmenuSbar ctermbg=0 guibg=#d6d6d6
+
+try
+  lang en_US
+catch
+endtry
+
+set ffs=unix,dos,mac "Default file types
 " }}}
 
 " Searching {{{
@@ -142,7 +154,7 @@ set hid "Change buffer - without saving
 set backspace=eol,start,indent
 set whichwrap+=<,>,h,l
 
-set lazyredraw "Don't redraw while executing macros
+"set lazyredraw "Don't redraw while executing macros
 
 set mat=2 "How many tenths of a second to blink
 
@@ -253,54 +265,6 @@ endif
 if has('patch-7.4.1570')
 	set shortmess+=F
 endif
-" }}}
-
-" => Colors and Fonts {{{
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-syntax enable "Enable syntax hl
-
-if LINUX() && has("gui_running")
-  set guifont=Inconsolata\ 12,Andale\ Mono\ Regular\ 16,Menlo\ Regular\ 15,Consolas\ Regular\ 16,Courier\ New\ Regular\ 18
-elseif OSX() && has("gui_running")
-  set guifont=Andale\ Mono\ Regular:h16,Menlo\ Regular:h15,Consolas\ Regular:h16,Courier\ New\ Regular:h18
-elseif WINDOWS() && has("gui_running")
-  set guifont=Andale_Mono:h10,Menlo:h10,Consolas:h10,Courier_New:h10
-endif
-
-" set termguicolors
-
-if has("gui_running")
-  set guioptions-=T
-  set guioptions-=m
-  set guioptions-=r
-  set guioptions-=e
-  set guioptions-=L "remove left scrollbar when there is vertical split
-  set guioptions-=l "remove left scrollbar
-else
-endif
-
-if has ("gui_running")
-  set background=dark
-else
-  set background=dark
-  set t_Co=256
-endif
-
-let g:gruvbox_contrast_dark='hard'
-let g:gruvbox_contrast_light='hard'
-
-colorscheme gruvbox
-
-highlight Pmenu ctermbg=8 guibg=#606060
-highlight PmenuSel ctermbg=1 guifg=#dddd00 guibg=#1f82cd
-highlight PmenuSbar ctermbg=0 guibg=#d6d6d6
-
-try
-  lang en_US
-catch
-endtry
-
-set ffs=unix,dos,mac "Default file types
 " }}}
 
 " => Text, tab and indent related {{{
@@ -483,8 +447,9 @@ endtry
 set laststatus=2
 
 " Format the statusline
-"let g:airline_theme = 'gruvbox'
-let g:airline_theme = 'base16'
+let g:airline_theme = 'gruvbox'
+"let g:airline_theme = 'base16'
+"let g:airline_theme = 'violet'
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#fnamemod = ':t' " show only filename in the tabline
@@ -536,13 +501,14 @@ set listchars=tab:›\ ,trail:•,extends:#,nbsp:. " Highlight problematic white
 " => Omni complete functions {{{
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-function! Multiple_cursors_before()
-  let b:deoplete_disable_auto_complete=2
-endfunction
-function! Multiple_cursors_after()
-  let b:deoplete_disable_auto_complete=0
-endfunction
+"function! Multiple_cursors_before()
+  "let b:deoplete_disable_auto_complete=2
+"endfunction
+"function! Multiple_cursors_after()
+  "let b:deoplete_disable_auto_complete=1
+"endfunction
 
+let g:deoplete_disable_auto_complete=2
 call deoplete#custom#set('buffer', 'mark', 'buffer')
 call deoplete#custom#set('ternjs', 'mark', '')
 call deoplete#custom#set('typescript', 'mark', '')
@@ -552,8 +518,8 @@ call deoplete#custom#set('file', 'mark', 'file')
 " ignore UltiSnips in completion
 let g:deoplete#ignore_sources = {}
 let g:deoplete#ignore_sources._ = ["ultisnips"]
-let g:deoplete#ignore_sources['javascript'] = ["omni"]
-let g:deoplete#ignore_sources['javascript.jsx'] = ["omni"]
+"let g:deoplete#ignore_sources['javascript'] = ["omni"]
+"let g:deoplete#ignore_sources['javascript.jsx'] = ["omni"]
 
 function! Preview_func()
   if &pvw
@@ -565,24 +531,31 @@ autocmd WinEnter * call Preview_func()
 autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
 autocmd InsertLeave * if pumvisible() == 0|pclose|endif
 
-"autocmd FileType cpp set omnifunc=omni#cpp#complete#Main
-autocmd FileType sql set omnifunc=sqlComplete#CompleteSQL
-autocmd FileType python set omnifunc=pythoncomplete#Complete
-autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-"autocmd FileType typescript setlocal omnifunc=tsuquyomi#complete
-autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
-autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
+" omnifuncs
+augroup omnifuncs
+  autocmd!
+  "autocmd FileType cpp set omnifunc=omni#cpp#complete#Main
+  autocmd FileType sql set omnifunc=sqlComplete#CompleteSQL
+  autocmd FileType python set omnifunc=pythoncomplete#Complete
+  autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+  autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+  "autocmd FileType typescript setlocal omnifunc=tsuquyomi#complete
+  autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+  autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+  autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
+  autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
+  autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+  autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+  autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+  autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+  autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+augroup end
 
-let g:SuperTabDefaultCompletionType = '<C-n>'
-let g:SuperTabClosePreviewOnPopupClose = 1
-let g:SuperTabDisabled = 1
-"let g:SuperTabDefaultCompletionType = 'context'
+if exists('g:plugs["tern_for_vim"]')
+  autocmd FileType javascript setlocal omnifunc=tern#Complete
+endif
 
-"inoremap <expr><C-l> deoplete#refresh()
+inoremap <expr><C-l> deoplete#refresh()
 
 imap <silent><expr><CR> pumvisible() ?
 	\ (neosnippet#expandable() ? "\<Plug>(neosnippet_expand)" : deoplete#close_popup())
@@ -608,7 +581,6 @@ smap <silent><expr><Tab> pumvisible() ? "\<C-n>"
       \ : deoplete#manual_complete())
 
 inoremap <expr><S-Tab>  pumvisible() ? "\<C-p>" : "\<C-h>"
-
 
 " better key bindings for UltiSnipsExpandTrigger
 "let g:UltiSnipsExpandTrigger = "<C-k>"
@@ -676,7 +648,8 @@ set tags+=./tags
 " Deoplete
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#file#enable_buffer_path = 1
-let g:deoplete#auto_complete_delay = 300
+"let g:deoplete#auto_complete_delay = 50
+let g:deoplete#auto_complete_delay = 0
 "let g:deoplete#enable_refresh_always = 1
 "let g:deoplete#auto_refresh_delay = 1000
 let g:deoplete#enable_ignore_case = 1
@@ -692,10 +665,11 @@ let g:deoplete#skip_chars = ['(', ')']
 
 let g:deoplete#max_abbr_width = 0
 let g:deoplete#max_menu_width = 0
-"let g:deoplete#omni#input_patterns = get(g:,'deoplete#omni#input_patterns',{})
+let g:deoplete#omni#input_patterns = get(g:,'deoplete#omni#input_patterns',{})
 "let g:deoplete#omni#input_patterns.javascript = '[^. \t]\.\%(\h\w*\)\?'
 "let g:deoplete#omni#input_patterns['javascript.jsx'] = '[^. \t]\.\%(\h\w*\)\?'
-"let g:deoplete#omni#input_patterns['javascript.jsx'] = '[^. \t0-9]\.\w*'
+"let g:deoplete#omni#input_patterns['javascript'] = '[^. \t0-9]\.\w*'
+let g:deoplete#omni#input_patterns['javascript.jsx'] = '[^. \t0-9]\.\w*'
 "let g:deoplete#omni#input_patterns.typescript = '[^. \t]\.\%(\h\w*\)\?'
 
 let g:deoplete#sources#jedi#statement_length = 1
@@ -704,6 +678,12 @@ let g:deoplete#sources#jedi#short_types = 1
 
 let g:deoplete#omni#functions = get(g:, 'deoplete#omni#functions', {})
 let g:deoplete#omni#functions.css = 'csscomplete#CompleteCSS'
+
+"let g:deoplete#omni#functions['javascript.jsx'] = ['tern#Complete']
+"let g:deoplete#omni#functions['javascript'] = ['tern#Complete']
+
+"\ 'tern#Complete',
+
 
 let g:deoplete#tag#cache_limit_size = 5000000
 
@@ -727,7 +707,7 @@ map <leader>nm :!mocha %<CR>
 " vim-javascript options
 let g:javascript_plugin_jsdoc = 1
 
-nmap <silent><c-l> <Plug>(jsdoc)
+"nmap <silent><c-l> <Plug>(jsdoc)
 
 " jsdoc config
 let g:jsdoc_allow_input_prompt = 1
@@ -749,6 +729,11 @@ let g:tern_map_prefix='<leader>'
 " Use tern_for_vim.with deoplete
 let g:tern#command = ["tern"]
 let g:tern#arguments = ["--persistent"]
+let g:tern#filetypes= [
+      \ 'jsx',
+      \ 'javascript.jsx',
+      \ 'vue'
+      \ ]
 
 autocmd FileType javascript nnoremap gd :TernDef<cr>
 "autocmd FileType javascript nnoremap gd :TSDef<cr>

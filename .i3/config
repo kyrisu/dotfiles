@@ -220,10 +220,10 @@ mode "resize" {
 set $session "Session (s) Suspend, (l) lock, (r) Reboot, (p) Power off"
 
 mode $session {
-    bindsym s  exec --no-startup-id ~/.i3/bin/session suspend, mode "default"
-    bindsym l  exec --no-startup-id ~/.i3/bin/session lock, mode "default"
-    bindsym r  exec --no-startup-id ~/.i3/bin/session reboot, mode "default"
-    bindsym p  exec --no-startup-id ~/.i3/bin/session poweroff, mode "default"
+    #bindsym s  exec --no-startup-id ~/.i3/bin/session suspend, mode "default"
+    #bindsym l  exec --no-startup-id ~/.i3/bin/session lock, mode "default"
+    #bindsym r  exec --no-startup-id ~/.i3/bin/session reboot, mode "default"
+    #bindsym p  exec --no-startup-id ~/.i3/bin/session poweroff, mode "default"
 
     # Back to normal mode: Enter or Escape
     bindsym Return mode "default"

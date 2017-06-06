@@ -20,7 +20,7 @@ parcellite &
 syndaemon -K -i 1 -R -d
 
 # Initialize 'compton' composite manager.
-compton -CGfbz -D 2 -o 0 --backend glx --vsync opengl
+#compton -CGfbz -D 2 -o 0 --backend glx --vsync opengl
 
 # Start 'dunst' for notifications.
 dunst -config ~/.i3/dunstrc &
@@ -35,4 +35,4 @@ feh --no-fehbg --bg-fill ~/pictures/wallpapers/gigant.png
 
 startflux.sh &
 
-rescuetime &
+#rescuetime &

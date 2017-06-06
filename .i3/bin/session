@@ -26,7 +26,8 @@ session_lock() {
 # Suspend and lock screen.
 session_suspend() {
 	#session_lock
-	systemctl suspend
+	#systemctl suspend
+  echo 'session_suspend'
 }
 
 # Close all running applications and log out.
