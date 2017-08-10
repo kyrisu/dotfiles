@@ -22,6 +22,13 @@ let g:nvim_typescript#max_completion_detail=100
 
 " EasyMotion {{{
 let g:EasyMotion_smartcase = 1
+" Move to word
+map  <Leader><Leader>w <Plug>(easymotion-bd-w)
+map  <Leader>f <Plug>(easymotion-bd-w)
+nmap <Leader><Leader>w <Plug>(easymotion-overwin-w)
+" Move to line
+map <Leader><Leader>l <Plug>(easymotion-bd-jk)
+nmap <Leader><Leader>l <Plug>(easymotion-overwin-line)
 " }}}
 
 " NERDTree {{{
@@ -74,4 +81,54 @@ let g:csv_highlight_column = 'y'
 		"au BufRead,BufWritePost *.csv :%ArrangeColumn
 		"au BufWritePre *.csv :%UnArrangeColumn
 "aug end
+" }}}
+
+" FSWITCH {{{
+aug FSWITCH
+  au!
+  au! BufEnter *.js let b:fswitchdst = 'js' | :let b:fswitchfnames = '/$/.spec/' | let b:fswitchlocs = './'
+  au! BufEnter *.spec.js let b:fswitchdst = 'js' | :let b:fswitchfnames = '/.spec$//'| let b:fswitchlocs = './'
+aug end
+
+nnoremap <leader>A :FSHere<CR>
+" }}}
+
+" FLOW {{{
+"let g:flow#enable = 0
+"let g:flow#autoclose = 1
+" }}}
+
+" ALE {{{
+let g:ale_linters = {
+      \ 'sh' : ['shellcheck'],
+      \ 'vim' : ['vint'],
+      \ 'html' : ['tidy'],
+      \ 'python' : ['flake8'],
+      \ 'markdown' : ['mdl'],
+      \ 'javascript' : ['eslint'],
+      \ 'javascript.jsx' : ['eslint'],
+      \}
+
+" If emoji not loaded, use default sign
+try
+  let g:ale_sign_error = emoji#for('boom')
+  let g:ale_sign_warning = emoji#for('small_orange_diamond')
+catch
+  " Use same sign and distinguish error and warning via different colors.
+  let g:ale_sign_error = '•'
+  let g:ale_sign_warning = '•'
+endtry
+let g:ale_echo_msg_format = '[#%linter%#] %s [%severity%]'
+let g:ale_statusline_format = ['E•%d', 'W•%d', 'OK']
+let g:ale_change_sign_column_color=1
+
+"hi ALESignColumnWithErrors ctermbg=DarkRed
+" }}}
+
+" EMOJI {{{
+"set completefunc=emoji#complete
+"let g:gitgutter_sign_added = emoji#for('small_blue_diamond')
+"let g:gitgutter_sign_modified = emoji#for('small_orange_diamond')
+"let g:gitgutter_sign_removed = emoji#for('small_red_triangle')
+"let g:gitgutter_sign_modified_removed = emoji#for('collision')
 " }}}

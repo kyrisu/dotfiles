@@ -8,7 +8,6 @@
   "plugins": {
     "node": {},
     "node-express": {},
-    "angular": {},
     "webpack": {},
     "es_modules": {},
     "doc_comment": {

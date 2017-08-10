@@ -94,3 +94,11 @@ export const query = [\`
   $3
 \`];
 endsnippet
+
+snippet cldresp
+console.log('------------------');
+console.log(resp.errors ?
+            '[ERROR] ' + resp.errors[0].message :
+            '[DATA] ' + JSON.stringify(resp.data, null, 2));
+console.log('------------------');
+endsnippet

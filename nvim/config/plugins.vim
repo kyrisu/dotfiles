@@ -15,6 +15,8 @@ Plug 'MarcWeber/vim-addon-local-vimrc'
 Plug 'easymotion/vim-easymotion'
 
 Plug 'morhetz/gruvbox'
+Plug 'altercation/vim-colors-solarized'
+"Plug 'junegunn/vim-emoji'
 
 """" programming general
 
@@ -24,7 +26,7 @@ Plug 'kshenoy/vim-signature' " displays markers on the left margin
 Plug 'editorconfig/editorconfig-vim'
 Plug 'mileszs/ack.vim'
 Plug 'AndrewRadev/splitjoin.vim'
-""Plug 'wakatime/vim-wakatime'
+Plug 'wakatime/vim-wakatime'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'airblade/vim-gitgutter' " places vim +- marks on the left gutter
 Plug 'Yggdroot/indentLine' " prints vertical indentation lines
@@ -35,15 +37,16 @@ Plug 'w0rp/ale' " async linting
 Plug 'vasconcelloslf/vim-interestingwords' " keyword selection with <leader>k
 Plug 'rhysd/devdocs.vim' " opens devdocs with shift K
 Plug 'Chiel92/vim-autoformat'
+Plug 'majutsushi/tagbar'
+Plug 'derekwyatt/vim-fswitch'
 
 Plug 'metakirby5/codi.vim'
 Plug 'christianrondeau/vim-base64'
-Plug 'Shougo/echodoc.vim'
 
 """" Autocomplete
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'vim-airline/vim-airline'
-"Plug 'vim-airline/vim-airline-themes'
+Plug 'vim-airline/vim-airline-themes'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired' " cool bindings that I need to read more about
 Plug 'tpope/vim-fugitive' " git wrapper
@@ -65,6 +68,10 @@ Plug 'marijnh/tern_for_vim', {
       "\ 'do': 'npm install -g tern',
       "\ 'for': ['javascript', 'javascript.jsx']
       "\}
+"Plug 'flowtype/vim-flow', {
+      "\ 'for': ['javascript', 'javascript.jsx'],
+      "\ 'do' : 'npm install -g flow-bin'
+      "\ }
 
 "" Typescript
 Plug 'leafgarland/typescript-vim', { 'for': ['typescript'] }
@@ -117,6 +124,8 @@ Plug 'Shougo/neco-vim', {'for': 'vim'}
 
 Plug 'ryanoasis/vim-devicons'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+
+Plug 'Shougo/echodoc.vim'
 
 " Required:
 filetype plugin indent on

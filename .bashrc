@@ -13,6 +13,11 @@
 export EDITOR=nvim
 export PATH=$PATH:~/bin/:~/.local/bin/:~/bin/android-sdk-linux/tools:~/bin/android-sdk-linux/platform-tools
 
+#dynamic colors
+
+export PATH="$HOME/.dynamic-colors/bin:$PATH"
+source $HOME/.dynamic-colors/completions/dynamic-colors.bash
+
 # METEOR
 export PATH=$PATH:$HOME/.meteor
 
@@ -102,7 +107,7 @@ complete -F _docker_exec dockip
 
 #export CATALINA_HOME=/usr/share/tomcat8
 
-export PS1='\[\e[2;90m\]\t\e[22m`if [ $? = 0 ]; then echo "\[\e[32m\] ✔ "; else echo "\[\e[31m\] ✘ "; fi`\[\e[00;37m\]\u@\h \[\e[01;34m\]\W\e[35m$(__git_ps1 " (%s)")\n\[\e[00;39m\]\$ '
+export PS1='\e[22m`if [ $? = 0 ]; then echo "\[\e[32m\] ✔ "; else echo "\[\e[31m\] ✘ "; fi`\[\e[00;37m\]\u@\h \[\e[01;34m\]\W\e[35m$(__git_ps1 " (%s)")\n\[\e[00;39m\]\$ '
 
 export ANDROID_HOME=~/bin/android-sdk-linux
 
@@ -111,12 +116,12 @@ export ANDROID_HOME=~/bin/android-sdk-linux
 
 # node
 . /usr/share/nvm/init-nvm.sh
-export NVM_NODEJS_ORG_MIRROR=https://nodejs.org/dist
+#export NVM_NODEJS_ORG_MIRROR=https://nodejs.org/dist
 export NVM_DIR="/home/kyrisu/.nvm"
 
 
 # gruvbox console colors
-~/bin/gruvbox_256palette.sh
+#~/bin/gruvbox_256palette.sh
 
 # command not found hook
 [ -r /usr/share/doc/pkgfile/command-not-found.bash ] && . /usr/share/doc/pkgfile/command-not-found.bash
@@ -161,3 +166,15 @@ export FZF_DEFAULT_COMMAND='ag -Q -g ""'
 # BASH profiling end
 #set +x
 #exec 2>&3 3>&-
+
+dynamic-colors switch solarized-dark
+
+# Codi
+# Usage: codi [filetype] [filename]
+codi() {
+  local syntax="${1:-javascript}"
+  shift
+  nvim -c \
+    "set ft=$1 |\
+    Codi $syntax" "$@"
+}

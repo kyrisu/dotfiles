@@ -12,7 +12,7 @@ set path=.,**                " Directories to search when using gf
 set virtualedit=block        " Position cursor anywhere in visual block
 set synmaxcol=1000           " Don't syntax highlight long lines
 set formatoptions+=1         " Don't break lines after a one-letter word
-"set formatoptions-=t         " Don't auto-wrap text
+set formatoptions-=t         " Don't auto-wrap text
 
 " No sound on errors
 "set noerrorbells
@@ -33,6 +33,12 @@ set sessionoptions-=help
 set sessionoptions-=buffers
 set sessionoptions+=tabpages
 
+" Persistent undo
+set undofile                " Save undo's after file closes
+"set undodir=$HOME/.vim/undo " where to save undo histories
+set undolevels=1000         " How many undos
+set undoreload=10000        " number of lines to save for undo
+
 " Sets how many lines of history VIM has to remember
 set history=700
 
@@ -49,6 +55,8 @@ let g:mapleader = ","
 " Fast saving
 nmap <leader>w :w!<cr>
 
+" Create file under cursor
+map <leader>gf :exec printf('e %s/%s', expand("%:p:h"), expand("<cfile>"))<cr>
 " Fast editing of the .vimrc
 map <leader>ee :e! ~/.config/nvim/init.vim<cr>
 
@@ -106,10 +114,12 @@ else
   set t_Co=256
 endif
 
-let g:gruvbox_contrast_dark='hard'
-let g:gruvbox_contrast_light='hard'
+"let g:gruvbox_contrast_dark='hard'
+"let g:gruvbox_contrast_light='hard'
 
-colorscheme gruvbox
+"colorscheme gruvbox
+"let g:solarized_termcolors=256
+colorscheme solarized
 hi Comment cterm=italic
 
 highlight Pmenu ctermbg=8 guibg=#606060
@@ -146,7 +156,7 @@ set so=7
 
 set ruler "Always show current position
 
-set cmdheight=2 "The commandbar height
+set cmdheight=3 "The commandbar height
 
 set hid "Change buffer - without saving
 
@@ -154,7 +164,7 @@ set hid "Change buffer - without saving
 set backspace=eol,start,indent
 set whichwrap+=<,>,h,l
 
-"set lazyredraw "Don't redraw while executing macros
+set lazyredraw "Don't redraw while executing macros
 
 set mat=2 "How many tenths of a second to blink
 
@@ -447,14 +457,15 @@ endtry
 set laststatus=2
 
 " Format the statusline
-let g:airline_theme = 'gruvbox'
+"let g:airline_theme = 'gruvbox'
 "let g:airline_theme = 'base16'
-"let g:airline_theme = 'violet'
+let g:airline_theme = 'solarized'
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#fnamemod = ':t' " show only filename in the tabline
-let g:airline#extensions#branch#enabled = 0
-let g:airline#extensions#hunks#enabled = 0
+"let g:airline#extensions#branch#enabled = 0
+"let g:airline#extensions#hunks#enabled = 0
+let g:airline#extensions#whitespace#enabled = 0
 "
 
 function! HasPaste()
@@ -501,12 +512,12 @@ set listchars=tab:›\ ,trail:•,extends:#,nbsp:. " Highlight problematic white
 " => Omni complete functions {{{
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-"function! Multiple_cursors_before()
-  "let b:deoplete_disable_auto_complete=2
-"endfunction
-"function! Multiple_cursors_after()
-  "let b:deoplete_disable_auto_complete=1
-"endfunction
+function! Multiple_cursors_before()
+  let b:deoplete_disable_auto_complete=2
+endfunction
+function! Multiple_cursors_after()
+  let b:deoplete_disable_auto_complete=1
+endfunction
 
 let g:deoplete_disable_auto_complete=2
 call deoplete#custom#set('buffer', 'mark', 'buffer')
@@ -551,9 +562,10 @@ augroup omnifuncs
   autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 augroup end
 
-if exists('g:plugs["tern_for_vim"]')
+"if exists('g:plugs["tern_for_vim"]')
   autocmd FileType javascript setlocal omnifunc=tern#Complete
-endif
+  autocmd FileType javascript.jsx setlocal omnifunc=tern#Complete
+"endif
 
 inoremap <expr><C-l> deoplete#refresh()
 
@@ -649,7 +661,7 @@ set tags+=./tags
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#file#enable_buffer_path = 1
 "let g:deoplete#auto_complete_delay = 50
-let g:deoplete#auto_complete_delay = 0
+"let g:deoplete#auto_complete_delay = 0
 "let g:deoplete#enable_refresh_always = 1
 "let g:deoplete#auto_refresh_delay = 1000
 let g:deoplete#enable_ignore_case = 1
@@ -720,15 +732,15 @@ let g:used_javascript_libs = ''
 "let g:tern_show_argument_hints='no'
 let g:tern_request_timeout = 1
 "let g:tern_show_argument_hints=1
-let g:tern_show_signature_in_pum = 0
+let g:tern_show_signature_in_pum = 1
 let g:tern_map_keys=1
 let g:tern_map_prefix='<leader>'
 
 "let g:tern#arguments=["--verbose"]
 
 " Use tern_for_vim.with deoplete
-let g:tern#command = ["tern"]
-let g:tern#arguments = ["--persistent"]
+let g:tern#command = ['tern']
+let g:tern#arguments = ['--persistent']
 let g:tern#filetypes= [
       \ 'jsx',
       \ 'javascript.jsx',
