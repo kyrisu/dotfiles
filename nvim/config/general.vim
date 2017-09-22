@@ -224,7 +224,7 @@ set number              " Show line numbers
 set noruler             " Disable default status ruler
 set list                " Show hidden characters
 
-set showtabline=2       " Always show the tabs line
+set showtabline=0       " Show tabline only if I'm using tabs
 set tabpagemax=15       " Maximum number of tab pages
 set winwidth=75         " Minimum width for current window
 set winminwidth=8       " Minimum width for inactive windows
@@ -235,11 +235,11 @@ set helpheight=12       " Minimum help window height
 set previewheight=10    " Completion preview height
 
 set noshowcmd           " Don't show command in status line
-set cmdheight=2         " Height of the command line
+set cmdheight=1         " Height of the command line
 set cmdwinheight=5      " Command-line lines
-set noequalalways       " Don't resize windows on split or close
+"set noequalalways       " Don't resize windows on split or close
 set laststatus=2        " Always show a status line
-set display=lastline
+"set display=lastline
 
 "====[ Show when lines extend past column 80 ]=================================>-<=====================
 " copied from great config of Damian Conway found here: https://github.com/thoughtstream/Damian-Conway-s-Vim-Setup
@@ -371,7 +371,7 @@ function! VisualSearch(direction) range
   if a:direction == 'b'
     execute "normal ?" . l:pattern . "^M"
   elseif a:direction == 'gv'
-    call CmdLine("vimgrep " . '/'. l:pattern . '/' . ' **/*.')
+    call CmdLine('vimgrep ' . '/'. l:pattern . '/' . ' **/*.')
   elseif a:direction == 'f'
     execute "normal /" . l:pattern . "^M"
   endif
@@ -443,19 +443,16 @@ function! <SID>BufcloseCloseIt()
 endfunction
 
 " Specify the behavior when switching between buffers
-try
-  set switchbuf=usetab
-  set stal=2
-catch
-endtry
+"try
+  "set switchbuf=usetab
+  "set stal=2
+"catch
+"endtry
 
 "}}}
 
 " => Statusline {{{
 """"""""""""""""""""""""""""""
-" Always hide the statusline
-set laststatus=2
-
 " Format the statusline
 "let g:airline_theme = 'gruvbox'
 "let g:airline_theme = 'base16'
@@ -464,8 +461,9 @@ let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#fnamemod = ':t' " show only filename in the tabline
 "let g:airline#extensions#branch#enabled = 0
-"let g:airline#extensions#hunks#enabled = 0
+let g:airline#extensions#hunks#enabled = 0
 let g:airline#extensions#whitespace#enabled = 0
+"let g:airline_extensions = []
 "
 
 function! HasPaste()
@@ -528,12 +526,13 @@ call deoplete#custom#set('file', 'mark', 'file')
 
 " ignore UltiSnips in completion
 let g:deoplete#ignore_sources = {}
-let g:deoplete#ignore_sources._ = ["ultisnips"]
+let g:deoplete#ignore_sources._ = ['ultisnips']
 "let g:deoplete#ignore_sources['javascript'] = ["omni"]
 "let g:deoplete#ignore_sources['javascript.jsx'] = ["omni"]
 
+
 function! Preview_func()
-  if &pvw
+  if &previewwindow
     setlocal nonumber norelativenumber
   endif
 endfunction
@@ -550,22 +549,18 @@ augroup omnifuncs
   autocmd FileType python set omnifunc=pythoncomplete#Complete
   autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
   autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-  "autocmd FileType typescript setlocal omnifunc=tsuquyomi#complete
   autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
   autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
   autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
   autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
   autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
   autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-  autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
   autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
   autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-augroup end
 
-"if exists('g:plugs["tern_for_vim"]')
   autocmd FileType javascript setlocal omnifunc=tern#Complete
   autocmd FileType javascript.jsx setlocal omnifunc=tern#Complete
-"endif
+augroup end
 
 inoremap <expr><C-l> deoplete#refresh()
 
@@ -660,13 +655,9 @@ set tags+=./tags
 " Deoplete
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#file#enable_buffer_path = 1
-"let g:deoplete#auto_complete_delay = 50
-"let g:deoplete#auto_complete_delay = 0
-"let g:deoplete#enable_refresh_always = 1
-"let g:deoplete#auto_refresh_delay = 1000
+let g:deoplete#enable_refresh_always = 1
 let g:deoplete#enable_ignore_case = 1
 let g:deoplete#enable_smart_case = 1
-"let g:deoplete#enable_camel_case = 1
 
 let g:deoplete#skip_chars = ['(', ')']
 
@@ -710,8 +701,6 @@ autocmd FileType javascript,html,css,scss,typescript setlocal foldlevel=99
 autocmd FileType javascript,typescript,css,scss,json setlocal foldmethod=marker
 autocmd FileType javascript,typescript,css,scss,json setlocal foldmarker={,}
 
-let g:syntastic_javascript_checkers = ['eslint']
-" let g:neomake_javascript_enabled_makers = ['eslint']
 map <leader>nn :!node %<CR>
 map <leader>nb :!babel-node %<CR>
 map <leader>nm :!mocha %<CR>
@@ -726,12 +715,12 @@ let g:jsdoc_allow_input_prompt = 1
 let g:jsdoc_allow_description = 0
 let g:jsdoc_enable_es6 = 1
 
-let g:used_javascript_libs = ''
+let g:used_javascript_libs = 'react'
 "let g:used_javascript_libs = 'underscore,angularjs,handlebars'
 
 "let g:tern_show_argument_hints='no'
-let g:tern_request_timeout = 1
-"let g:tern_show_argument_hints=1
+let g:tern_request_timeout = 6000
+let g:tern_show_argument_hints=1
 let g:tern_show_signature_in_pum = 1
 let g:tern_map_keys=1
 let g:tern_map_prefix='<leader>'
@@ -776,7 +765,7 @@ let g:tagbar_type_javascript = {
     \ ]
 \ }
 
-let g:webdevicons_enable_ctrlp = 0
+"let g:webdevicons_enable_ctrlp = 0
 
 " generate ctags
 command! JStags !find . -type f -iregex ".*\.js$" -not -path "./node_modules/*" -exec jsctags {} -f \; | sed '/^$/d' | sort > tags
@@ -791,8 +780,8 @@ command! JStags !find . -type f -iregex ".*\.js$" -not -path "./node_modules/*" 
 let g:jsx_ext_required = 0
 "let g:xml_syntax_folding = 0
 
-autocmd FileType javascript vnoremap <buffer>  <leader>ff :call JsBeautify()<cr>
-autocmd FileType javascript vnoremap <buffer>  <leader>ff :call RangeJsBeautify()<cr>
+"autocmd FileType javascript vnoremap <buffer>  <leader>ff :call JsBeautify()<cr>
+"autocmd FileType javascript vnoremap <buffer>  <leader>ff :call RangeJsBeautify()<cr>
 
 " => JSON section {{{
 """""""""""""""""""""""""""""""
@@ -965,7 +954,7 @@ noremap <Leader>xt :call DeleteTrailingWS()<CR>
 " %!iconv -f cp1250 -t utf-8
 
 "Quickly open a buffer for scripbble
-map <leader>qq :e ~/buffer.wiki<cr>
+map <leader>qq :e ~/buffer.md<cr>
 au BufRead,BufNewFile ~/buffer.wiki iab <buffer> xh1 ===========================================
 
 map <leader>pp :setlocal paste!<cr>

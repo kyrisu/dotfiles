@@ -10,9 +10,9 @@ Plug 'junegunn/fzf.vim'
 Plug 'scrooloose/nerdtree'
 Plug 'junegunn/vim-easy-align'
 Plug 'airblade/vim-rooter'
-Plug 'milkypostman/vim-togglelist'
+Plug 'milkypostman/vim-togglelist' " toggle location and quickfix list
 Plug 'MarcWeber/vim-addon-local-vimrc'
-Plug 'easymotion/vim-easymotion'
+"Plug 'easymotion/vim-easymotion'
 
 Plug 'morhetz/gruvbox'
 Plug 'altercation/vim-colors-solarized'
@@ -26,18 +26,17 @@ Plug 'kshenoy/vim-signature' " displays markers on the left margin
 Plug 'editorconfig/editorconfig-vim'
 Plug 'mileszs/ack.vim'
 Plug 'AndrewRadev/splitjoin.vim'
-Plug 'wakatime/vim-wakatime'
+"Plug 'wakatime/vim-wakatime'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'airblade/vim-gitgutter' " places vim +- marks on the left gutter
 Plug 'Yggdroot/indentLine' " prints vertical indentation lines
 Plug 'Raimondi/delimitMate' " automatic closing of quotes, brackets etc
-Plug 'Konfekt/FastFold' " Speed up Vim by updating folds only when called-for.
+"Plug 'Konfekt/FastFold' " Speed up Vim by updating folds only when called-for.
 Plug 'scrooloose/nerdcommenter' " commands for commenting selected text / row
 Plug 'w0rp/ale' " async linting
 Plug 'vasconcelloslf/vim-interestingwords' " keyword selection with <leader>k
 Plug 'rhysd/devdocs.vim' " opens devdocs with shift K
-Plug 'Chiel92/vim-autoformat'
-Plug 'majutsushi/tagbar'
+"Plug 'majutsushi/tagbar'
 Plug 'derekwyatt/vim-fswitch'
 
 Plug 'metakirby5/codi.vim'
@@ -54,7 +53,8 @@ Plug 'tpope/vim-fugitive' " git wrapper
 "" Javascript
 Plug 'pangloss/vim-javascript', { 'for': ['javascript', 'javascript.jsx'] }
 Plug 'mxw/vim-jsx', { 'for': ['javascript', 'javascript.jsx'] }
-"Plug 'othree/javascript-libraries-syntax.vim', { 'for': ['javascript', 'javascript.jsx'] }
+Plug 'alampros/vim-styled-jsx', { 'for': ['javascript', 'javascript.jsx'] }
+Plug 'othree/javascript-libraries-syntax.vim', { 'for': ['javascript', 'javascript.jsx'] }
 
 Plug 'ruanyl/vim-fixmyjs', { 'for': ['javascript', 'javascript.jsx'] }
 Plug 'heavenshell/vim-jsdoc', { 'for': ['javascript', 'javascript.jsx'] }
@@ -74,10 +74,11 @@ Plug 'marijnh/tern_for_vim', {
       "\ }
 
 "" Typescript
-Plug 'leafgarland/typescript-vim', { 'for': ['typescript'] }
+"Plug 'leafgarland/typescript-vim', { 'for': ['typescript'] }
 "Plug 'mhartington/nvim-typescript', { 'for': [ 'typescript', 'javascript', 'javascript.jsx' ] }
-Plug 'mhartington/nvim-typescript', { 'for': [ 'typescript' ] }
+"Plug 'mhartington/nvim-typescript', { 'for': [ 'typescript' ] }
 Plug 'ianks/vim-tsx', { 'for': ['typescript'] }
+
 
 
 "" Markdown
@@ -89,7 +90,8 @@ Plug 'mustache/vim-mustache-handlebars'
 Plug 'digitaltoad/vim-pug', { 'for': ['jade', 'pug'] }
 Plug 'ap/vim-css-color', { 'for': ['css', 'less', 'scss', 'stylus'] }
 Plug 'cakebaker/scss-syntax.vim', { 'for': ['scss'] }
-"Plug 'Valloric/MatchTagAlways'
+Plug 'Valloric/MatchTagAlways'
+Plug 'hail2u/vim-css3-syntax'
 
 Plug 'mattn/emmet-vim', {'for': ['javascript.jsx', 'html']}
 Plug 'groenewege/vim-less', {'for': 'less'}
@@ -117,6 +119,7 @@ Plug 'zchee/deoplete-jedi', {'for': 'python'}
 
 "" syntax
 Plug 'jparise/vim-graphql', {'for': 'gql'}
+Plug 'tomlion/vim-solidity'
 
 "" vim
 Plug 'vim-scripts/vimwiki'

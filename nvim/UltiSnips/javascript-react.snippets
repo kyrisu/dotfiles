@@ -9,7 +9,7 @@ import React from 'react';
 endsnippet
 
 snippet irp
-import React, { PropTypes } from 'react';
+import PropTypes from 'prop-types';
 endsnippet
 
 snippet ird
@@ -105,8 +105,18 @@ snippet rcc
 class ${1:ClassName} extends React.Component {
   render() {
     return (
-        ${0:<div />}
-        );
+      ${0:<div />}
+    );
+  }
+}
+endsnippet
+
+snippet rccp
+class ${1:ClassName} extends React.PureComponent {
+  render() {
+    return (
+      ${0:<div />}
+    );
   }
 }
 endsnippet

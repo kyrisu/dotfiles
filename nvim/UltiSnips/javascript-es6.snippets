@@ -42,6 +42,12 @@ snippet af "arrow function" i
 }
 endsnippet
 
+snippet afi "arrow function immediate return" i
+(${1}) => (
+  ${0}
+)
+endsnippet
+
 snippet sym
 const ${1} = Symbol('${0}');
 endsnippet
@@ -101,4 +107,10 @@ console.log(resp.errors ?
             '[ERROR] ' + resp.errors[0].message :
             '[DATA] ' + JSON.stringify(resp.data, null, 2));
 console.log('------------------');
+endsnippet
+
+snippet sjsx
+<style jsx>{\`
+  $0
+\`}</style>
 endsnippet
