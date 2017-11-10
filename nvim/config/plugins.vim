@@ -14,8 +14,10 @@ Plug 'milkypostman/vim-togglelist' " toggle location and quickfix list
 Plug 'MarcWeber/vim-addon-local-vimrc'
 "Plug 'easymotion/vim-easymotion'
 
-Plug 'morhetz/gruvbox'
+"Plug 'morhetz/gruvbox'
+"Plug 'mhartington/oceanic-next'
 Plug 'altercation/vim-colors-solarized'
+Plug 'vim-scripts/LargeFile'
 "Plug 'junegunn/vim-emoji'
 
 """" programming general
@@ -44,8 +46,10 @@ Plug 'christianrondeau/vim-base64'
 
 """" Autocomplete
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+"Plug 'vim-airline/vim-airline'
+"Plug 'vim-airline/vim-airline-themes'
+"Plug 'ap/vim-buftabline'
+Plug 'itchyny/lightline.vim'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired' " cool bindings that I need to read more about
 Plug 'tpope/vim-fugitive' " git wrapper
@@ -74,10 +78,11 @@ Plug 'marijnh/tern_for_vim', {
       "\ }
 
 "" Typescript
-"Plug 'leafgarland/typescript-vim', { 'for': ['typescript'] }
+"Plug 'leafgarland/typescript-vim', { 'for': ['typescript', 'typescript.tsx'] }
 "Plug 'mhartington/nvim-typescript', { 'for': [ 'typescript', 'javascript', 'javascript.jsx' ] }
-"Plug 'mhartington/nvim-typescript', { 'for': [ 'typescript' ] }
-Plug 'ianks/vim-tsx', { 'for': ['typescript'] }
+Plug 'mhartington/nvim-typescript', { 'for': [ 'typescript', 'typescript.tsx' ] }
+"Plug 'ianks/vim-tsx', { 'for': ['typescript', 'typescript.tsx'] }
+"Plug 'HerringtonDarkholme/yats.vim', { 'for': ['typescript', 'typescript.tsx'] }
 
 
 
@@ -102,7 +107,8 @@ Plug 'chrisbra/csv.vim', {'for': 'csv'}
 
 "" CPP
 ""Plug 'ciaranm/googletest-syntax'
-"Plug 'octol/vim-cpp-enhanced-highlight', {'for': 'cpp'}
+Plug 'octol/vim-cpp-enhanced-highlight', {'for': 'cpp'}
+Plug 'Rip-Rip/clang_complete', {'for': 'cpp'}
 
 "" Dockerfile
 Plug 'ekalinin/Dockerfile.vim'

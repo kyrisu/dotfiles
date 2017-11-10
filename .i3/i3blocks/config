@@ -49,6 +49,32 @@ interval=1
 
 [separator]
 
+[btc]
+label=BTC
+command=echo "$(curl 'https://bitbay.net/API/Public/BTCPLN/ticker.json' -s | jq '.["average"]') PLN"
+#command=echo "$(curl 'https://api.coinmarketcap.com/v1/ticker/bitcoin/' -s | jq '.[0]["price_usd"]' | sed 's/"//g') \$"
+# command=echo "$(curl 'https://blockchain.info/ticker' -s | jq '.["USD"]["last"]') \$"
+interval=60
+
+[separator]
+
+[eth]
+label=ETH
+command=echo "$(curl 'https://bitbay.net/API/Public/ETHPLN/ticker.json' -s | jq '.["average"]') PLN"
+#command=echo "$(curl 'https://api.coinmarketcap.com/v1/ticker/ethereum/' -s | jq '.[0]["price_usd"]' | sed 's/"//g') \$"
+interval=60
+color=#1793D1
+
+[separator]
+
+[lsk]
+label=LSK
+command=echo "$(curl 'https://bitbay.net/API/Public/LSKPLN/ticker.json' -s | jq '.["average"]') PLN"
+#command=echo "$(curl 'https://api.coinmarketcap.com/v1/ticker/ethereum/' -s | jq '.[0]["price_usd"]' | sed 's/"//g') \$"
+interval=60
+
+[separator]
+
 [disk-home]
 label=
 command=/usr/lib/i3blocks/disk 1

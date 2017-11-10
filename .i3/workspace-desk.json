@@ -13,10 +13,8 @@
     "percent": 0.5,
     "swallows": [
        {
-       "class": "^URxvt$",
-       "instance": "^urxvt$",
-       //"title": "^kyrisu\\@chronos\\:\\~\\/\\.i3$",
-       "transient_for": "^$"
+           "class": "^Alacritty$",
+           "instance": "^Alacritty$"
        }
     ],
     "type": "con"

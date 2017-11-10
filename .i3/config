@@ -21,7 +21,7 @@ set $WS8 8
 set $WS9 9
 
 # Workspace assignments for applications
-assign [class="Wync|Sky|skypeforlinux"] $WS6
+assign [class="Wync|Sky|skypeforlinux|Skype"] $WS6
 assign [class="Thunderbird"] $WS7
 assign [class="jetbrains-idea-ce"] $WS5
 assign [class="Slack"] $WS10
@@ -31,7 +31,7 @@ for_window [class="Connman-gtk"] floating enable
 for_window [class="Pavucontrol"] floating enable
 for_window [class="Linphone"] floating enable
 
-for_window [class="Vlc|VLSub 0.9|MPlayer|Peek|Gtk-recordMyDesktop|Skype|xpad|Java|Hamster|Systemadm|Modem-manager-gui|Screengrab|Shutter|Exodus|Jaxx"] floating enable
+for_window [class="Vlc|VLSub 0.9|MPlayer|Peek|Gtk-recordMyDesktop|Skype|xpad|Java|Hamster|Systemadm|Modem-manager-gui|Screengrab|Shutter|Exodus|Jaxx|Mist|Slack"] floating enable
 for_window [class="File-roller|Lxappearance|Nitrogen|Arandr|Caffeine|Pavucontrol|emulator64-arm|Transmission-gtk|sublime-text|VirtualBox|Virt-manager"] floating enable
 for_window [instance="wync|sky|TeamViewer.exe"] floating enable
 for_window [title="Preferences|Xfce-notifyd|TrueCrypt|Catfish|Google Keep|irssi|Xarchiver|Wync|Unetbootin"] floating enable
@@ -68,6 +68,7 @@ set $mod  Mod4
 
 # Application launching
 bindsym $mod+Return   exec --no-startup-id urxvtc
+#bindsym $mod+Return   exec --no-startup-id alacritty
 bindsym $mod+p        exec "rofi -show run"
 bindsym $mod+Shift+p  exec i3-dmenu-desktop
 

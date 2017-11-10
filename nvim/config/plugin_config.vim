@@ -132,3 +132,28 @@ let g:ale_change_sign_column_color=1
 "let g:gitgutter_sign_removed = emoji#for('small_red_triangle')
 "let g:gitgutter_sign_modified_removed = emoji#for('collision')
 " }}}
+
+" LightLine {{{
+"let g:lightline = { 'enable': { 'statusline': 1, 'tabline': 1 } }
+"let g:lightline = {
+      "\ 'tabline': {
+      "\   'left': [ ['bufferline'] ]
+      "\ },
+      "\ 'component_expand': {
+      "\   'bufferline': 'LightlineBufferline',
+      "\ },
+      "\ 'component_type': {
+      "\   'bufferline': 'tabsel',
+      "\ },
+      "\ }
+
+"function! LightlineBufferline()
+  "call bufferline#refresh_status()
+  "return [ g:bufferline_status_info.before, g:bufferline_status_info.current, g:bufferline_status_info.after]
+"endfunction
+" }}}
+
+" DelimitMate {{{
+au FileType cpp let b:delimitMate_matchpairs_list = [['(', ')'], ['{', '}'], ['[', ']']]
+
+" }}}

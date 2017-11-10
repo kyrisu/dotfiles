@@ -10,15 +10,9 @@ set fileformats=unix,dos,mac " Use Unix as the standard file type
 set magic                    " For regular expressions turn magic on
 set path=.,**                " Directories to search when using gf
 set virtualedit=block        " Position cursor anywhere in visual block
-set synmaxcol=1000           " Don't syntax highlight long lines
+set synmaxcol=500           " Don't syntax highlight long lines
 set formatoptions+=1         " Don't break lines after a one-letter word
 set formatoptions-=t         " Don't auto-wrap text
-
-" No sound on errors
-"set noerrorbells
-"set novisualbell
-"set t_vb=
-"set tm=500
 
 " What to save for views:
 set viewoptions-=options
@@ -52,20 +46,24 @@ set diffopt+=vertical
 let mapleader = ","
 let g:mapleader = ","
 
+" CUSTOM COMMANDS {{{
+
 " Fast saving
 nmap <leader>w :w!<cr>
 
 " Create file under cursor
-map <leader>gf :exec printf('e %s/%s', expand("%:p:h"), expand("<cfile>"))<cr>
+map <leader>gf :exec printf('e %s/%s.%s', expand("%:p:h"), expand("<cfile>:r"), (expand("<cfile>:e") ? expand("<cfile>:e") : expand("%:p:e")))<CR><CR>
 " Fast editing of the .vimrc
 map <leader>ee :e! ~/.config/nvim/init.vim<cr>
+
+map <leader>xx :.w !bash<cr>
+"}}}
 
 " When vimrc is edited, reload it
 autocmd! bufwritepost init.vim nested source ~/.config/nvim/init.vim
 set inccommand=split
 set noshowmode
 set splitbelow
-map <leader>xx :.w !bash<cr>
 " }}}
 
 " Wildmenu {{{
@@ -87,17 +85,17 @@ map <leader>xx :.w !bash<cr>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 syntax enable "Enable syntax hl
 
-if LINUX() && has("gui_running")
+if LINUX() && has('gui_running')
   set guifont=Inconsolata\ 12,Andale\ Mono\ Regular\ 16,Menlo\ Regular\ 15,Consolas\ Regular\ 16,Courier\ New\ Regular\ 18
-elseif OSX() && has("gui_running")
+elseif OSX() && has('gui_running')
   set guifont=Andale\ Mono\ Regular:h16,Menlo\ Regular:h15,Consolas\ Regular:h16,Courier\ New\ Regular:h18
-elseif WINDOWS() && has("gui_running")
+elseif WINDOWS() && has('gui_running')
   set guifont=Andale_Mono:h10,Menlo:h10,Consolas:h10,Courier_New:h10
 endif
 
 " set termguicolors
 
-if has("gui_running")
+if has('gui_running')
   set guioptions-=T
   set guioptions-=m
   set guioptions-=r
@@ -107,7 +105,7 @@ if has("gui_running")
 else
 endif
 
-if has ("gui_running")
+if has ('gui_running')
   set background=dark
 else
   set background=dark
@@ -121,6 +119,9 @@ endif
 "let g:solarized_termcolors=256
 colorscheme solarized
 hi Comment cterm=italic
+hi TabLine cterm=NONE
+hi TabLineSel cterm=reverse
+hi TabLineFill cterm=NONE
 
 highlight Pmenu ctermbg=8 guibg=#606060
 highlight PmenuSel ctermbg=1 guifg=#dddd00 guibg=#1f82cd
@@ -151,65 +152,35 @@ set cpoptions-=m    " showmatch will wait 0.5s or until a char is typed
 
 " => VIM user interface {{{
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Set 7 lines to the curors - when moving vertical..
-set so=7
-
-set ruler "Always show current position
-
-set cmdheight=3 "The commandbar height
-
-set hid "Change buffer - without saving
-
-" Set backspace config
-set backspace=eol,start,indent
-set whichwrap+=<,>,h,l
-
-set lazyredraw "Don't redraw while executing macros
-
-set mat=2 "How many tenths of a second to blink
-
-"set rnu
-"function! ToggleNumbersOn()
-    "set rnu!
-    "set nu
-"endfunction
-"function! ToggleRelativeOn()
-    "set nu!
-    "set rnu
-"endfunction
-"autocmd FocusLost * call ToggleNumbersOn()
-"autocmd FocusGained * call ToggleRelativeOn()
-"autocmd InsertEnter * call ToggleNumbersOn()
-"autocmd InsertLeave * call ToggleRelativeOn()
-
 autocmd BufEnter * let &titlestring = 'NVIM ' . expand("%:t")
 set title
 " }}}
 
 " }}}
+
 " Behavior {{{
 " --------
 "set nowrap                      " No wrap by default
-set linebreak                   " Break long lines at 'breakat'
-set breakat=\ \	;:,!?           " Long lines break chars
-set nostartofline               " Cursor in same column for few commands
-set whichwrap+=h,l,<,>,[,],~    " Move to following line on certain keys
-"set splitbelow splitright       " Splits open bottom right
-set switchbuf=useopen,usetab    " Jump to the first open window in any tab
-"set switchbuf+=vsplit           " Switch buffer behavior to vsplit
-set backspace=indent,eol,start  " Intuitive backspacing in insert mode
-set diffopt=filler,iwhite       " Diff mode: show fillers, ignore white
-set showfulltag                 " Show tag and tidy search in completion
-set complete=.                  " No wins, buffs, tags, include scanning
-set completeopt=menuone         " Show menu even for one item
-set completeopt+=noselect       " Do not select a match in the menu
+set linebreak                  " Break long lines at 'breakat'
+set breakat=\ \	;:,!?          " Long lines break chars
+set nostartofline              " Cursor in same column for few commands
+set whichwrap+=h,l,<,>,[,],~   " Move to following line on certain keys
+set switchbuf=useopen,usetab   " Jump to the first open window in any tab
+set backspace=indent,eol,start " Intuitive backspacing in insert mode
+set diffopt=filler,iwhite      " Diff mode: show fillers, ignore white
+set showfulltag                " Show tag and tidy search in completion
+set complete=.                 " No wins, buffs, tags, include scanning
+set completeopt=menuone        " Show menu even for one item
+set completeopt+=noselect      " Do not select a match in the menu
+set lazyredraw                 " Don't redraw while executing macros
+set matchtime=2                " How many tenths of a second to blink
 
 if has('patch-7.4.775')
-	set completeopt+=noinsert
+  set completeopt+=noinsert
 endif
 
 if exists('+inccommand')
-	set inccommand=nosplit
+  set inccommand=nosplit
 endif
 
 " }}}
@@ -224,7 +195,7 @@ set number              " Show line numbers
 set noruler             " Disable default status ruler
 set list                " Show hidden characters
 
-set showtabline=0       " Show tabline only if I'm using tabs
+set showtabline=1       " Show tabline only if there are at least 2 tab pages
 set tabpagemax=15       " Maximum number of tab pages
 set winwidth=75         " Minimum width for current window
 set winminwidth=8       " Minimum width for inactive windows
@@ -235,7 +206,7 @@ set helpheight=12       " Minimum help window height
 set previewheight=10    " Completion preview height
 
 set noshowcmd           " Don't show command in status line
-set cmdheight=1         " Height of the command line
+set cmdheight=2         " Height of the command line
 set cmdwinheight=5      " Command-line lines
 "set noequalalways       " Don't resize windows on split or close
 set laststatus=2        " Always show a status line
@@ -289,7 +260,6 @@ set autoindent      " Use same indenting on new lines
 set smartindent     " Smart autoindenting on new lines
 set shiftround      " Round indent to multiple of 'shiftwidth'
 
-set list
 " }}}
 
 " Time {{{
@@ -303,7 +273,7 @@ if has('nvim')
 	" https://github.com/neovim/neovim/issues/2017
 	set ttimeoutlen=-1
 else
-	set ttimeoutlen=250
+  set ttimeoutlen=250 " Time out on key codes
 endif
 
 " }}}
@@ -392,7 +362,7 @@ nnoremap <silent> <space> :nohlsearch<Bar>:echo<CR>
 map <silent> <leader><cr> :noh<cr>
 
 " Close the current buffer
-map <leader>bd :Bclose<cr>
+map <leader>bd :silent Bclose<cr>
 map <leader>c :bp\|bd #<cr>
 
 " Close all the buffers
@@ -442,13 +412,6 @@ function! <SID>BufcloseCloseIt()
   endif
 endfunction
 
-" Specify the behavior when switching between buffers
-"try
-  "set switchbuf=usetab
-  "set stal=2
-"catch
-"endtry
-
 "}}}
 
 " => Statusline {{{
@@ -458,6 +421,7 @@ endfunction
 "let g:airline_theme = 'base16'
 let g:airline_theme = 'solarized'
 let g:airline_powerline_fonts = 1
+let g:airline_highlighting_cache = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#fnamemod = ':t' " show only filename in the tabline
 "let g:airline#extensions#branch#enabled = 0
@@ -530,6 +494,13 @@ let g:deoplete#ignore_sources._ = ['ultisnips']
 "let g:deoplete#ignore_sources['javascript'] = ["omni"]
 "let g:deoplete#ignore_sources['javascript.jsx'] = ["omni"]
 
+let g:deoplete#sources = {}
+let g:deoplete#sources['javascript'] = ['omni', 'file', 'buffer']
+let g:deoplete#sources['javascript.jsx'] = ['omni', 'file', 'buffer']
+call deoplete#custom#source('omni', 'rank', 1000)
+
+let g:deoplete#auto_complete_delay = 50
+
 
 function! Preview_func()
   if &previewwindow
@@ -579,12 +550,17 @@ function! s:is_whitespace() "{{{
 	return ! col || getline('.')[col - 1] =~? '\s'
 endfunction "}}}
 
+function! s:check_back_space() abort "{{{
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~ '\s'
+endfunction"}}}
+
 imap <silent><expr><Tab> pumvisible() ? "\<C-n>"
-      \ : (<SID>is_whitespace() ? "\<Tab>"
+      \ : (<SID>check_back_space() ? "\<Tab>"
       \ : deoplete#manual_complete())
 
 smap <silent><expr><Tab> pumvisible() ? "\<C-n>"
-      \ : (<SID>is_whitespace() ? "\<Tab>"
+      \ : (<SID>check_back_space() ? "\<Tab>"
       \ : deoplete#manual_complete())
 
 inoremap <expr><S-Tab>  pumvisible() ? "\<C-p>" : "\<C-h>"
@@ -593,10 +569,6 @@ inoremap <expr><S-Tab>  pumvisible() ? "\<C-p>" : "\<C-h>"
 "let g:UltiSnipsExpandTrigger = "<C-k>"
 "let g:UltiSnipsJumpForwardTrigger = "<C-n>"
 "let g:UltiSnipsJumpBackwardTrigger = "<C-p>"
-
-let g:syntastic_auto_loc_list = 0
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_java_javac_config_file_enabled=1
 
 let g:UltiSnipsSnippetDirectories=[$HOME.'/.dotfiles/nvim/UltiSnips', $HOME.'/.dotfiles/nvim/bundle/vim-snippets/UltiSnips']
 
@@ -669,10 +641,7 @@ let g:deoplete#skip_chars = ['(', ')']
 let g:deoplete#max_abbr_width = 0
 let g:deoplete#max_menu_width = 0
 let g:deoplete#omni#input_patterns = get(g:,'deoplete#omni#input_patterns',{})
-"let g:deoplete#omni#input_patterns.javascript = '[^. \t]\.\%(\h\w*\)\?'
-"let g:deoplete#omni#input_patterns['javascript.jsx'] = '[^. \t]\.\%(\h\w*\)\?'
-"let g:deoplete#omni#input_patterns['javascript'] = '[^. \t0-9]\.\w*'
-let g:deoplete#omni#input_patterns['javascript.jsx'] = '[^. \t0-9]\.\w*'
+let g:deoplete#omni#input_patterns['javascript.jsx'] = ['[^. \t0-9]\.\w*']
 "let g:deoplete#omni#input_patterns.typescript = '[^. \t]\.\%(\h\w*\)\?'
 
 let g:deoplete#sources#jedi#statement_length = 1
@@ -681,12 +650,6 @@ let g:deoplete#sources#jedi#short_types = 1
 
 let g:deoplete#omni#functions = get(g:, 'deoplete#omni#functions', {})
 let g:deoplete#omni#functions.css = 'csscomplete#CompleteCSS'
-
-"let g:deoplete#omni#functions['javascript.jsx'] = ['tern#Complete']
-"let g:deoplete#omni#functions['javascript'] = ['tern#Complete']
-
-"\ 'tern#Complete',
-
 
 let g:deoplete#tag#cache_limit_size = 5000000
 
@@ -720,8 +683,8 @@ let g:used_javascript_libs = 'react'
 
 "let g:tern_show_argument_hints='no'
 let g:tern_request_timeout = 6000
-let g:tern_show_argument_hints=1
-let g:tern_show_signature_in_pum = 1
+let g:tern_show_argument_hints = 0
+let g:tern_show_signature_in_pum = 0
 let g:tern_map_keys=1
 let g:tern_map_prefix='<leader>'
 
@@ -765,23 +728,18 @@ let g:tagbar_type_javascript = {
     \ ]
 \ }
 
-"let g:webdevicons_enable_ctrlp = 0
-
 " generate ctags
 command! JStags !find . -type f -iregex ".*\.js$" -not -path "./node_modules/*" -exec jsctags {} -f \; | sed '/^$/d' | sort > tags
 
+" JSX
 " this will be usefull in the feature when jsctags has append option
 "autocmd BufWritePost *
       "\ if filereadable('tags') |
       "\   call system('ctags -a '.expand('%')) |
       "\ endif
 
-" JSX
 let g:jsx_ext_required = 0
 "let g:xml_syntax_folding = 0
-
-"autocmd FileType javascript vnoremap <buffer>  <leader>ff :call JsBeautify()<cr>
-"autocmd FileType javascript vnoremap <buffer>  <leader>ff :call RangeJsBeautify()<cr>
 
 " => JSON section {{{
 """""""""""""""""""""""""""""""
@@ -793,9 +751,6 @@ let g:indentLine_conceallevel = 0
 """"""""""""""""""""""""""""""
 " => HTML & CSS
 """""""""""""""""""""""""""""""
-let g:syntastic_html_checkers = ['eslint']
-let g:syntastic_less_checkers = ['lessc']
-let g:syntastic_scss_checkers = ['sass_lint']
 
 function! Expander()
   let line   = getline(".")
@@ -841,66 +796,6 @@ let g:tsuquyomi_disable_quickfix = 1
 
 " }}}
 
-" => Ionic Framework section {{{
-"""""""""""""""""""""""""""""""
-"automatically jump to the error when saving the file
-let g:syntastic_auto_jump=0
-
-let g:syntastic_html_tidy_ignore_errors=[
-  \ 'proprietary attribute',
-  \ '<ion-',
-  \ '</ion-',
-  \ '<md-',
-  \ '</md-',
-  \ '<ng-',
-  \ '</ng-',
-  \ '<wb-',
-  \ '</wb-'
-  \ ]
-"allow for ionic html attributes
-let g:syntastic_html_tidy_blocklevel_tags = [
-  \'ion-checkbox',
-  \'ion-content',
-  \'ion-delete-button',
-  \'ion-footer-bar',
-  \'ion-header-bar',
-  \'ion-infinite-scroll',
-  \'ion-item',
-  \'ion-list',
-  \'ion-modal-view',
-  \'ion-nav-back-button',
-  \'ion-nav-bar',
-  \'ion-nav-buttons',
-  \'ion-nav-view',
-  \'ion-option-button',
-  \'ion-pane',
-  \'ion-popover-view',
-  \'ion-radio',
-  \'ion-refresher',
-  \'ion-reorder-button',
-  \'ion-scroll',
-  \'ion-side-menu',
-  \'ion-side-menus',
-  \'ion-side-menu-content',
-  \'ion-slide',
-  \'ion-slide-box',
-  \'ion-tab',
-  \'ion-tabs',
-  \'ion-toggle',
-  \'ion-view',
-  \'md-toolbar',
-  \'md-content',
-  \'md-button',
-  \'md-icon',
-  \'md-sidenav',
-  \'md-*',
-  \'ng-*',
-  \'wb-*',
-  \'webview',
-  \'ui-*',
-  \]
-" }}}
-
 " => Vim grep {{{
 """"""""""""""""""""""""""""""
 let Grep_Skip_Dirs = 'RCS CVS SCCS .svn generated .git'
@@ -914,6 +809,8 @@ set grepprg=/bin/grep\ -nH
 au BufRead,BufNewFile *.ags set ft=ags
 "*.log
 au BufRead,BufNewFile *.log set ft=log
+"*.vim
+au BufRead,BufNewFile *.vim setlocal keywordprg=:help
 " }}}
 
 " => Markdown {{{
@@ -932,10 +829,10 @@ let g:vim_markdown_folding_disabled = 1
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 "nmap <leader>t :!make test<cr>
-"set makeprg=g++
+set makeprg="clang++ -std=c++11 -Wall -Wextra"
 
-let g:syntastic_cpp_checkers = ['gcc']
 
+let &path.='src/include,/usr/include/AL,'
 "}}}
 
 " => MISC {{{
@@ -963,9 +860,9 @@ map <leader>bb :cd ..<cr>
 
 " TagBar options
 if WINDOWS()
-  let g:tagbar_ctags_bin = "C:\\bin\\ctags.exe"
+  let g:tagbar_ctags_bin = 'C:\\bin\\ctags.exe'
 elseif LINUX()
-  let g:tagbar_ctags_bin = "ctags"
+  let g:tagbar_ctags_bin = 'ctags'
 endif
 
 nnoremap <silent> <F8> :TagbarToggle<CR>

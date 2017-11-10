@@ -83,7 +83,7 @@ endsnippet
 
 snippet spt
 static propTypes = {
-  ${1}: React.PropTypes.${2:type},
+  ${1}: PropTypes.${2:type},
 }
 endsnippet
 
@@ -147,6 +147,13 @@ constructor(props) {
   super(props);
   ${1}
 }
+endsnippet
+
+snippet gip
+static async getInitialProps(context) {
+  ${1}
+}
+
 endsnippet
 
 snippet ren

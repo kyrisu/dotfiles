@@ -17,7 +17,7 @@ session_lock() {
 
   # Lock screen.
   logger "Running i3lock... "
-  pidof i3lock || i3lock -u -i ~/.cache/i3/i3lock.png
+  pidof i3lock || i3lock -e -i ~/.cache/i3/i3lock.png
 
   # Remove cached file on exit.
   trap 'rm ~/.cache/i3/*i3lock.png' EXIT
