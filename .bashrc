@@ -54,6 +54,7 @@ alias watch_todos="WATCH='\"src/**/*\"' chokidar --silent $WATCH --initial -c \"
 
 # utilities
 alias whereami='geoiplookup $(curl ifconfig.io 2> /dev/null)'
+alias beep='paplay /usr/share/sounds/freedesktop/stereo/complete.oga'
 
 # soft aliases
 

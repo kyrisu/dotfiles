@@ -109,6 +109,10 @@ let g:ale_linters = {
       \ 'javascript.jsx' : ['eslint'],
       \}
 
+let g:ale_fixers = {
+\   'javascript': ['eslint'],
+\}
+
 " If emoji not loaded, use default sign
 try
   let g:ale_sign_error = emoji#for('boom')
@@ -134,26 +138,89 @@ let g:ale_change_sign_column_color=1
 " }}}
 
 " LightLine {{{
-"let g:lightline = { 'enable': { 'statusline': 1, 'tabline': 1 } }
-"let g:lightline = {
-      "\ 'tabline': {
-      "\   'left': [ ['bufferline'] ]
-      "\ },
-      "\ 'component_expand': {
-      "\   'bufferline': 'LightlineBufferline',
-      "\ },
-      "\ 'component_type': {
-      "\   'bufferline': 'tabsel',
-      "\ },
-      "\ }
 
-"function! LightlineBufferline()
-  "call bufferline#refresh_status()
-  "return [ g:bufferline_status_info.before, g:bufferline_status_info.current, g:bufferline_status_info.after]
-"endfunction
+let g:lightline = {
+  \   'colorscheme': 'solarized',
+  \   'active': {
+  \     'left': [ [ 'mode' ], [ 'pwd' ] ],
+  \     'right': [ [ 'linter_errors', 'linter_warnings', 'trailing', 'lineinfo' ], [ 'fileinfo' ] ],
+  \   },
+  \   'inactive': {
+  \     'left': [ [ 'pwd' ] ],
+  \     'right': [ [ 'lineinfo' ], [ 'fileinfo' ] ],
+  \   },
+  \   'tabline': {
+  \     'left': [ [ 'buffers' ] ]
+  \   },
+  \   'mode_map': {
+  \     'n' : 'N',
+  \     'i' : 'I',
+  \     'R' : 'R',
+  \     'v' : 'V',
+  \     'V' : 'V-LINE',
+  \     "\<C-v>": 'V-BLOCK',
+  \     'c' : 'C',
+  \     's' : 'S',
+  \     'S' : 'S-LINE',
+  \     "\<C-s>": 'S-BLOCK',
+  \     't': '',
+  \   },
+  \   'component': {
+  \     'lineinfo': '%l:%-v',
+  \   },
+  \   'separator': { 'left': '', 'right': '' },
+  \   'subseparator': { 'left': '', 'right': '' },
+  \   'component_expand': {
+  \     'buffers': 'lightline#bufferline#buffers',
+  \     'trailing': 'lightline#trailing_whitespace#component',
+  \     'linter_warnings': 'lightline#ale#warnings',
+  \     'linter_errors': 'lightline#ale#errors',
+  \   },
+  \   'component_function': {
+  \     'pwd': 'LightlineWorkingDirectory',
+  \     'fileinfo': 'LightlineFileinfo',
+  \   },
+  \   'component_type': {
+  \     'buffers': 'tabsel',
+  \     'linter_warnings': 'warning',
+  \     'linter_errors': 'error',
+  \   }
+  \ }
+
+function! LightlineFileinfo()
+  if winwidth(0) < 90
+    return ''
+  endif
+
+  let encoding = &fenc !=# "" ? &fenc : &enc
+  let format = &ff
+  let type = &ft !=# "" ? &ft : "no ft"
+  return type . ' | ' . format . ' | ' . encoding
+endfunction
+
+function! LightlineWorkingDirectory()
+  return &ft =~ 'help\|qf' ? '' : fnamemodify(getcwd(), ":~:.")
+endfunction
 " }}}
+
+
+"""" Lightline ALE
+let g:lightline#ale#indicator_warnings = ' '
+let g:lightline#ale#indicator_errors = ' '
+
+"""" lightline-bufferline
+let g:lightline#bufferline#filename_modifier = ':~:.' " Show filename relative to current directory
+let g:lightline#bufferline#unicode_symbols = 1        " Use fancy unicode symbols for various indicators
+let g:lightline#bufferline#modified = ''             " Default pencil is too ugly
+let g:lightline#bufferline#unnamed = '[No Name]'      " Default name when no buffer is opened
+let g:lightline#bufferline#shorten_path = 1           " compress ~/my/folder/name to ~/m/f/n
+
+""" buftabline
+
+let g:buftabline_separators = 0
+let g:buftabline_indicators = 1
 
 " DelimitMate {{{
 au FileType cpp let b:delimitMate_matchpairs_list = [['(', ')'], ['{', '}'], ['[', ']']]
-
+au FileType cpp,javascript.jsx let b:delimitMate_expand_cr = 2
 " }}}

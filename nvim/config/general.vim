@@ -10,7 +10,7 @@ set fileformats=unix,dos,mac " Use Unix as the standard file type
 set magic                    " For regular expressions turn magic on
 set path=.,**                " Directories to search when using gf
 set virtualedit=block        " Position cursor anywhere in visual block
-set synmaxcol=500           " Don't syntax highlight long lines
+set synmaxcol=300           " Don't syntax highlight long lines
 set formatoptions+=1         " Don't break lines after a one-letter word
 set formatoptions-=t         " Don't auto-wrap text
 
@@ -43,8 +43,7 @@ set autowrite " autosave on ! and others
 
 set diffopt+=vertical
 
-let mapleader = ","
-let g:mapleader = ","
+let g:mapleader = ','
 
 " CUSTOM COMMANDS {{{
 
@@ -53,6 +52,7 @@ nmap <leader>w :w!<cr>
 
 " Create file under cursor
 map <leader>gf :exec printf('e %s/%s.%s', expand("%:p:h"), expand("<cfile>:r"), (expand("<cfile>:e") ? expand("<cfile>:e") : expand("%:p:e")))<CR><CR>
+
 " Fast editing of the .vimrc
 map <leader>ee :e! ~/.config/nvim/init.vim<cr>
 
@@ -64,21 +64,6 @@ autocmd! bufwritepost init.vim nested source ~/.config/nvim/init.vim
 set inccommand=split
 set noshowmode
 set splitbelow
-" }}}
-
-" Wildmenu {{{
-" --------
-"if has('wildmenu')
-	"set nowildmenu
-	"set wildmode=list:longest,full
-	"set wildoptions=tagfile
-	"set wildignorecase
-	"set wildignore+=.git,.hg,.svn,.stversions,*.pyc,*.spl,*.o,*.out,*~,%*
-	"set wildignore+=*.jpg,*.jpeg,*.png,*.gif,*.zip,*.DS_Store
-	"set wildignore+=**/node_modules/**,**/bower_modules/**,*/.sass-cache/*
-	"set wildignore+=__pycache__,*.egg-info
-"endif
-
 " }}}
 
 " => Colors and Fonts {{{
@@ -117,6 +102,7 @@ endif
 
 "colorscheme gruvbox
 "let g:solarized_termcolors=256
+
 colorscheme solarized
 hi Comment cterm=italic
 hi TabLine cterm=NONE
@@ -132,7 +118,7 @@ try
 catch
 endtry
 
-set ffs=unix,dos,mac "Default file types
+set fileformats=unix,dos,mac "Default file types
 " }}}
 
 " Searching {{{
@@ -152,7 +138,10 @@ set cpoptions-=m    " showmatch will wait 0.5s or until a char is typed
 
 " => VIM user interface {{{
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-autocmd BufEnter * let &titlestring = 'NVIM ' . expand("%:t")
+augroup VimStart
+  autocmd BufEnter * let &titlestring = 'NVIM ' . expand("%:t")
+augroup END
+
 set title
 " }}}
 
@@ -195,7 +184,7 @@ set number              " Show line numbers
 set noruler             " Disable default status ruler
 set list                " Show hidden characters
 
-set showtabline=1       " Show tabline only if there are at least 2 tab pages
+set showtabline=2       " Show tabline only if there are at least 2 tab pages
 set tabpagemax=15       " Maximum number of tab pages
 set winwidth=75         " Minimum width for current window
 set winminwidth=8       " Minimum width for inactive windows
@@ -307,7 +296,7 @@ function! FoldText()
   let foldLevelStr = repeat('+--', v:foldlevel)
   let lineCount = line('$')
   let foldPercentage = printf('[%.1f', (foldSize*1.0)/lineCount*100) . '%] '
-  let expansionString = repeat('.', w - strwidth(foldSizeStr.line.foldLevelStr.foldPercentage))
+  let expansionString = repeat('.', w - strwidth(foldSizeStr . line . foldLevelStr . foldPercentage))
   return line . expansionString . foldSizeStr . foldPercentage . foldLevelStr
 endfunction
 
@@ -325,29 +314,29 @@ vnoremap <silent> gv :call VisualSearch('gv')<CR>
 " map <leader>g :vimgrep // ./**/*.<left><left><left><left><left><left><left><left><left>
 
 function! CmdLine(str)
-  exe "menu Foo.Bar :" . a:str
+  exe 'menu Foo.Bar :' . a:str
   emenu Foo.Bar
   unmenu Foo
 endfunction
 
 " From an idea by Michael Naumann
 function! VisualSearch(direction) range
-  let l:saved_reg = @"
-  execute "normal! vgvy"
+  let saved_reg = @"
+  execute 'normal! vgvy'
 
-  let l:pattern = escape(@", '\\/.*$^~[]')
-  let l:pattern = substitute(l:pattern, "\n$", "", "")
+  let pattern = escape(@", '\\/.*$^~[]')
+  let pattern = substitute(pattern, '\n$', '', '')
 
   if a:direction == 'b'
-    execute "normal ?" . l:pattern . "^M"
+    execute "normal ?" . pattern . "^M"
   elseif a:direction == 'gv'
-    call CmdLine('vimgrep ' . '/'. l:pattern . '/' . ' **/*.')
+    call CmdLine('vimgrep ' . '/'. pattern . '/' . ' **/*.')
   elseif a:direction == 'f'
-    execute "normal /" . l:pattern . "^M"
+    execute "normal /" . pattern . "^M"
   endif
 
-  let @/ = l:pattern
-  let @" = l:saved_reg
+  let @/ = pattern
+  let @" = saved_reg
 endfunction
 
 " Visual shifting
@@ -394,21 +383,21 @@ map <leader>cd :cd %:p:h<cr>
 
 command! Bclose call <SID>BufcloseCloseIt()
 function! <SID>BufcloseCloseIt()
-  let l:currentBufNum = bufnr("%")
-  let l:alternateBufNum = bufnr("#")
+  let currentBufNum = bufnr("%")
+  let alternateBufNum = bufnr("#")
 
-  if buflisted(l:alternateBufNum)
+  if buflisted(alternateBufNum)
     buffer #
   else
     bnext
   endif
 
-  if bufnr("%") == l:currentBufNum
+  if bufnr("%") == currentBufNum
     new
   endif
 
-  if buflisted(l:currentBufNum)
-    execute("bdelete! ".l:currentBufNum)
+  if buflisted(currentBufNum)
+    execute("bdelete! ".currentBufNum)
   endif
 endfunction
 
@@ -416,20 +405,6 @@ endfunction
 
 " => Statusline {{{
 """"""""""""""""""""""""""""""
-" Format the statusline
-"let g:airline_theme = 'gruvbox'
-"let g:airline_theme = 'base16'
-let g:airline_theme = 'solarized'
-let g:airline_powerline_fonts = 1
-let g:airline_highlighting_cache = 1
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#fnamemod = ':t' " show only filename in the tabline
-"let g:airline#extensions#branch#enabled = 0
-let g:airline#extensions#hunks#enabled = 0
-let g:airline#extensions#whitespace#enabled = 0
-"let g:airline_extensions = []
-"
-
 function! HasPaste()
   if &paste
     return 'PASTE MODE  '
@@ -703,8 +678,8 @@ autocmd FileType javascript nnoremap gd :TernDef<cr>
 "autocmd FileType javascript nnoremap gd :TSDef<cr>
 
 " insert newline when pressing enter between brackets
-autocmd FileType javascript inoremap {<CR>  {<CR>}<C-c><S-o>
-autocmd FileType javascript inoremap [<CR>  [<CR>]<C-c><S-o>
+"autocmd FileType javascript inoremap {<CR>  {<CR>}<C-c><S-o>
+"autocmd FileType javascript inoremap [<CR>  [<CR>]<C-c><S-o>
 
 autocmd! BufRead,BufNewFile,BufEnter *.spec.js UltiSnipsAddFiletype javascript-spec
 
@@ -832,7 +807,7 @@ let g:vim_markdown_folding_disabled = 1
 set makeprg="clang++ -std=c++11 -Wall -Wextra"
 
 
-let &path.='src/include,/usr/include/AL,'
+autocmd FileType cpp let &path.='src/include,/usr/include/AL,'
 "}}}
 
 " => MISC {{{
@@ -885,4 +860,19 @@ augroup END
 command! JI JavaImport
 command! JIO JavaImportOrganize
 "}}}
+
+augroup suffixes
+  autocmd!
+
+  let associations = [
+        \['javascript', '.js,.javascript,.es,.esx,.json'],
+        \['javascript.jsx', '.js,.jsx,.json'],
+        \['python', '.py,.pyw']
+        \]
+
+  for ft in associations
+    execute 'autocmd FileType ' . ft[0] . ' setlocal suffixesadd=' . ft[1]
+  endfor
+augroup END
+
 set secure

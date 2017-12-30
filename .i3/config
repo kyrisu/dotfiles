@@ -31,7 +31,7 @@ for_window [class="Connman-gtk"] floating enable
 for_window [class="Pavucontrol"] floating enable
 for_window [class="Linphone"] floating enable
 
-for_window [class="Vlc|VLSub 0.9|MPlayer|Peek|Gtk-recordMyDesktop|Skype|xpad|Java|Hamster|Systemadm|Modem-manager-gui|Screengrab|Shutter|Exodus|Jaxx|Mist|Slack"] floating enable
+for_window [class="Vlc|VLSub 0.9|MPlayer|Peek|Gtk-recordMyDesktop|Skype|xpad|Java|Hamster|Systemadm|Modem-manager-gui|Screengrab|Shutter|Exodus|Jaxx|Mist|Slack|Electron"] floating enable
 for_window [class="File-roller|Lxappearance|Nitrogen|Arandr|Caffeine|Pavucontrol|emulator64-arm|Transmission-gtk|sublime-text|VirtualBox|Virt-manager"] floating enable
 for_window [instance="wync|sky|TeamViewer.exe"] floating enable
 for_window [title="Preferences|Xfce-notifyd|TrueCrypt|Catfish|Google Keep|irssi|Xarchiver|Wync|Unetbootin"] floating enable
@@ -52,11 +52,14 @@ for_window [class="CrashPlan"] floating enable
 for_window [class="Player"] floating enable
 for_window [instance="gitg"] floating enable
 
+for_window [class="qt-*"] floating enable
+
 # doit.im
 for_window [instance="crx_cddjogbhlfmcgapnfineapehielpnkec"] floating disable
 
 
 # float projects
+for_window [class="QtQmlViewer"] floating enable
 for_window [class="Unified Agent*"] floating enable
 
 # -----------

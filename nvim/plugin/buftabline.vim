@@ -40,6 +40,7 @@ augroup BufTabLine
   let g:buftabline_numbers    = get(g:, 'buftabline_numbers',    0)
   let g:buftabline_indicators = get(g:, 'buftabline_indicators', 1)
   let g:buftabline_separators = get(g:, 'buftabline_separators', 0)
+  let g:buftabline_separator = get(g:, 'buftabline_separator', nr2char(0x23B8))
   let g:buftabline_show       = get(g:, 'buftabline_show',       2)
 
   function! buftabline#user_buffers() " help buffers are always unlisted, but quickfix buffers are not
@@ -52,7 +53,7 @@ augroup BufTabLine
     let show_num = g:buftabline_numbers == 1
     let show_ord = g:buftabline_numbers == 2
     let show_mod = g:buftabline_indicators
-    let lpad     = g:buftabline_separators ? nr2char(0x23B8) : ' '
+    let lpad     = g:buftabline_separators ? g:buftabline_separator : ' '
 
     let bufnums = buftabline#user_buffers()
     let centerbuf = s:centerbuf " prevent tabline jumping around when non-user buffer current (e.g. help)

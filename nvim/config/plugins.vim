@@ -45,20 +45,27 @@ Plug 'metakirby5/codi.vim'
 Plug 'christianrondeau/vim-base64'
 
 """" Autocomplete
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-"Plug 'vim-airline/vim-airline'
-"Plug 'vim-airline/vim-airline-themes'
-"Plug 'ap/vim-buftabline'
+if has('nvim')
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+else
+  Plug 'Shougo/deoplete.nvim'
+  Plug 'roxma/nvim-yarp'
+  Plug 'roxma/vim-hug-neovim-rpc'
+endif
 Plug 'itchyny/lightline.vim'
+Plug 'maximbaz/lightline-ale'
 Plug 'tpope/vim-surround'
+Plug 'tpope/vim-repeat' " allows dot to repeat more complicated expressions
 Plug 'tpope/vim-unimpaired' " cool bindings that I need to read more about
 Plug 'tpope/vim-fugitive' " git wrapper
 
 "" Javascript
 Plug 'pangloss/vim-javascript', { 'for': ['javascript', 'javascript.jsx'] }
+"Plug 'othree/yajs.vim', { 'for': ['javascript', 'javascript.jsx'] }
+"Plug 'othree/es.next.syntax.vim', { 'for': ['javascript', 'javascript.jsx'] }
+Plug 'othree/javascript-libraries-syntax.vim', { 'for': ['javascript', 'javascript.jsx'] }
 Plug 'mxw/vim-jsx', { 'for': ['javascript', 'javascript.jsx'] }
 Plug 'alampros/vim-styled-jsx', { 'for': ['javascript', 'javascript.jsx'] }
-Plug 'othree/javascript-libraries-syntax.vim', { 'for': ['javascript', 'javascript.jsx'] }
 
 Plug 'ruanyl/vim-fixmyjs', { 'for': ['javascript', 'javascript.jsx'] }
 Plug 'heavenshell/vim-jsdoc', { 'for': ['javascript', 'javascript.jsx'] }
@@ -88,7 +95,10 @@ Plug 'mhartington/nvim-typescript', { 'for': [ 'typescript', 'typescript.tsx' ] 
 
 "" Markdown
 Plug 'shime/vim-livedown', {'for': 'markdown'}
+"Plug 'suan/vim-instant-markdown', {'for': 'markdown'}
+Plug 'iamcco/markdown-preview.vim', {'for': 'markdown'}
 Plug 'plasticboy/vim-markdown', {'for': 'markdown'}
+
 
 "" HTML & CSS
 Plug 'mustache/vim-mustache-handlebars'
