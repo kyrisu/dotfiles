@@ -476,6 +476,7 @@ function! Neok()
 endfunction
 
 let g:ulti_expand_or_jump_res = 0
+
 function! NeoCR()
   if pumvisible() == 1
     let snippet = UltiSnips#ExpandSnippetOrJump()
@@ -498,6 +499,7 @@ inoremap <silent> <C-j> <C-R>=Neoj()<CR>
 inoremap <silent> <C-k> <C-R>=Neok()<CR>
 "snoremap <silent> <C-k> <Esc>:call UltiSnips#JumpBackwards()<CR>
 " inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
+au BufEnter * exec "inoremap <silent> <CR> <C-R>=NeoCR()<CR>"
 
 "set tags+=./tags
 
