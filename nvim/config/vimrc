@@ -2,6 +2,18 @@
 let $VIMPATH = fnamemodify(resolve(expand('<sfile>:p')), ':h:h')
 let $VARPATH = expand(($XDG_CACHE_HOME ? $XDG_CACHE_HOME : '~/.cache').'/vim')
 
+" OS Detection  {{{
+silent function! OSX()
+	return has('macunix')
+endfunction
+silent function! LINUX()
+	return has('unix') && !has('macunix') && !has('win32unix')
+endfunction
+silent function! WINDOWS()
+	return  (has('win16') || has('win32') || has('win64'))
+endfunction
+" }}}
+
 " Ensure cache directory "{{{
 if ! isdirectory(expand($VARPATH))
   " Create missing dirs i.e. cache/{undo,backup}
@@ -51,10 +63,9 @@ call s:source_file('plugins.vim')
 " Loading configuration modules {{{
 call s:source_file('general.vim')
 call s:source_file('plugin_config.vim')
-"call s:source_file('terminal.vim')
-call s:source_file('filetype.vim')
+"call s:source_file('filetype.vim')
+"call s:source_file('../filetype.vim')
 "call s:source_file('mappings.vim')
-"call s:source_file('theme.vim')
 " }}}
 
 set secure

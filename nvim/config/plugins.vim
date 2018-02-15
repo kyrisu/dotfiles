@@ -8,50 +8,52 @@ let g:plug_window = 'new'
 Plug 'junegunn/fzf', {'do': './install --all'}
 Plug 'junegunn/fzf.vim'
 Plug 'scrooloose/nerdtree'
-Plug 'junegunn/vim-easy-align'
+"Plug 'junegunn/vim-easy-align'
 Plug 'airblade/vim-rooter'
 Plug 'milkypostman/vim-togglelist' " toggle location and quickfix list
 Plug 'MarcWeber/vim-addon-local-vimrc'
-"Plug 'easymotion/vim-easymotion'
 
-"Plug 'morhetz/gruvbox'
-"Plug 'mhartington/oceanic-next'
 Plug 'altercation/vim-colors-solarized'
-Plug 'vim-scripts/LargeFile'
-"Plug 'junegunn/vim-emoji'
+"Plug 'vim-scripts/LargeFile'
 
-"""" programming general
+""""" programming general
 
 Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
-Plug 'kshenoy/vim-signature' " displays markers on the left margin
-Plug 'editorconfig/editorconfig-vim'
-Plug 'mileszs/ack.vim'
-Plug 'AndrewRadev/splitjoin.vim'
-"Plug 'wakatime/vim-wakatime'
+"Plug 'honza/vim-snippets'
+"Plug 'kshenoy/vim-signature' " displays markers on the left margin
+"Plug 'editorconfig/editorconfig-vim'
+"Plug 'mileszs/ack.vim'
+"Plug 'AndrewRadev/splitjoin.vim'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'airblade/vim-gitgutter' " places vim +- marks on the left gutter
 Plug 'Yggdroot/indentLine' " prints vertical indentation lines
 Plug 'Raimondi/delimitMate' " automatic closing of quotes, brackets etc
-"Plug 'Konfekt/FastFold' " Speed up Vim by updating folds only when called-for.
 Plug 'scrooloose/nerdcommenter' " commands for commenting selected text / row
 Plug 'w0rp/ale' " async linting
 Plug 'vasconcelloslf/vim-interestingwords' " keyword selection with <leader>k
 Plug 'rhysd/devdocs.vim' " opens devdocs with shift K
-"Plug 'majutsushi/tagbar'
-Plug 'derekwyatt/vim-fswitch'
 
-Plug 'metakirby5/codi.vim'
-Plug 'christianrondeau/vim-base64'
+Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
 
-"""" Autocomplete
+"Plug 'christianrondeau/vim-base64'
+
+"" Autocomplete
 if has('nvim')
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins', 'tag': '4.0-serial' }
 else
   Plug 'Shougo/deoplete.nvim'
   Plug 'roxma/nvim-yarp'
   Plug 'roxma/vim-hug-neovim-rpc'
 endif
+
+"Plug 'prabirshrestha/asyncomplete.vim'
+"Plug 'prabirshrestha/asyncomplete-lsp.vim'
+
+Plug 'prabirshrestha/async.vim'
+Plug 'prabirshrestha/vim-lsp'
+"Plug 'yami-beta/asyncomplete-omni.vim'
+"Plug 'prabirshrestha/asyncomplete-necosyntax.vim'
+
 Plug 'itchyny/lightline.vim'
 Plug 'maximbaz/lightline-ale'
 Plug 'tpope/vim-surround'
@@ -59,85 +61,90 @@ Plug 'tpope/vim-repeat' " allows dot to repeat more complicated expressions
 Plug 'tpope/vim-unimpaired' " cool bindings that I need to read more about
 Plug 'tpope/vim-fugitive' " git wrapper
 
-"" Javascript
+""" Javascript
 Plug 'pangloss/vim-javascript', { 'for': ['javascript', 'javascript.jsx'] }
-"Plug 'othree/yajs.vim', { 'for': ['javascript', 'javascript.jsx'] }
-"Plug 'othree/es.next.syntax.vim', { 'for': ['javascript', 'javascript.jsx'] }
+""Plug 'othree/yajs.vim', { 'for': ['javascript', 'javascript.jsx'] }
+""Plug 'othree/es.next.syntax.vim', { 'for': ['javascript', 'javascript.jsx'] }
 Plug 'othree/javascript-libraries-syntax.vim', { 'for': ['javascript', 'javascript.jsx'] }
 Plug 'mxw/vim-jsx', { 'for': ['javascript', 'javascript.jsx'] }
 Plug 'alampros/vim-styled-jsx', { 'for': ['javascript', 'javascript.jsx'] }
 
-Plug 'ruanyl/vim-fixmyjs', { 'for': ['javascript', 'javascript.jsx'] }
+"Plug 'ruanyl/vim-fixmyjs', { 'for': ['javascript', 'javascript.jsx'] }
 Plug 'heavenshell/vim-jsdoc', { 'for': ['javascript', 'javascript.jsx'] }
 
 Plug 'marijnh/tern_for_vim', {
       \ 'do' : 'npm install; npm i tern-node-express',
       \ 'for': ['javascript', 'javascript.jsx']
       \ }
-"Plug 'carlitux/deoplete-ternjs',
-      "\{
-      "\ 'do': 'npm install -g tern',
-      "\ 'for': ['javascript', 'javascript.jsx']
-      "\}
-"Plug 'flowtype/vim-flow', {
-      "\ 'for': ['javascript', 'javascript.jsx'],
-      "\ 'do' : 'npm install -g flow-bin'
-      "\ }
+""Plug 'carlitux/deoplete-ternjs',
+      ""\{
+      ""\ 'do': 'npm install -g tern',
+      ""\ 'for': ['javascript', 'javascript.jsx']
+      ""\}
+""Plug 'flowtype/vim-flow', {
+      ""\ 'for': ['javascript', 'javascript.jsx'],
+      ""\ 'do' : 'npm install -g flow-bin'
+      ""\ }
+
 
 "" Typescript
-"Plug 'leafgarland/typescript-vim', { 'for': ['typescript', 'typescript.tsx'] }
-"Plug 'mhartington/nvim-typescript', { 'for': [ 'typescript', 'javascript', 'javascript.jsx' ] }
-Plug 'mhartington/nvim-typescript', { 'for': [ 'typescript', 'typescript.tsx' ] }
-"Plug 'ianks/vim-tsx', { 'for': ['typescript', 'typescript.tsx'] }
-"Plug 'HerringtonDarkholme/yats.vim', { 'for': ['typescript', 'typescript.tsx'] }
+"Plug 'mhartington/nvim-typescript', { 
+  "\ 'for': [ 'typescript', 'javascript', 'javascript.jsx' ] ,
+  "\ 'do' : 'npm i -g typescript'
+  "\ }
+""Plug 'leafgarland/typescript-vim', { 'for': ['typescript', 'typescript.tsx'] }
+"Plug 'mhartington/nvim-typescript', { 'for': [ 'typescript', 'typescript.tsx' ] }
+""Plug 'ianks/vim-tsx', { 'for': ['typescript', 'typescript.tsx'] }
+""Plug 'HerringtonDarkholme/yats.vim', { 'for': ['typescript', 'typescript.tsx'] }
 
 
 
-"" Markdown
+""" Markdown
 Plug 'shime/vim-livedown', {'for': 'markdown'}
-"Plug 'suan/vim-instant-markdown', {'for': 'markdown'}
-Plug 'iamcco/markdown-preview.vim', {'for': 'markdown'}
+""Plug 'suan/vim-instant-markdown', {'for': 'markdown'}
+"Plug 'iamcco/markdown-preview.vim', {'for': 'markdown'}
 Plug 'plasticboy/vim-markdown', {'for': 'markdown'}
 
 
-"" HTML & CSS
-Plug 'mustache/vim-mustache-handlebars'
-Plug 'digitaltoad/vim-pug', { 'for': ['jade', 'pug'] }
+""" HTML & CSS
+"Plug 'mustache/vim-mustache-handlebars'
+"Plug 'digitaltoad/vim-pug', { 'for': ['jade', 'pug'] }
 Plug 'ap/vim-css-color', { 'for': ['css', 'less', 'scss', 'stylus'] }
-Plug 'cakebaker/scss-syntax.vim', { 'for': ['scss'] }
-Plug 'Valloric/MatchTagAlways'
+"Plug 'cakebaker/scss-syntax.vim', { 'for': ['scss'] }
+"Plug 'Valloric/MatchTagAlways'
 Plug 'hail2u/vim-css3-syntax'
 
-Plug 'mattn/emmet-vim', {'for': ['javascript.jsx', 'html']}
-Plug 'groenewege/vim-less', {'for': 'less'}
-Plug 'wavded/vim-stylus', {'for': 'stylus'}
+"Plug 'mattn/emmet-vim', {'for': ['javascript.jsx', 'html']}
+"Plug 'groenewege/vim-less', {'for': 'less'}
+"Plug 'wavded/vim-stylus', {'for': 'stylus'}
 
-"" CSV
-Plug 'chrisbra/csv.vim', {'for': 'csv'}
+""" CSV
+"Plug 'chrisbra/csv.vim', {'for': 'csv'}
 
-"" CPP
-""Plug 'ciaranm/googletest-syntax'
-Plug 'octol/vim-cpp-enhanced-highlight', {'for': 'cpp'}
-Plug 'Rip-Rip/clang_complete', {'for': 'cpp'}
+""" CPP
+"""Plug 'ciaranm/googletest-syntax'
+"Plug 'octol/vim-cpp-enhanced-highlight', {'for': 'cpp'}
+"Plug 'Rip-Rip/clang_complete', {'for': 'cpp'}
 
-"" Dockerfile
+""" Dockerfile
 Plug 'ekalinin/Dockerfile.vim'
 
-"" config files
+""" config files
 Plug 'vim-scripts/nginx.vim'
-"Plug 'tmatilai/gitolite.vim'
-"Plug 'kyrisu/vim-mikrotik'
+""Plug 'tmatilai/gitolite.vim'
+""Plug 'kyrisu/vim-mikrotik'
 Plug 'vim-scripts/openvpn', {'for': 'openvpn'}
 
-"" PYTHON
-Plug 'davidhalter/jedi-vim', {'for': 'python'}
-Plug 'zchee/deoplete-jedi', {'for': 'python'}
+""" PYTHON
+"Plug 'davidhalter/jedi-vim', {'for': 'python'}
+"Plug 'zchee/deoplete-jedi', {'for': 'python'}
 
-"" syntax
-Plug 'jparise/vim-graphql', {'for': 'gql'}
-Plug 'tomlion/vim-solidity'
+""" syntax
+"Plug 'jparise/vim-graphql', {'for': 'gql'}
+"Plug 'tomlion/vim-solidity'
+Plug 'NLKNguyen/cloudformation-syntax.vim'
 
-"" vim
+""" vim
 Plug 'vim-scripts/vimwiki'
 Plug 'Shougo/neco-vim', {'for': 'vim'}
 

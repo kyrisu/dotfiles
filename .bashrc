@@ -32,7 +32,6 @@ alias pacman-disowned-dirs="comm -23 <(sudo find / \( -path '/dev' -o -path '/sy
 alias psc='ps xawf -eo pid,user,cgroup,args'
 
 alias pacman='pacman --color auto'
-alias grep='grep --color'
 alias grepc='grep --color -n --exclude-dir="node_modules" --exclude-dir="bower_components" --exclude-dir=".tmp" --exclude-dir="coverage" --exclude="bundle.js*"'
 
 # docker aliases
@@ -78,6 +77,9 @@ go ()
       ;;
     born)
       cd ~/dev/BORN/${2}
+      ;;
+    insendi)
+      cd ~/dev/insendi/${2}
       ;;
     [\/\.-]*)
       cd $1
@@ -170,12 +172,5 @@ export FZF_DEFAULT_COMMAND='ag -Q -g ""'
 
 dynamic-colors switch solarized-dark
 
-# Codi
-# Usage: codi [filetype] [filename]
-codi() {
-  local syntax="${1:-javascript}"
-  shift
-  nvim -c \
-    "set ft=$1 |\
-    Codi $syntax" "$@"
-}
+export AWS_PROFILE=insendi-admin
+export AWS_DEFAULT_REGION=eu-west-1

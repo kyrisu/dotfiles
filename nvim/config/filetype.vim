@@ -59,7 +59,7 @@ augroup MyAutoCmd " {{{
 
 	autocmd FileType markdown
 				\ setlocal spell expandtab autoindent
-				\ formatoptions=tcroqn2 comments=n:>
+				\ formatoptions=croqn2 comments=n:>
 
 	autocmd FileType apache setlocal path+=./;/
 

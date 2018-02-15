@@ -6,9 +6,6 @@ session_lock() {
 	# Suspend notifications while locked.
 	killall -SIGUSR1 dunst
 
-	# Unsuspend notifications on exit.
-	trap 'killall -SIGUSR2 dunst' exit
-
   # Create blurred-out screenshot of current screen.
   #scrot -z -e 'convert -resize 20% -fill "#222" -colorize 50% -blur 0x1 -resize 500% $f ~/.cache/i3/_i3lock.png' ~/.cache/i3/__i3lock.png
   scrot -z -e 'convert "$tmpbg" -scale 10% -scale 1000% $f ~/.cache/i3/_i3lock.png' ~/.cache/i3/__i3lock.png
@@ -20,7 +17,8 @@ session_lock() {
   pidof i3lock || i3lock -e -i ~/.cache/i3/i3lock.png
 
   # Remove cached file on exit.
-  trap 'rm ~/.cache/i3/*i3lock.png' EXIT
+	# Unsuspend notifications on exit.
+  trap 'rm ~/.cache/i3/*i3lock.png && killall -SIGUSR2 dunst' EXIT
 }
 
 # Suspend and lock screen.
