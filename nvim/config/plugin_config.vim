@@ -242,55 +242,54 @@ autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.gra
 
 " }}}
 
-if executable('typescript-language-server')
-  au User lsp_setup call lsp#register_server({
-        \ 'name': 'typescript-language-server',
-        \ 'cmd': { server_info->[&shell, &shellcmdflag, 'typescript-language-server --stdio']},
-        \ 'root_uri': { server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_directory(lsp#utils#get_buffer_path(), '.git/..'))},
-        \ 'whitelist': ['typescript', 'javascript', 'javascript.jsx']
-        \ })
-endif
-
 if has_key(g:plugs, 'vim-lsp')
+  if executable('typescript-language-server')
+    au User lsp_setup call lsp#register_server({
+          \ 'name': 'typescript-language-server',
+          \ 'cmd': { server_info->[&shell, &shellcmdflag, 'typescript-language-server --stdio']},
+          \ 'root_uri': { server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_directory(lsp#utils#get_buffer_path(), '.git/..'))},
+          \ 'whitelist': ['typescript', 'javascript', 'javascript.jsx']
+          \ })
+  endif
+
   let g:lsp_async_completion = 1
   let g:asyncomplete_remove_duplicates = 1
 
   autocmd FileType javascript nnoremap gd :LspDefinition<cr>
 
-  inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-  inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-  inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<cr>"
-  imap <c-space> <Plug>(asyncomplete_force_refresh)
+
+  if executable('docker-langserver')
+    au User lsp_setup call lsp#register_server({
+          \ 'name': 'docker-langserver',
+          \ 'cmd': {server_info->[&shell, &shellcmdflag, 'docker-langserver --stdio']},
+          \ 'whitelist': ['dockerfile'],
+          \ })
+  endif
+
+  if executable('pyls')
+    au User lsp_setup call lsp#register_server({
+          \ 'name': 'pyls',
+          \ 'cmd': {server_info->['pyls']},
+          \ 'whitelist': ['python'],
+          \ })
+  endif
+
+  if executable('css-languageserver')
+    au User lsp_setup call lsp#register_server({
+          \ 'name': 'css-languageserver',
+          \ 'cmd': {server_info->[&shell, &shellcmdflag, 'css-languageserver --stdio']},
+          \ 'whitelist': ['css', 'less', 'sass'],
+          \ })
+  endif
+
+  autocmd FileType typescript,javascript,javascript.jsx setlocal omnifunc=lsp#complete
+  autocmd FileType Dockerfile setlocal omnifunc=lsp#complete
+  autocmd FileType css,less,sass setlocal omnifunc=lsp#complete
 endif
 
-autocmd FileType typescript,javascript,javascript.jsx setlocal omnifunc=lsp#complete
 
 " Typescript server {{{
 if has_key(g:plugs, 'asyncomplete.vim')
-        if executable('docker-langserver')
-        au User lsp_setup call lsp#register_server({
-        \ 'name': 'docker-langserver',
-        \ 'cmd': {server_info->[&shell, &shellcmdflag, 'docker-langserver --stdio']},
-        \ 'whitelist': ['dockerfile'],
-        \ })
-        endif
-
-        if executable('pyls')
-        au User lsp_setup call lsp#register_server({
-        \ 'name': 'pyls',
-        \ 'cmd': {server_info->['pyls']},
-        \ 'whitelist': ['python'],
-        \ })
-        endif
-
-        if executable('css-languageserver')
-        au User lsp_setup call lsp#register_server({
-        \ 'name': 'css-languageserver',
-        \ 'cmd': {server_info->[&shell, &shellcmdflag, 'css-languageserver --stdio']},
-        \ 'whitelist': ['css', 'less', 'sass'],
-        \ })
-        endif
-
         call asyncomplete#register_source(asyncomplete#sources#omni#get_source_options({
         \ 'name': 'omni',
         \ 'whitelist': ['*'],
@@ -303,6 +302,9 @@ if has_key(g:plugs, 'asyncomplete.vim')
         \ 'whitelist': ['*'],
         \ 'completor': function('asyncomplete#sources#necosyntax#completor'),
         \ }))
+
+        imap <c-space> <Plug>(asyncomplete_force_refresh)
+
         " auto close preview window when the completion is done
         "autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
 endif
@@ -354,17 +356,18 @@ let g:tern#filetypes= [
 " }}}
 
 
-" => Omni complete functions {{{
+" => Deoplete {{{
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-function! Multiple_cursors_before()
-  let b:deoplete_disable_auto_complete=2
-endfunction
-function! Multiple_cursors_after()
-  let b:deoplete_disable_auto_complete=1
-endfunction
+"function! Multiple_cursors_before()
+  "let b:deoplete_disable_auto_complete=2
+"endfunction
+"function! Multiple_cursors_after()
+  "let b:deoplete_disable_auto_complete=1
+"endfunction
 
 let g:deoplete#enable_at_startup = 1
+let b:deoplete_disable_auto_complete=1
 let g:deoplete#file#enable_buffer_path = 1
 let g:deoplete#enable_refresh_always = 1
 let g:deoplete#enable_ignore_case = 1
@@ -430,11 +433,6 @@ inoremap <expr><C-l> deoplete#refresh()
 " 2. Otherwise, if within a snippet, jump to next input
 " 3. Otherwise, if preceding chars are whitespace, insert tab char
 " 4. Otherwise, start manual autocomplete
-"
-function! s:is_whitespace() "{{{
-  let col = col('.') - 1
-  return ! col || getline('.')[col - 1] =~? '\s'
-endfunction "}}}
 
 function! s:check_back_space() abort "{{{
   let col = col('.') - 1
@@ -451,62 +449,55 @@ smap <silent><expr><Tab> pumvisible() ? "\<C-n>"
 
 inoremap <expr><S-Tab>  pumvisible() ? "\<C-p>" : "\<C-h>"
 
-" better key bindings for UltiSnipsExpandTrigger
-"let g:UltiSnipsExpandTrigger = "<C-k>"
-"let g:UltiSnipsJumpForwardTrigger = "<C-n>"
-"let g:UltiSnipsJumpBackwardTrigger = "<C-p>"
+let g:UltiSnipsSnippetDirectories=[$HOME.'/.dotfiles/nvim/UltiSnips', $HOME.'/.dotfiles/nvim/bundle/vim-snippets/UltiSnips']
 
-"let g:UltiSnipsSnippetDirectories=[$HOME.'/.dotfiles/nvim/UltiSnips', $HOME.'/.dotfiles/nvim/bundle/vim-snippets/UltiSnips']
+function! Neoj()
+    if pumvisible() == 1
+        return "\<C-n>"
+    else
+        call UltiSnips#JumpForwards()
+        if g:ulti_jump_forwards_res == 0
+            return "\<C-j>"
+        endif
+        return ""
+    endif
+endfunction
 
-"function! Neoj()
-    "if pumvisible() == 1
-        "return "\<C-n>"
-    "else
-        "call UltiSnips#JumpForwards()
-        "if g:ulti_jump_forwards_res == 0
-            "return "\<C-j>"
-        "endif
-        "return ""
-    "endif
-"endfunction
+function! Neok()
+  if pumvisible() == 1
+    return "\<C-p>"
+  else
+    call UltiSnips#JumpBackwards()
+    if g:ulti_jump_backwards_res == 0
+      return "\<C-k>"
+    endif
+    return ""
+  endif
+endfunction
 
-"function! Neok()
-  "if pumvisible() == 1
-    "return "\<C-p>"
-  "else
-    "call UltiSnips#JumpBackwards()
-    "if g:ulti_jump_backwards_res == 0
-      "return "\<C-k>"
-    "endif
-    "return ""
-  "endif
-"endfunction
+let g:ulti_expand_or_jump_res = 0
+function! NeoCR()
+  if pumvisible() == 1
+    let snippet = UltiSnips#ExpandSnippetOrJump()
+    if g:ulti_expand_or_jump_res > 0
+      return snippet
+    else
+      return "\<CR>"
+    endif
+  else
+    return "\<CR>"
+  endif
+endfunction
 
-"let g:ulti_expand_or_jump_res = 0
-"function! NeoCR()
-  "if pumvisible() == 1
-    "let snippet = UltiSnips#ExpandSnippetOrJump()
-    "if g:ulti_expand_or_jump_res > 0
-      "return snippet
-    "else
-      "return "\<CR>"
-    "endif
-  "else
-    "return "\<CR>"
-  "endif
-"endfunction
-
-"let g:UltiSnipsJumpForwardTrigger = "<nop>"
-"let g:UltiSnipsJumpBackwardTrigger = "<nop>"
-""let g:UltiSnipsExpandTrigger="<nop>"
-"let g:UltiSnipsExpandTrigger = "<C-k>"
-"inoremap <silent> <C-j> <C-R>=Neoj()<CR>
-""snoremap <silent> <C-j> <Esc>:call UltiSnips#JumpForwards()<CR>
-"inoremap <silent> <C-k> <C-R>=Neok()<CR>
-""snoremap <silent> <C-k> <Esc>:call UltiSnips#JumpBackwards()<CR>
-"" inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
-
-"au BufEnter * exec "inoremap <silent> <CR> <C-R>=NeoCR()<CR>"
+let g:UltiSnipsJumpForwardTrigger = "<nop>"
+let g:UltiSnipsJumpBackwardTrigger = "<nop>"
+"let g:UltiSnipsExpandTrigger="<nop>"
+let g:UltiSnipsExpandTrigger = "<C-k>"
+inoremap <silent> <C-j> <C-R>=Neoj()<CR>
+"snoremap <silent> <C-j> <Esc>:call UltiSnips#JumpForwards()<CR>
+inoremap <silent> <C-k> <C-R>=Neok()<CR>
+"snoremap <silent> <C-k> <Esc>:call UltiSnips#JumpBackwards()<CR>
+" inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 
 "set tags+=./tags
 

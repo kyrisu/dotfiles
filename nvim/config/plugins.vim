@@ -19,11 +19,11 @@ Plug 'altercation/vim-colors-solarized'
 """"" programming general
 
 Plug 'SirVer/ultisnips'
-"Plug 'honza/vim-snippets'
+Plug 'honza/vim-snippets'
 "Plug 'kshenoy/vim-signature' " displays markers on the left margin
-"Plug 'editorconfig/editorconfig-vim'
-"Plug 'mileszs/ack.vim'
-"Plug 'AndrewRadev/splitjoin.vim'
+Plug 'editorconfig/editorconfig-vim'
+Plug 'mileszs/ack.vim'
+Plug 'AndrewRadev/splitjoin.vim'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'airblade/vim-gitgutter' " places vim +- marks on the left gutter
 Plug 'Yggdroot/indentLine' " prints vertical indentation lines
