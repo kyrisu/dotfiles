@@ -46,11 +46,17 @@ else
   Plug 'roxma/vim-hug-neovim-rpc'
 endif
 
+Plug 'autozimu/LanguageClient-neovim', {
+    \ 'branch': 'next',
+    \ 'do': 'bash install.sh',
+    \ }
+
 "Plug 'prabirshrestha/asyncomplete.vim'
 "Plug 'prabirshrestha/asyncomplete-lsp.vim'
 
-Plug 'prabirshrestha/async.vim'
-Plug 'prabirshrestha/vim-lsp'
+"Plug 'prabirshrestha/async.vim'
+"Plug 'prabirshrestha/vim-lsp'
+
 "Plug 'yami-beta/asyncomplete-omni.vim'
 "Plug 'prabirshrestha/asyncomplete-necosyntax.vim'
 

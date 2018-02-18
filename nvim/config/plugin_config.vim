@@ -14,13 +14,6 @@ let g:vimwiki_global_ext = 0
 let g:echodoc_enable_at_startup = 1
 " }}}
 
-" VMATH {{{
-vmap <silent><expr> ++  VMATH_YankAndAnalyse()
-nmap <silent>       ++  vip++
-" }}}
-
-
-
 " nvim-typescript {{{
 if has_key(g:plugs, 'nvim-typescript')
   let g:nvim_typescript#javascript_support = 1
@@ -242,12 +235,43 @@ autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.gra
 
 " }}}
 
+" => LanguageClient {{{
+
+if has_key(g:plugs, 'LanguageClient-neovim')
+  let g:LanguageClient_serverCommands = {
+    \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
+    \ 'cpp': ['cquery', '--log-file=/tmp/cq.log'],
+    \ 'c': ['cquery', '--log-file=/tmp/cq.log'],
+    \ 'javascript': ['javascript-typescript-stdio -l /tmp/jts.log'],
+    \ 'javascript.jsx': ['javascript-typescript-stdio -l /tmp/jts.log'],
+    \ }
+
+let g:LanguageClient_loadSettings = 1 " Use an absolute configuration path if you want system-wide settings
+let g:LanguageClient_settingsPath = '/home/kyrisu/.dotfiles/nvim/settings.json'
+
+"set completefunc=LanguageClient#complete
+
+autocmd FileType javascript,javascript.jsx setlocal omnifunc=LanguageClient#complete
+autocmd FileType c,cpp,rust setlocal omnifunc=tern#Complete
+
+set formatexpr=LanguageClient_textDocument_rangeFormatting()
+
+  autocmd FileType c,cpp,rust,javascript nmap <buffer>K :call LanguageClient_textDocument_hover()<CR>
+  autocmd FileType c,cpp,rust,javascript nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
+
+  let g:LanguageClient_loggingLevel = 'DEBUG'
+
+  nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
+endif
+
+" }}}
+
 if has_key(g:plugs, 'vim-lsp')
   if executable('typescript-language-server')
     au User lsp_setup call lsp#register_server({
           \ 'name': 'typescript-language-server',
-          \ 'cmd': { server_info->[&shell, &shellcmdflag, 'typescript-language-server --stdio']},
-          \ 'root_uri': { server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_directory(lsp#utils#get_buffer_path(), '.git/..'))},
+          \ 'cmd': { server_info->[&shell, &shellcmdflag, 'typescript-language-server --stdio --tsserver-log-file ~/tmp/tsserver.log --log-level 4']},
+          \ 'root_uri': { server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_directory(lsp#utils#get_buffer_path(), 'package.json'))},
           \ 'whitelist': ['typescript', 'javascript', 'javascript.jsx']
           \ })
   endif
@@ -313,7 +337,7 @@ endif
 " DevDocs {{{
 augroup plugin-devdocs
   autocmd!
-  autocmd FileType c,cpp,rust,haskell,python,javascript nmap <buffer>K <Plug>(devdocs-under-cursor)
+  autocmd FileType c,cpp,rust,haskell,python nmap <buffer>K <Plug>(devdocs-under-cursor)
 augroup END
 " }}}
 
@@ -359,15 +383,15 @@ let g:tern#filetypes= [
 " => Deoplete {{{
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-"function! Multiple_cursors_before()
-  "let b:deoplete_disable_auto_complete=2
-"endfunction
-"function! Multiple_cursors_after()
-  "let b:deoplete_disable_auto_complete=1
-"endfunction
+function! Multiple_cursors_before()
+  let b:deoplete_disable_auto_complete=2
+endfunction
+function! Multiple_cursors_after()
+  let b:deoplete_disable_auto_complete=1
+endfunction
 
 let g:deoplete#enable_at_startup = 1
-let b:deoplete_disable_auto_complete=1
+"let b:deoplete_disable_auto_complete=1
 let g:deoplete#file#enable_buffer_path = 1
 let g:deoplete#enable_refresh_always = 1
 let g:deoplete#enable_ignore_case = 1
@@ -424,9 +448,9 @@ augroup end
 
 inoremap <expr><C-l> deoplete#refresh()
 
-"imap <silent><expr><CR> pumvisible() ?
-	"\ (neosnippet#expandable() ? "\<Plug>(neosnippet_expand)" : deoplete#close_popup())
-		"\ : (delimitMate#WithinEmptyPair() ? "\<Plug>delimitMateCR" : "\<CR>")
+imap <silent><expr><CR> pumvisible() ?
+      \ (neosnippet#expandable() ? "\<Plug>(neosnippet_expand)" : deoplete#close_popup())
+      \ : (delimitMate#WithinEmptyPair() ? "\<Plug>delimitMateCR" : "\<CR>")
 
 " <Tab> completion:
 " 1. If popup menu is visible, select and insert next item
@@ -505,3 +529,7 @@ au BufEnter * exec "inoremap <silent> <CR> <C-R>=NeoCR()<CR>"
 
 
 "}}}
+
+" => indentLine {{{
+let g:indentLine_conceallevel = 0
+" }}}

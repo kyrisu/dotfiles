@@ -41,8 +41,10 @@ let g:mapleader = ','
 " Fast editing of the .vimrc
 map <leader>ee :e! ~/.config/nvim/init.vim<cr>
 
-map <leader>xx :.w !bash<cr> " execute current line in bash
-nnoremap <leader>a <C-^> "jump to alternative file
+" execute current line in bash
+map <leader>xx :.w !bash<cr>
+" jump to alternative file
+nnoremap <leader>a <C-^>
 
 " }}}
 
