@@ -242,8 +242,8 @@ if has_key(g:plugs, 'LanguageClient-neovim')
     \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
     \ 'cpp': ['cquery', '--log-file=/tmp/cq.log'],
     \ 'c': ['cquery', '--log-file=/tmp/cq.log'],
-    \ 'javascript': ['javascript-typescript-stdio -l /tmp/jts.log'],
-    \ 'javascript.jsx': ['javascript-typescript-stdio -l /tmp/jts.log'],
+    \ 'javascript': ['javascript-typescript-stdio'],
+    \ 'javascript.jsx': ['javascript-typescript-stdio'],
     \ }
 
 let g:LanguageClient_loadSettings = 1 " Use an absolute configuration path if you want system-wide settings
@@ -251,15 +251,15 @@ let g:LanguageClient_settingsPath = '/home/kyrisu/.dotfiles/nvim/settings.json'
 
 "set completefunc=LanguageClient#complete
 
-autocmd FileType javascript,javascript.jsx setlocal omnifunc=LanguageClient#complete
-autocmd FileType c,cpp,rust setlocal omnifunc=tern#Complete
+  autocmd FileType javascript,javascript.jsx setlocal omnifunc=LanguageClient#complete
+  autocmd FileType c,cpp,rust setlocal omnifunc=LanguageClient#complete
 
-set formatexpr=LanguageClient_textDocument_rangeFormatting()
+  set formatexpr=LanguageClient_textDocument_rangeFormatting()
 
   autocmd FileType c,cpp,rust,javascript nmap <buffer>K :call LanguageClient_textDocument_hover()<CR>
   autocmd FileType c,cpp,rust,javascript nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
 
-  let g:LanguageClient_loggingLevel = 'DEBUG'
+  let g:LanguageClient_loggingLevel = 'WARN'
 
   nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
 endif
@@ -377,6 +377,15 @@ let g:tern#filetypes= [
       \ 'javascript.jsx',
       \ 'vue'
       \ ]
+
+" omnifuncs
+augroup tern
+  autocmd!
+  autocmd FileType javascript setlocal omnifunc=tern#Complete
+  autocmd FileType javascript.jsx setlocal omnifunc=tern#Complete
+  autocmd FileType javascript,javascript.jsx nnoremap <silent> gd :TernDef<CR>
+  autocmd FileType javascript,javascript.jsx nmap <buffer>K :TernDoc<CR>
+augroup end
 " }}}
 
 
@@ -438,13 +447,6 @@ autocmd WinEnter * call Preview_func()
 
 autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
 autocmd InsertLeave * if pumvisible() == 0|pclose|endif
-
-" omnifuncs
-augroup omnifuncs_deoplete
-  autocmd!
-  autocmd FileType javascript setlocal omnifunc=tern#Complete
-  autocmd FileType javascript.jsx setlocal omnifunc=tern#Complete
-augroup end
 
 inoremap <expr><C-l> deoplete#refresh()
 
@@ -532,4 +534,9 @@ au BufEnter * exec "inoremap <silent> <CR> <C-R>=NeoCR()<CR>"
 
 " => indentLine {{{
 let g:indentLine_conceallevel = 0
+" }}}
+
+" => nerdcommenter {{{
+let g:NERDSpaceDelims = 1
+let g:NERDCompactSexyComs = 1
 " }}}
