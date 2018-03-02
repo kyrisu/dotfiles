@@ -12,6 +12,7 @@ Plug 'junegunn/vim-easy-align'
 Plug 'airblade/vim-rooter'
 Plug 'milkypostman/vim-togglelist' " toggle location and quickfix list
 Plug 'MarcWeber/vim-addon-local-vimrc'
+Plug 'ap/vim-buftabline'
 
 Plug 'altercation/vim-colors-solarized'
 Plug 'vim-scripts/LargeFile'
@@ -35,16 +36,25 @@ Plug 'rhysd/devdocs.vim' " opens devdocs with shift K
 
 Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
 
+Plug 'ruanyl/coverage.vim'
+
 "Plug 'christianrondeau/vim-base64'
 
 "" Autocomplete
 if has('nvim')
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins', 'tag': '4.0-serial' }
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 else
   Plug 'Shougo/deoplete.nvim'
   Plug 'roxma/nvim-yarp'
   Plug 'roxma/vim-hug-neovim-rpc'
 endif
+
+Plug 'mhartington/nvim-typescript'
+
+" Plug 'marijnh/tern_for_vim', {
+      " \ 'do' : 'npm install; npm i tern-node-express',
+      " \ 'for': ['javascript', 'javascript.jsx']
+      " \ }
 
 " Plug 'autozimu/LanguageClient-neovim', {
     " \ 'branch': 'next',
@@ -75,11 +85,6 @@ Plug 'alampros/vim-styled-jsx', { 'for': ['javascript', 'javascript.jsx'] }
 
 "Plug 'ruanyl/vim-fixmyjs', { 'for': ['javascript', 'javascript.jsx'] }
 Plug 'heavenshell/vim-jsdoc', { 'for': ['javascript', 'javascript.jsx'] }
-
-Plug 'marijnh/tern_for_vim', {
-      \ 'do' : 'npm install; npm i tern-node-express',
-      \ 'for': ['javascript', 'javascript.jsx']
-      \ }
 
 
 """ Markdown
@@ -121,6 +126,9 @@ Plug 'vim-scripts/openvpn', {'for': 'openvpn'}
 "Plug 'jparise/vim-graphql', {'for': 'gql'}
 Plug 'tomlion/vim-solidity'
 Plug 'NLKNguyen/cloudformation-syntax.vim'
+Plug 'GutenYe/json5.vim'
+
+Plug 'hashivim/vim-vagrant'
 
 """ vim
 Plug 'vim-scripts/vimwiki'

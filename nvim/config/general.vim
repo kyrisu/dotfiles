@@ -103,6 +103,7 @@ autocmd! bufwritepost init.vim nested source ~/.config/nvim/init.vim
 " Create file under cursor
 map <leader>gf :exec printf('e %s/%s.%s', expand("%:p:h"), expand("<cfile>:r"), (expand("<cfile>:e") ? expand("<cfile>:e") : expand("%:p:e")))<CR><CR>
 
+map <leader>qq :e ~/buffer.md<cr>
 " }}}
 
 " => Editor UI Appearance {{{
@@ -163,8 +164,8 @@ vnoremap > >gv
 " Use the arrows to something usefull
 map <right> :bn<cr>
 map <left> :bp<cr>
-map <S-l> :bn<cr>
-map <S-h> :bp<cr>
+map <expr><S-l> (expand('%:t') =~ '^NERD_tree.\+') ? '\<s-l>' : ':bn<cr>'
+map <expr><S-h> (expand('%:t') =~ '^NERD_tree.\+') ? '\<s-h>' : ':bp<cr>'
 
 " Close the current buffer
 map <leader>bd :silent Bclose<cr>

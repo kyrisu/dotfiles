@@ -17,7 +17,11 @@ let g:echodoc_enable_at_startup = 1
 " nvim-typescript {{{
 if has_key(g:plugs, 'nvim-typescript')
   let g:nvim_typescript#javascript_support = 1
-  let g:nvim_typescript#max_completion_detail=100
+  let g:nvim_typescript#max_completion_detail=25
+  let g:nvim_typescript#completion_mark=''
+  autocmd FileType javascript,javascript.jsx nnoremap <silent> gd :TSDef<CR>
+  autocmd FileType javascript,javascript.jsx nmap <buffer>K :TSDoc<CR>
+  nnoremap <silent> <F2> :TSRename<CR>
 endif
 " }}}
 
@@ -36,13 +40,13 @@ nmap <Leader><Leader>l <Plug>(easymotion-overwin-line)
 map <C-e> :NERDTreeToggle<CR>:NERDTreeMirror<CR>
 map <leader>e :NERDTreeFind<CR>
 
-let NERDTreeShowBookmarks=1
-let NERDTreeIgnore=['\.\.$', '\.$', '\.pyc', '\~$', '\.swo$', '\.swp$', '\.git', '\.hg', '\.svn', '\.bzr']
-let NERDTreeChDirMode=0
-let NERDTreeMouseMode=2
-let NERDTreeShowHidden=1
-let NERDTreeKeepTreeInNewTab=1
-let NERDTreeQuitOnOpen=1
+let g:NERDTreeShowBookmarks=1
+let g:NERDTreeIgnore=['\.\.$', '\.$', '\.pyc', '\~$', '\.swo$', '\.swp$', '\.git', '\.hg', '\.svn', '\.bzr']
+let g:NERDTreeChDirMode=0
+let g:NERDTreeMouseMode=2
+let g:NERDTreeShowHidden=1
+let g:NERDTreeKeepTreeInNewTab=1
+let g:NERDTreeQuitOnOpen=1
 let g:nerdtree_tabs_open_on_gui_startup=0
 
 " }}}
@@ -114,20 +118,18 @@ let g:ale_fixers = {
 \   'javascript': ['eslint'],
 \}
 
-" If emoji not loaded, use default sign
-try
-  let g:ale_sign_error = emoji#for('boom')
-  let g:ale_sign_warning = emoji#for('small_orange_diamond')
-catch
-  " Use same sign and distinguish error and warning via different colors.
-  let g:ale_sign_error = '•'
-  let g:ale_sign_warning = '•'
-endtry
+" Use same sign and distinguish error and warning via different colors.
+let g:ale_sign_error = ''
+let g:ale_sign_warning = ''
+
 let g:ale_echo_msg_format = '[#%linter%#] %s [%severity%]'
 let g:ale_statusline_format = ['E•%d', 'W•%d', 'OK']
 let g:ale_change_sign_column_color=1
 
-"hi ALESignColumnWithErrors ctermbg=DarkRed
+" hi ALESignColumnWithErrors ctermbg=DarkRed
+
+nmap <silent> <C-k> <Plug>(ale_previous_wrap)
+nmap <silent> <C-j> <Plug>(ale_next_wrap)
 " }}}
 
 " EMOJI {{{
@@ -246,13 +248,15 @@ if has_key(g:plugs, 'LanguageClient-neovim')
     \ 'javascript.jsx': ['javascript-typescript-stdio'],
     \ }
 
-let g:LanguageClient_loadSettings = 1 " Use an absolute configuration path if you want system-wide settings
-let g:LanguageClient_settingsPath = '/home/kyrisu/.dotfiles/nvim/settings.json'
+  let g:LanguageClient_autoStart = 1
+  let g:LanguageClient_trace = 'messages'
+  let g:LanguageClient_loadSettings = 1 " Use an absolute configuration path if you want system-wide settings
+  let g:LanguageClient_settingsPath = '/home/kyrisu/.dotfiles/nvim/settings.json'
 
-"set completefunc=LanguageClient#complete
+  " set completefunc=LanguageClient#complete
 
-  autocmd FileType javascript,javascript.jsx setlocal omnifunc=LanguageClient#complete
-  autocmd FileType c,cpp,rust setlocal omnifunc=LanguageClient#complete
+  " autocmd FileType javascript,javascript.jsx setlocal omnifunc=LanguageClient#complete
+  " autocmd FileType c,cpp,rust setlocal omnifunc=LanguageClient#complete
 
   set formatexpr=LanguageClient_textDocument_rangeFormatting()
 
@@ -364,173 +368,131 @@ let g:jsx_ext_required = 0
 
 " => Tern.JS {{{
 
-let g:tern_request_timeout = 6000
-let g:tern_show_argument_hints = 1
-let g:tern_show_signature_in_pum = 1
-let g:tern_map_keys=1
-let g:tern_map_prefix='<leader>'
+if has_key(g:plugs, 'tern_for_vim')
+  let g:tern_request_timeout = 6000
+  let g:tern_show_argument_hints = 1
+  let g:tern_show_signature_in_pum = 1
+  let g:tern_map_keys=1
+  let g:tern_map_prefix='<leader>'
 
-let g:tern#command = ['tern']
-let g:tern#arguments = ['--persistent']
-let g:tern#filetypes= [
-      \ 'jsx',
-      \ 'javascript.jsx',
-      \ 'vue'
-      \ ]
+  let g:tern#command = ['tern']
+  let g:tern#arguments = ['--persistent']
+  let g:tern#filetypes= [
+        \ 'jsx',
+        \ 'javascript.jsx',
+        \ 'vue'
+        \ ]
 
-" omnifuncs
-augroup tern
-  autocmd!
-  autocmd FileType javascript setlocal omnifunc=tern#Complete
-  autocmd FileType javascript.jsx setlocal omnifunc=tern#Complete
-  autocmd FileType javascript,javascript.jsx nnoremap <silent> gd :TernDef<CR>
-  autocmd FileType javascript,javascript.jsx nmap <buffer>K :TernDoc<CR>
-augroup end
+  " omnifuncs
+  augroup tern
+    autocmd!
+    autocmd FileType javascript setlocal omnifunc=tern#Complete
+    autocmd FileType javascript.jsx setlocal omnifunc=tern#Complete
+    autocmd FileType javascript,javascript.jsx nnoremap <silent> gd :TernDef<CR>
+    autocmd FileType javascript,javascript.jsx nmap <buffer>K :TernDoc<CR>
+  augroup end
+endif
 " }}}
 
 
 " => Deoplete {{{
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+if has_key(g:plugs, 'deoplete.nvim')
+  function! Multiple_cursors_before()
+    let b:deoplete_disable_auto_complete=2
+  endfunction
+  function! Multiple_cursors_after()
+    let b:deoplete_disable_auto_complete=1
+  endfunction
 
-function! Multiple_cursors_before()
-  let b:deoplete_disable_auto_complete=2
-endfunction
-function! Multiple_cursors_after()
-  let b:deoplete_disable_auto_complete=1
-endfunction
+  let g:deoplete#enable_at_startup = 1
+  "let b:deoplete_disable_auto_complete=1
+  let g:deoplete#file#enable_buffer_path = 1
+  let g:deoplete#enable_refresh_always = 1
+  let g:deoplete#enable_ignore_case = 1
+  let g:deoplete#enable_smart_case = 1
 
-let g:deoplete#enable_at_startup = 1
-"let b:deoplete_disable_auto_complete=1
-let g:deoplete#file#enable_buffer_path = 1
-let g:deoplete#enable_refresh_always = 1
-let g:deoplete#enable_ignore_case = 1
-let g:deoplete#enable_smart_case = 1
+  let g:deoplete#skip_chars = ['(', ')']
 
-let g:deoplete#skip_chars = ['(', ')']
+  let g:deoplete#max_abbr_width = 0
+  let g:deoplete#max_menu_width = 0
+  let g:deoplete#omni#input_patterns = get(g:,'deoplete#omni#input_patterns',{})
+  let g:deoplete#omni#input_patterns['javascript.jsx'] = ['[^. \t0-9]\.\w*']
 
-let g:deoplete#max_abbr_width = 0
-let g:deoplete#max_menu_width = 0
-let g:deoplete#omni#input_patterns = get(g:,'deoplete#omni#input_patterns',{})
-let g:deoplete#omni#input_patterns['javascript.jsx'] = ['[^. \t0-9]\.\w*']
+  let g:deoplete#sources#jedi#statement_length = 1
+  let g:deoplete#sources#jedi#show_docstring = 1
+  let g:deoplete#sources#jedi#short_types = 1
 
-let g:deoplete#sources#jedi#statement_length = 1
-let g:deoplete#sources#jedi#show_docstring = 1
-let g:deoplete#sources#jedi#short_types = 1
+  let g:deoplete#omni#functions = get(g:, 'deoplete#omni#functions', {})
+  let g:deoplete#omni#functions.css = 'csscomplete#CompleteCSS'
 
-let g:deoplete#omni#functions = get(g:, 'deoplete#omni#functions', {})
-let g:deoplete#omni#functions.css = 'csscomplete#CompleteCSS'
+  "let g:deoplete#tag#cache_limit_size = 5000000
+  call deoplete#custom#set('buffer', 'mark', 'buffer')
+  call deoplete#custom#set('ternjs', 'mark', '')
+  call deoplete#custom#set('typescript', 'mark', '')
+  call deoplete#custom#set('omni', 'mark', 'omni')
+  call deoplete#custom#set('file', 'mark', 'file')
 
-"let g:deoplete#tag#cache_limit_size = 5000000
-call deoplete#custom#set('buffer', 'mark', 'buffer')
-call deoplete#custom#set('ternjs', 'mark', '')
-call deoplete#custom#set('typescript', 'mark', '')
-call deoplete#custom#set('omni', 'mark', 'omni')
-call deoplete#custom#set('file', 'mark', 'file')
+  " ignore UltiSnips in completion
+  let g:deoplete#ignore_sources = {}
+  let g:deoplete#ignore_sources._ = ['ultisnips']
+  let g:deoplete#ignore_sources['javascript.jsx'] = ['omni']
 
-" ignore UltiSnips in completion
-let g:deoplete#ignore_sources = {}
-let g:deoplete#ignore_sources._ = ['ultisnips']
+  " let g:deoplete#sources = {}
+  " let g:deoplete#sources['javascript'] = ['omni', 'file', 'buffer']
+  " let g:deoplete#sources['javascript.jsx'] = ['omni', 'file', 'buffer']
+  " call deoplete#custom#source('omni', 'rank', 1000)
 
-let g:deoplete#sources = {}
-let g:deoplete#sources['javascript'] = ['omni', 'file', 'buffer']
-let g:deoplete#sources['javascript.jsx'] = ['omni', 'file', 'buffer']
-call deoplete#custom#source('omni', 'rank', 1000)
+  let g:deoplete#auto_complete_delay = 50
 
-let g:deoplete#auto_complete_delay = 50
-
-function! Preview_func()
-  if &previewwindow
-    setlocal nonumber norelativenumber
-  endif
-endfunction
-autocmd WinEnter * call Preview_func()
-
-autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
-autocmd InsertLeave * if pumvisible() == 0|pclose|endif
-
-inoremap <expr><C-l> deoplete#refresh()
-
-imap <silent><expr><CR> pumvisible() ?
-      \ (neosnippet#expandable() ? "\<Plug>(neosnippet_expand)" : deoplete#close_popup())
-      \ : (delimitMate#WithinEmptyPair() ? "\<Plug>delimitMateCR" : "\<CR>")
-
-" <Tab> completion:
-" 1. If popup menu is visible, select and insert next item
-" 2. Otherwise, if within a snippet, jump to next input
-" 3. Otherwise, if preceding chars are whitespace, insert tab char
-" 4. Otherwise, start manual autocomplete
-
-function! s:check_back_space() abort "{{{
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~ '\s'
-endfunction"}}}
-
-imap <silent><expr><Tab> pumvisible() ? "\<C-n>"
-      \ : (<SID>check_back_space() ? "\<Tab>"
-      \ : deoplete#manual_complete())
-
-smap <silent><expr><Tab> pumvisible() ? "\<C-n>"
-      \ : (<SID>check_back_space() ? "\<Tab>"
-      \ : deoplete#manual_complete())
-
-inoremap <expr><S-Tab>  pumvisible() ? "\<C-p>" : "\<C-h>"
-
-let g:UltiSnipsSnippetDirectories=[$HOME.'/.dotfiles/nvim/UltiSnips', $HOME.'/.dotfiles/nvim/bundle/vim-snippets/UltiSnips']
-
-function! Neoj()
-    if pumvisible() == 1
-        return "\<C-n>"
-    else
-        call UltiSnips#JumpForwards()
-        if g:ulti_jump_forwards_res == 0
-            return "\<C-j>"
-        endif
-        return ""
+  function! Preview_func()
+    if &previewwindow
+      setlocal nonumber norelativenumber
     endif
-endfunction
+  endfunction
+  autocmd WinEnter * call Preview_func()
 
-function! Neok()
-  if pumvisible() == 1
-    return "\<C-p>"
-  else
-    call UltiSnips#JumpBackwards()
-    if g:ulti_jump_backwards_res == 0
-      return "\<C-k>"
-    endif
-    return ""
-  endif
-endfunction
+  autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
+  autocmd InsertLeave * if pumvisible() == 0|pclose|endif
 
-let g:ulti_expand_or_jump_res = 0
+  inoremap <expr><C-l> deoplete#refresh()
 
-function! NeoCR()
-  if pumvisible() == 1
-    let snippet = UltiSnips#ExpandSnippetOrJump()
-    if g:ulti_expand_or_jump_res > 0
-      return snippet
-    else
-      return "\<CR>"
-    endif
-  else
-    return "\<CR>"
-  endif
-endfunction
+  " imap <silent><expr><CR> pumvisible() ?
+        " \ (neosnippet#expandable() ? "\<Plug>(neosnippet_expand)" : deoplete#close_popup())
+        " \ : (delimitMate#WithinEmptyPair() ? "\<Plug>delimitMateCR" : "\<CR>")
+  imap <expr><CR> pumvisible() ?
+        \ deoplete#close_popup()
+        \ : (delimitMate#WithinEmptyPair() ? "\<Plug>delimitMateCR" : "\<CR>")
 
-let g:UltiSnipsJumpForwardTrigger = "<nop>"
-let g:UltiSnipsJumpBackwardTrigger = "<nop>"
-"let g:UltiSnipsExpandTrigger="<nop>"
-let g:UltiSnipsExpandTrigger = "<C-k>"
-inoremap <silent> <C-j> <C-R>=Neoj()<CR>
-"snoremap <silent> <C-j> <Esc>:call UltiSnips#JumpForwards()<CR>
-inoremap <silent> <C-k> <C-R>=Neok()<CR>
-"snoremap <silent> <C-k> <Esc>:call UltiSnips#JumpBackwards()<CR>
-" inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
-au BufEnter * exec "inoremap <silent> <CR> <C-R>=NeoCR()<CR>"
+  " <Tab> completion:
+  " 1. If popup menu is visible, select and insert next item
+  " 2. Otherwise, if within a snippet, jump to next input
+  " 3. Otherwise, if preceding chars are whitespace, insert tab char
+  " 4. Otherwise, start manual autocomplete
 
-"set tags+=./tags
+  function! s:check_back_space() abort "{{{
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1]  =~ '\s'
+  endfunction"}}}
 
+  imap <silent><expr><Tab> pumvisible() ? "\<C-n>"
+        \ : (<SID>check_back_space() ? "\<Tab>"
+        \ : deoplete#manual_complete())
 
+  smap <silent><expr><Tab> pumvisible() ? "\<C-n>"
+        \ : (<SID>check_back_space() ? "\<Tab>"
+        \ : deoplete#manual_complete())
+
+  inoremap <expr><S-Tab>  pumvisible() ? "\<C-p>" : "\<C-h>"
+endif
 "}}}
+
+" => UltiSnips {{{
+if has_key(g:plugs, 'ultisnips')
+  let g:UltiSnipsSnippetDirectories=[$HOME.'/.dotfiles/nvim/UltiSnips', $HOME.'/.dotfiles/nvim/bundle/vim-snippets/UltiSnips']
+  let g:UltiSnipsExpandTrigger = '<C-j>'
+endif
+" }}}
 
 " => indentLine {{{
 let g:indentLine_conceallevel = 0
@@ -539,4 +501,14 @@ let g:indentLine_conceallevel = 0
 " => nerdcommenter {{{
 let g:NERDSpaceDelims = 1
 let g:NERDCompactSexyComs = 1
+" }}}
+
+" => coverage {{{
+if has_key(g:plugs, 'coverage.vim')
+  let g:coverage_json_report_path = 'coverage/coverage-final.json'
+
+  let g:coverage_sign_uncovered = ''
+
+  let g:coverage_interval = 5000
+endif
 " }}}

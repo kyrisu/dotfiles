@@ -99,9 +99,10 @@ go ()
 [ -r /usr/share/bash-completion/bash_completion   ] && . /usr/share/bash-completion/bash_completion
 [ -f /usr/share/git/completion/git-completion.bash ] && . /usr/share/git/completion/git-completion.bash
 [ -f /usr/share/git/completion/git-prompt.sh ] && . /usr/share/git/completion/git-prompt.sh
-[ -f ~/.dotfiles/completions/purevpn.sh ] && . ~/.dotfiles/completions/purevpn.sh
 [ -f /usr/share/bash-completion/completions/docker-compose ] && . /usr/share/bash-completion/completions/docker-compose
 [ -f /usr/share/bash-completion/completions/docker ] && . /usr/share/bash-completion/completions/docker
+[ -f ~/.dotfiles/completions/purevpn.sh ] && . ~/.dotfiles/completions/purevpn.sh
+[ -f ~/.dotfiles/completions/consul.sh ] && . ~/.dotfiles/completions/consul.sh
 
 complete -F _docker_compose dc
 complete -F _docker_exec dockip
@@ -110,7 +111,7 @@ complete -F _docker_exec dockip
 
 #export CATALINA_HOME=/usr/share/tomcat8
 
-export PS1='\e[22m`if [ $? = 0 ]; then echo "\[\e[32m\] ✔ "; else echo "\[\e[31m\] ✘ "; fi`\[\e[00;37m\]\u@\h \[\e[01;34m\]\W\e[35m$(__git_ps1 " (%s)")\n\[\e[00;39m\]\$ '
+export PS1='\e[22m`if [ $? = 0 ]; then echo "\[\e[32m\]  "; else echo "\[\e[31m\]  "; fi`\[\e[00;37m\]\u@\h \[\e[01;34m\]\W\e[35m$(__git_ps1 " (%s)")\n\[\e[00;39m\]\$ '
 
 export ANDROID_HOME=~/bin/android-sdk-linux
 
