@@ -17,11 +17,32 @@ let g:echodoc_enable_at_startup = 1
 " nvim-typescript {{{
 if has_key(g:plugs, 'nvim-typescript')
   let g:nvim_typescript#javascript_support = 1
-  let g:nvim_typescript#max_completion_detail=25
+  let g:nvim_typescript#max_completion_detail= 100
+  let g:nvim_typescript#type_info_on_hold = 1
   let g:nvim_typescript#completion_mark=''
   autocmd FileType javascript,javascript.jsx nnoremap <silent> gd :TSDef<CR>
   autocmd FileType javascript,javascript.jsx nmap <buffer>K :TSDoc<CR>
   nnoremap <silent> <F2> :TSRename<CR>
+endif
+" }}}
+
+" tsuquyomi {{{
+if has_key(g:plugs, 'tsuquyomi')
+  let g:deoplete#sources#tss#javascript_support = 1
+
+  let g:tsuquyomi_auto_open = 1
+  let g:tsuquyomi_javascript_support = 1
+  let g:tsuquyomi_disable_quickfix = 1
+  let g:tsuquyomi_completion_preview = 1
+  " let g:tsuquyomi_debug = 1
+  " let g:tsuquyomi_tsserver_debug = 1
+  autocmd FileType javascript,javascript.jsx nnoremap <silent> gd :TsuquyomiDefinition<CR>
+  autocmd FileType javascript,javascript.jsx nmap <buffer>K :TsuquyomiSignatureHelp<CR>
+  autocmd FileType javascript,javascript.jsx setlocal omnifunc=tsuquyomi#complete
+  nnoremap <silent> <F2> :TSRename<CR>
+
+  set ballooneval
+  autocmd FileType typescript setlocal balloonexpr=tsuquyomi#balloonexpr()
 endif
 " }}}
 
@@ -250,8 +271,8 @@ if has_key(g:plugs, 'LanguageClient-neovim')
 
   let g:LanguageClient_autoStart = 1
   let g:LanguageClient_trace = 'messages'
-  let g:LanguageClient_loadSettings = 1 " Use an absolute configuration path if you want system-wide settings
-  let g:LanguageClient_settingsPath = '/home/kyrisu/.dotfiles/nvim/settings.json'
+  " let g:LanguageClient_loadSettings = 1 " Use an absolute configuration path if you want system-wide settings
+  " let g:LanguageClient_settingsPath = '/home/kyrisu/.dotfiles/nvim/settings.json'
 
   " set completefunc=LanguageClient#complete
 
@@ -388,8 +409,8 @@ if has_key(g:plugs, 'tern_for_vim')
     autocmd!
     autocmd FileType javascript setlocal omnifunc=tern#Complete
     autocmd FileType javascript.jsx setlocal omnifunc=tern#Complete
-    autocmd FileType javascript,javascript.jsx nnoremap <silent> gd :TernDef<CR>
-    autocmd FileType javascript,javascript.jsx nmap <buffer>K :TernDoc<CR>
+    " autocmd FileType javascript,javascript.jsx nnoremap <silent> gd :TernDef<CR>
+    " autocmd FileType javascript,javascript.jsx nmap <buffer>K :TernDoc<CR>
   augroup end
 endif
 " }}}
@@ -418,6 +439,7 @@ if has_key(g:plugs, 'deoplete.nvim')
   let g:deoplete#max_menu_width = 0
   let g:deoplete#omni#input_patterns = get(g:,'deoplete#omni#input_patterns',{})
   let g:deoplete#omni#input_patterns['javascript.jsx'] = ['[^. \t0-9]\.\w*']
+  call deoplete#custom#set('_', 'matchers', ['matcher_full_fuzzy'])
 
   let g:deoplete#sources#jedi#statement_length = 1
   let g:deoplete#sources#jedi#show_docstring = 1
@@ -436,11 +458,12 @@ if has_key(g:plugs, 'deoplete.nvim')
   " ignore UltiSnips in completion
   let g:deoplete#ignore_sources = {}
   let g:deoplete#ignore_sources._ = ['ultisnips']
-  let g:deoplete#ignore_sources['javascript.jsx'] = ['omni']
+
 
   " let g:deoplete#sources = {}
   " let g:deoplete#sources['javascript'] = ['omni', 'file', 'buffer']
   " let g:deoplete#sources['javascript.jsx'] = ['omni', 'file', 'buffer']
+  let g:deoplete#ignore_sources['javascript.jsx'] = ['omni']
   " call deoplete#custom#source('omni', 'rank', 1000)
 
   let g:deoplete#auto_complete_delay = 50

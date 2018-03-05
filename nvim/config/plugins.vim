@@ -12,7 +12,10 @@ Plug 'junegunn/vim-easy-align'
 Plug 'airblade/vim-rooter'
 Plug 'milkypostman/vim-togglelist' " toggle location and quickfix list
 Plug 'MarcWeber/vim-addon-local-vimrc'
-Plug 'ap/vim-buftabline'
+
+if exists('g:gui_oni') == 0
+  Plug 'ap/vim-buftabline'
+endif
 
 Plug 'altercation/vim-colors-solarized'
 Plug 'vim-scripts/LargeFile'
@@ -41,20 +44,26 @@ Plug 'ruanyl/coverage.vim'
 "Plug 'christianrondeau/vim-base64'
 
 "" Autocomplete
-if has('nvim')
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-else
-  Plug 'Shougo/deoplete.nvim'
-  Plug 'roxma/nvim-yarp'
-  Plug 'roxma/vim-hug-neovim-rpc'
-endif
 
-Plug 'mhartington/nvim-typescript'
+if exists('g:gui_oni') == 0
+  if has('nvim')
+    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+  else
+    Plug 'Shougo/deoplete.nvim'
+    Plug 'roxma/nvim-yarp'
+    Plug 'roxma/vim-hug-neovim-rpc'
+  endif
+
+Plug 'mhartington/nvim-typescript', { 'do': ':UpdateRemotePlugins' }
+
+" Plug 'Shougo/vimproc.vim', { 'do' : 'make' }
+" Plug 'Quramy/tsuquyomi', { 'do': 'npm i -g typescript' }
 
 " Plug 'marijnh/tern_for_vim', {
       " \ 'do' : 'npm install; npm i tern-node-express',
       " \ 'for': ['javascript', 'javascript.jsx']
       " \ }
+endif
 
 " Plug 'autozimu/LanguageClient-neovim', {
     " \ 'branch': 'next',
@@ -64,14 +73,17 @@ Plug 'mhartington/nvim-typescript'
 "Plug 'prabirshrestha/asyncomplete.vim'
 "Plug 'prabirshrestha/asyncomplete-lsp.vim'
 
-"Plug 'prabirshrestha/async.vim'
-"Plug 'prabirshrestha/vim-lsp'
+" Plug 'prabirshrestha/async.vim'
+" Plug 'prabirshrestha/vim-lsp'
 
 "Plug 'yami-beta/asyncomplete-omni.vim'
 "Plug 'prabirshrestha/asyncomplete-necosyntax.vim'
 
-Plug 'itchyny/lightline.vim'
-Plug 'maximbaz/lightline-ale'
+if exists('g:gui_oni') == 0
+  Plug 'itchyny/lightline.vim'
+  Plug 'maximbaz/lightline-ale'
+endif
+
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat' " allows dot to repeat more complicated expressions
 Plug 'tpope/vim-unimpaired' " cool bindings that I need to read more about
