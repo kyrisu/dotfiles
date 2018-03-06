@@ -56,6 +56,9 @@ if has('vim_starting')
   if has('nvim')
     call s:source_file('neovim.vim')
   endif
+  if has('gui_running')
+    call s:source_file('ginit.vim')
+  endif
 endif
 
 call s:source_file('plugins.vim')

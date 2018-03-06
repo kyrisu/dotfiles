@@ -1,6 +1,13 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 ""  PLUGIN CONFIGURATION
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Remove declared plugins
+function! s:UnPlug(plug_name)
+  if has_key(g:plugs, a:plug_name)
+    call remove(g:plugs, a:plug_name)
+  endif
+endfunction
+command!  -nargs=1 UnPlug call s:UnPlug(<args>)
 
 " VimWiki {{{
 let g:vimwiki_list = [{'path': '~/vimwiki/', 'syntax': 'markdown', 'ext': '.md'}]
@@ -270,14 +277,21 @@ if has_key(g:plugs, 'LanguageClient-neovim')
     \ }
 
   let g:LanguageClient_autoStart = 1
-  let g:LanguageClient_trace = 'messages'
+  let g:LanguageClient_trace = 'verbose'
+  let g:LanguageClient_changeThrottle = 0.5
+  let g:LanguageClient_diagnosticsEnable = 0
   " let g:LanguageClient_loadSettings = 1 " Use an absolute configuration path if you want system-wide settings
   " let g:LanguageClient_settingsPath = '/home/kyrisu/.dotfiles/nvim/settings.json'
 
-  " set completefunc=LanguageClient#complete
+  " let g:LanguageClient_rootMarkers = ['.git', 'package.json']
+  " let g:LanguageClient_rootMarkers = {
+      " \ 'javascript': ['project.json', '.git'],
+      " \ }
 
-  " autocmd FileType javascript,javascript.jsx setlocal omnifunc=LanguageClient#complete
-  " autocmd FileType c,cpp,rust setlocal omnifunc=LanguageClient#complete
+  set completefunc=LanguageClient#complete
+
+  autocmd FileType javascript,javascript.jsx setlocal omnifunc=LanguageClient#complete
+  autocmd FileType c,cpp,rust setlocal omnifunc=LanguageClient#complete
 
   set formatexpr=LanguageClient_textDocument_rangeFormatting()
 
@@ -439,7 +453,7 @@ if has_key(g:plugs, 'deoplete.nvim')
   let g:deoplete#max_menu_width = 0
   let g:deoplete#omni#input_patterns = get(g:,'deoplete#omni#input_patterns',{})
   let g:deoplete#omni#input_patterns['javascript.jsx'] = ['[^. \t0-9]\.\w*']
-  call deoplete#custom#set('_', 'matchers', ['matcher_full_fuzzy'])
+  " call deoplete#custom#set('_', 'matchers', ['matcher_full_fuzzy'])
 
   let g:deoplete#sources#jedi#statement_length = 1
   let g:deoplete#sources#jedi#show_docstring = 1
@@ -534,4 +548,8 @@ if has_key(g:plugs, 'coverage.vim')
 
   let g:coverage_interval = 5000
 endif
+" }}}
+
+" => javascript-libraries-syntax.vim {{{
+" let g:used_javascript_libs = 'react'
 " }}}

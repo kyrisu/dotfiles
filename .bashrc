@@ -15,8 +15,8 @@ export PATH=$PATH:~/bin/:~/.local/bin/:~/bin/android-sdk-linux/tools:~/bin/andro
 
 #dynamic colors
 
-export PATH="$HOME/.dynamic-colors/bin:$PATH"
-source $HOME/.dynamic-colors/completions/dynamic-colors.bash
+# export PATH="$HOME/.dynamic-colors/bin:$PATH"
+# source $HOME/.dynamic-colors/completions/dynamic-colors.bash
 
 # METEOR
 export PATH=$PATH:$HOME/.meteor
@@ -125,7 +125,8 @@ export NVM_DIR="/home/kyrisu/.nvm"
 
 
 # gruvbox console colors
-#~/bin/gruvbox_256palette.sh
+~/bin/gruvbox_256palette.sh
+# dynamic-colors switch solarized-dark
 
 # command not found hook
 [ -r /usr/share/doc/pkgfile/command-not-found.bash ] && . /usr/share/doc/pkgfile/command-not-found.bash
@@ -171,7 +172,6 @@ export FZF_DEFAULT_COMMAND='ag -Q -g ""'
 #set +x
 #exec 2>&3 3>&-
 
-dynamic-colors switch solarized-dark
 
 export AWS_PROFILE=insendi-admin
 export AWS_DEFAULT_REGION=eu-west-1

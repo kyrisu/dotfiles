@@ -13,11 +13,10 @@ Plug 'airblade/vim-rooter'
 Plug 'milkypostman/vim-togglelist' " toggle location and quickfix list
 Plug 'MarcWeber/vim-addon-local-vimrc'
 
-if exists('g:gui_oni') == 0
-  Plug 'ap/vim-buftabline'
-endif
+" Plug 'equalsraf/neovim-gui-shim'
 
 Plug 'altercation/vim-colors-solarized'
+Plug 'morhetz/gruvbox'
 Plug 'vim-scripts/LargeFile'
 
 """"" programming general
@@ -45,43 +44,45 @@ Plug 'ruanyl/coverage.vim'
 
 "" Autocomplete
 
-if exists('g:gui_oni') == 0
+"" don't load in oni
+if !exists('gui_oni')
   if has('nvim')
-    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+    Plug 'Shougo/deoplete.nvim', {
+          \ 'do': ':UpdateRemotePlugins'
+          \ }
   else
     Plug 'Shougo/deoplete.nvim'
     Plug 'roxma/nvim-yarp'
     Plug 'roxma/vim-hug-neovim-rpc'
   endif
 
-Plug 'mhartington/nvim-typescript', { 'do': ':UpdateRemotePlugins' }
+  Plug 'mhartington/nvim-typescript', { 'do': ':UpdateRemotePlugins' }
 
-" Plug 'Shougo/vimproc.vim', { 'do' : 'make' }
-" Plug 'Quramy/tsuquyomi', { 'do': 'npm i -g typescript' }
+  " Plug 'Shougo/vimproc.vim', { 'do' : 'make' }
+  " Plug 'Quramy/tsuquyomi', { 'do': 'npm i -g typescript' }
 
-" Plug 'marijnh/tern_for_vim', {
+  " Plug 'marijnh/tern_for_vim', {
       " \ 'do' : 'npm install; npm i tern-node-express',
       " \ 'for': ['javascript', 'javascript.jsx']
       " \ }
-endif
 
-" Plug 'autozimu/LanguageClient-neovim', {
-    " \ 'branch': 'next',
-    " \ 'do': 'bash install.sh',
-    " \ }
+  " Plug 'autozimu/LanguageClient-neovim', {
+      " \ 'branch': 'next',
+      " \ 'do': 'bash install.sh',
+      " \ }
 
-"Plug 'prabirshrestha/asyncomplete.vim'
-"Plug 'prabirshrestha/asyncomplete-lsp.vim'
+  "Plug 'prabirshrestha/asyncomplete.vim'
+  "Plug 'prabirshrestha/asyncomplete-lsp.vim'
 
-" Plug 'prabirshrestha/async.vim'
-" Plug 'prabirshrestha/vim-lsp'
+  " Plug 'prabirshrestha/async.vim'
+  " Plug 'prabirshrestha/vim-lsp'
 
-"Plug 'yami-beta/asyncomplete-omni.vim'
-"Plug 'prabirshrestha/asyncomplete-necosyntax.vim'
+  "Plug 'yami-beta/asyncomplete-omni.vim'
+  "Plug 'prabirshrestha/asyncomplete-necosyntax.vim'
 
-if exists('g:gui_oni') == 0
   Plug 'itchyny/lightline.vim'
   Plug 'maximbaz/lightline-ale'
+  Plug 'ap/vim-buftabline'
 endif
 
 Plug 'tpope/vim-surround'
@@ -90,7 +91,9 @@ Plug 'tpope/vim-unimpaired' " cool bindings that I need to read more about
 Plug 'tpope/vim-fugitive' " git wrapper
 
 """ Javascript
-Plug 'pangloss/vim-javascript', { 'for': ['javascript', 'javascript.jsx'] }
+" Plug 'pangloss/vim-javascript', { 'for': ['javascript', 'javascript.jsx'] }
+Plug 'othree/yajs.vim', { 'for': ['javascript', 'javascript.jsx'] }
+Plug 'othree/es.next.syntax.vim', { 'for': ['javascript', 'javascript.jsx'] }
 Plug 'othree/javascript-libraries-syntax.vim', { 'for': ['javascript', 'javascript.jsx'] }
 Plug 'mxw/vim-jsx', { 'for': ['javascript', 'javascript.jsx'] }
 Plug 'alampros/vim-styled-jsx', { 'for': ['javascript', 'javascript.jsx'] }

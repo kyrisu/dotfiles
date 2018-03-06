@@ -74,7 +74,10 @@ endif
 set background=dark
 set t_Co=256
 
-colorscheme solarized
+" colorscheme solarized
+colorscheme gruvbox
+let g:gruvbox_contrast_dark = 'soft'
+let g:gruvbox_contrast_light = 'medium'
 
 hi Comment cterm=italic
 
