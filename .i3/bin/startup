@@ -14,7 +14,7 @@ dropbox &
 parcellite &
 
 # urxvtc
-/usr/bin/urxvtd &
+# /usr/bin/urxvtd &
 
 # run synademon
 syndaemon -K -i 1 -R -d

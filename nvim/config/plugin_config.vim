@@ -27,12 +27,20 @@ if has_key(g:plugs, 'nvim-typescript')
   let g:nvim_typescript#max_completion_detail= 100
   let g:nvim_typescript#type_info_on_hold = 1
   let g:nvim_typescript#completion_mark=''
-  autocmd FileType javascript,javascript.jsx nnoremap <silent> gd :TSDef<CR>
+
+  " autocmd FileType javascript,javascript.jsx nnoremap <silent> gd :TSDef<CR>
   autocmd FileType javascript,javascript.jsx nmap <buffer>K :TSDoc<CR>
   nnoremap <silent> <F2> :TSRename<CR>
 endif
 " }}}
 
+" nvim-typescript {{{
+if has_key(g:plugs, 'vim-sneak')
+  let g:sneak#label = 1
+  let g:sneak#use_ic_scs = 1
+endif
+" }}}
+"
 " tsuquyomi {{{
 if has_key(g:plugs, 'tsuquyomi')
   let g:deoplete#sources#tss#javascript_support = 1
@@ -48,8 +56,8 @@ if has_key(g:plugs, 'tsuquyomi')
   autocmd FileType javascript,javascript.jsx setlocal omnifunc=tsuquyomi#complete
   nnoremap <silent> <F2> :TSRename<CR>
 
-  set ballooneval
-  autocmd FileType typescript setlocal balloonexpr=tsuquyomi#balloonexpr()
+  " set ballooneval
+  " autocmd FileType typescript setlocal balloonexpr=tsuquyomi#balloonexpr()
 endif
 " }}}
 
@@ -81,12 +89,13 @@ let g:nerdtree_tabs_open_on_gui_startup=0
 
 " FZF {{{
 command! FZFMru call fzf#run({
-\  'source':  v:oldfiles,
-\  'sink':    'e',
-\  'options': '-m -x +s',
-\  'down':    '40%'})
+      \  'source':  v:oldfiles,
+      \  'sink':    'e',
+      \  'options': '-m -x +s',
+      \  'down':    '40%'})
 
 map <C-p> :Files<CR>
+" map <C-S-p> :Commands<CR>
 map <C-b> :Buffers<CR>
 map <C-_> :Ag<CR>
 "map <C-m> :FZFMru<CR>
@@ -110,9 +119,9 @@ let g:csv_nomap_cr = 1
 let g:csv_highlight_column = 'y'
 
 "aug CSV_Editing
-		"au!
-		"au BufRead,BufWritePost *.csv :%ArrangeColumn
-		"au BufWritePre *.csv :%UnArrangeColumn
+"au!
+"au BufRead,BufWritePost *.csv :%ArrangeColumn
+"au BufWritePre *.csv :%UnArrangeColumn
 "aug end
 " }}}
 
@@ -143,21 +152,21 @@ let g:ale_linters = {
       \}
 
 let g:ale_fixers = {
-\   'javascript': ['eslint'],
-\}
+      \   'javascript': ['eslint'],
+      \}
 
 " Use same sign and distinguish error and warning via different colors.
 let g:ale_sign_error = ''
 let g:ale_sign_warning = ''
 
-let g:ale_echo_msg_format = '[#%linter%#] %s [%severity%]'
+let g:ale_echo_msg_format = '[#%linter%#] %(code): %%s [%severity%]'
 let g:ale_statusline_format = ['E•%d', 'W•%d', 'OK']
 let g:ale_change_sign_column_color=1
 
 " hi ALESignColumnWithErrors ctermbg=DarkRed
 
-nmap <silent> <C-k> <Plug>(ale_previous_wrap)
-nmap <silent> <C-j> <Plug>(ale_next_wrap)
+" nmap <silent> <C-k> <Plug>(ale_previous_wrap)
+" nmap <silent> <C-j> <Plug>(ale_next_wrap)
 " }}}
 
 " EMOJI {{{
@@ -170,53 +179,53 @@ nmap <silent> <C-j> <Plug>(ale_next_wrap)
 
 " LightLine {{{
 
+" \   'colorscheme': 'solarized',
 let g:lightline = {
-  \   'colorscheme': 'solarized',
-  \   'active': {
-  \     'left': [ [ 'mode' ], [ 'pwd' ] ],
-  \     'right': [ [ 'linter_errors', 'linter_warnings', 'trailing', 'lineinfo' ], [ 'fileinfo' ] ],
-  \   },
-  \   'inactive': {
-  \     'left': [ [ 'pwd' ] ],
-  \     'right': [ [ 'lineinfo' ], [ 'fileinfo' ] ],
-  \   },
-  \   'tabline': {
-  \     'left': [ [ 'buffers' ] ]
-  \   },
-  \   'mode_map': {
-  \     'n' : 'N',
-  \     'i' : 'I',
-  \     'R' : 'R',
-  \     'v' : 'V',
-  \     'V' : 'V-LINE',
-  \     "\<C-v>": 'V-BLOCK',
-  \     'c' : 'C',
-  \     's' : 'S',
-  \     'S' : 'S-LINE',
-  \     "\<C-s>": 'S-BLOCK',
-  \     't': '',
-  \   },
-  \   'component': {
-  \     'lineinfo': '%l:%-v',
-  \   },
-  \   'separator': { 'left': '', 'right': '' },
-  \   'subseparator': { 'left': '', 'right': '' },
-  \   'component_expand': {
-  \     'buffers': 'lightline#bufferline#buffers',
-  \     'trailing': 'lightline#trailing_whitespace#component',
-  \     'linter_warnings': 'lightline#ale#warnings',
-  \     'linter_errors': 'lightline#ale#errors',
-  \   },
-  \   'component_function': {
-  \     'pwd': 'LightlineWorkingDirectory',
-  \     'fileinfo': 'LightlineFileinfo',
-  \   },
-  \   'component_type': {
-  \     'buffers': 'tabsel',
-  \     'linter_warnings': 'warning',
-  \     'linter_errors': 'error',
-  \   }
-  \ }
+      \   'active': {
+      \     'left': [ [ 'mode' ], [ 'pwd' ] ],
+      \     'right': [ [ 'linter_errors', 'linter_warnings', 'trailing', 'lineinfo' ], [ 'fileinfo' ] ],
+      \   },
+      \   'inactive': {
+      \     'left': [ [ 'pwd' ] ],
+      \     'right': [ [ 'lineinfo' ], [ 'fileinfo' ] ],
+      \   },
+      \   'tabline': {
+      \     'left': [ [ 'buffers' ] ]
+      \   },
+      \   'mode_map': {
+      \     'n' : 'N',
+      \     'i' : 'I',
+      \     'R' : 'R',
+      \     'v' : 'V',
+      \     'V' : 'V-LINE',
+      \     "\<C-v>": 'V-BLOCK',
+      \     'c' : 'C',
+      \     's' : 'S',
+      \     'S' : 'S-LINE',
+      \     "\<C-s>": 'S-BLOCK',
+      \     't': '',
+      \   },
+      \   'component': {
+      \     'lineinfo': '%l:%-v',
+      \   },
+      \   'separator': { 'left': '', 'right': '' },
+      \   'subseparator': { 'left': '', 'right': '' },
+      \   'component_expand': {
+      \     'buffers': 'lightline#bufferline#buffers',
+      \     'trailing': 'lightline#trailing_whitespace#component',
+      \     'linter_warnings': 'lightline#ale#warnings',
+      \     'linter_errors': 'lightline#ale#errors',
+      \   },
+      \   'component_function': {
+      \     'pwd': 'LightlineWorkingDirectory',
+      \     'fileinfo': 'LightlineFileinfo',
+      \   },
+      \   'component_type': {
+      \     'buffers': 'tabsel',
+      \     'linter_warnings': 'warning',
+      \     'linter_errors': 'error',
+      \   }
+      \ }
 
 function! LightlineFileinfo()
   if winwidth(0) < 90
@@ -269,29 +278,32 @@ autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.gra
 
 if has_key(g:plugs, 'LanguageClient-neovim')
   let g:LanguageClient_serverCommands = {
-    \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
-    \ 'cpp': ['cquery', '--log-file=/tmp/cq.log'],
-    \ 'c': ['cquery', '--log-file=/tmp/cq.log'],
-    \ 'javascript': ['javascript-typescript-stdio'],
-    \ 'javascript.jsx': ['javascript-typescript-stdio'],
-    \ }
+        \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
+        \ 'cpp': ['cquery', '--log-file=/tmp/cq.log'],
+        \ 'c': ['cquery', '--log-file=/tmp/cq.log'],
+        \ 'javascript': ['javascript-typescript-stdio'],
+        \ 'javascript.jsx': ['javascript-typescript-stdio'],
+        \ }
+        " \ 'javascript': ['tcp://127.0.0.1:2089'],
+        " \ 'javascript.jsx': ['tcp://127.0.0.1:2089'],
+        " \ }
 
   let g:LanguageClient_autoStart = 1
-  let g:LanguageClient_trace = 'verbose'
-  let g:LanguageClient_changeThrottle = 0.5
-  let g:LanguageClient_diagnosticsEnable = 0
+  " let g:LanguageClient_trace = 'verbose'
+  " let g:LanguageClient_changeThrottle = 0.5
+  " let g:LanguageClient_diagnosticsEnable = 0
   " let g:LanguageClient_loadSettings = 1 " Use an absolute configuration path if you want system-wide settings
   " let g:LanguageClient_settingsPath = '/home/kyrisu/.dotfiles/nvim/settings.json'
 
   " let g:LanguageClient_rootMarkers = ['.git', 'package.json']
   " let g:LanguageClient_rootMarkers = {
-      " \ 'javascript': ['project.json', '.git'],
-      " \ }
+  " \ 'javascript': ['project.json', '.git'],
+  " \ }
 
-  set completefunc=LanguageClient#complete
+  " set completefunc=LanguageClient#complete
 
-  autocmd FileType javascript,javascript.jsx setlocal omnifunc=LanguageClient#complete
-  autocmd FileType c,cpp,rust setlocal omnifunc=LanguageClient#complete
+  " autocmd FileType javascript,javascript.jsx setlocal omnifunc=LanguageClient#complete
+  " autocmd FileType c,cpp,rust setlocal omnifunc=LanguageClient#complete
 
   set formatexpr=LanguageClient_textDocument_rangeFormatting()
 
@@ -306,20 +318,48 @@ endif
 " }}}
 
 if has_key(g:plugs, 'vim-lsp')
-  if executable('typescript-language-server')
-    au User lsp_setup call lsp#register_server({
-          \ 'name': 'typescript-language-server',
-          \ 'cmd': { server_info->[&shell, &shellcmdflag, 'typescript-language-server --stdio --tsserver-log-file ~/tmp/tsserver.log --log-level 4']},
-          \ 'root_uri': { server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_directory(lsp#utils#get_buffer_path(), 'package.json'))},
-          \ 'whitelist': ['typescript', 'javascript', 'javascript.jsx']
-          \ })
-  endif
+  " if executable('typescript-language-server')
+  " au User lsp_setup call lsp#register_server({
+  " \ 'name': 'typescript-language-server',
+  " \ 'whitelist': ['typescript', 'javascript', 'javascript.jsx'],
+  " \ 'cmd': { server_info->[&shell, &shellcmdflag, 'typescript-language-server --stdio']},
+  " \ 'root_uri': { server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_directory(lsp#utils#get_buffer_path(), 'package.json'))}
+  " \ })
+  " endif
 
   let g:lsp_async_completion = 1
-  let g:asyncomplete_remove_duplicates = 1
 
   autocmd FileType javascript nnoremap gd :LspDefinition<cr>
 
+  autocmd FileType typescript,javascript,javascript.jsx setlocal omnifunc=lsp#complete
+  autocmd FileType Dockerfile setlocal omnifunc=lsp#complete
+  autocmd FileType css,less,sass setlocal omnifunc=lsp#complete
+
+  inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<cr>"
+
+  function! s:check_back_space() abort
+    let l:col = col('.') - 1
+    return !l:col || getline('.')[l:col - 1]  =~ '\s'
+  endfunction
+
+  inoremap <silent><expr> <TAB>
+        \ pumvisible() ? "\<C-n>" :
+        \ <SID>check_back_space() ? "\<TAB>" :
+        \ asyncomplete#force_refresh()
+  inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+  autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
+  imap <c-space> <Plug>(asyncomplete_force_refresh)
+
+
+  if executable('typescript-language-server')
+    au User lsp_setup call lsp#register_server({
+      \ 'name': 'typescript-language-server',
+      \ 'cmd': { server_info->[&shell, &shellcmdflag, 'typescript-language-server --stdio']},
+      \ 'root_uri': { server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_directory(lsp#utils#get_buffer_path(), '.git/..'))},
+      \ 'whitelist': ['typescript', 'javascript', 'javascript.jsx']
+      \ })
+endif
 
   if executable('docker-langserver')
     au User lsp_setup call lsp#register_server({
@@ -344,39 +384,67 @@ if has_key(g:plugs, 'vim-lsp')
           \ 'whitelist': ['css', 'less', 'sass'],
           \ })
   endif
-
-  autocmd FileType typescript,javascript,javascript.jsx setlocal omnifunc=lsp#complete
-  autocmd FileType Dockerfile setlocal omnifunc=lsp#complete
-  autocmd FileType css,less,sass setlocal omnifunc=lsp#complete
 endif
 
 
-" Typescript server {{{
 if has_key(g:plugs, 'asyncomplete.vim')
-        call asyncomplete#register_source(asyncomplete#sources#omni#get_source_options({
-        \ 'name': 'omni',
-        \ 'whitelist': ['*'],
-        \ 'blacklist': ['html', 'javascript'],
-        \ 'completor': function('asyncomplete#sources#omni#completor')
-        \  }))
+  let g:asyncomplete_remove_duplicates = 1
 
-        au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#necosyntax#get_source_options({
+  inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+  inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+  inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<cr>"
+
+  " auto close preview window when the completion is done
+  autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
+
+  function! s:check_back_space() abort
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1]  =~ '\s'
+  endfunction
+
+  inoremap <silent><expr> <tab>
+        \ pumvisible() ? "\<c-n>" :
+        \ <sid>check_back_space() ? "\<tab>" :
+        \ asyncomplete#force_refresh()
+
+  " inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+  au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#file#get_source_options({
+        \ 'name': 'file',
+        \ 'whitelist': ['*'],
+        \ 'priority': 10,
+        \ 'completor': function('asyncomplete#sources#file#completor')
+        \ }))
+
+  if has_key(g:plugs, 'asyncomplete-tscompletejob.vim')
+    au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#tscompletejob#get_source_options({
+          \ 'name': 'tscompletejob',
+          \ 'whitelist': ['typescript', 'javascript', 'javascript.jsx'],
+          \ 'completor': function('asyncomplete#sources#tscompletejob#completor'),
+          \ }))
+  endif
+
+  if has_key(g:plugs, 'asyncomplete-omni.vim')
+    call asyncomplete#register_source(asyncomplete#sources#omni#get_source_options({
+          \ 'name': 'omni',
+          \ 'whitelist': ['*'],
+          \ 'blacklist': ['html', 'javascript', 'javascript.jsx'],
+          \ 'completor': function('asyncomplete#sources#omni#completor')
+          \  }))
+  endif
+
+  au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#necosyntax#get_source_options({
         \ 'name': 'necosyntax',
         \ 'whitelist': ['*'],
         \ 'completor': function('asyncomplete#sources#necosyntax#completor'),
         \ }))
-
-        imap <c-space> <Plug>(asyncomplete_force_refresh)
-
-        " auto close preview window when the completion is done
-        "autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
 endif
 " }}}
 
 " DevDocs {{{
 augroup plugin-devdocs
   autocmd!
-  autocmd FileType c,cpp,rust,haskell,python nmap <buffer>K <Plug>(devdocs-under-cursor)
+  autocmd FileType c,cpp,rust,haskell,python,javascript,javascript.jsx nmap <buffer>KK <Plug>(devdocs-under-cursor)
 augroup END
 " }}}
 
@@ -423,8 +491,8 @@ if has_key(g:plugs, 'tern_for_vim')
     autocmd!
     autocmd FileType javascript setlocal omnifunc=tern#Complete
     autocmd FileType javascript.jsx setlocal omnifunc=tern#Complete
-    " autocmd FileType javascript,javascript.jsx nnoremap <silent> gd :TernDef<CR>
-    " autocmd FileType javascript,javascript.jsx nmap <buffer>K :TernDoc<CR>
+    autocmd FileType javascript,javascript.jsx nnoremap <silent> gd :TernDef<CR>
+    autocmd FileType javascript,javascript.jsx nmap <buffer>K :TernDoc<CR>
   augroup end
 endif
 " }}}
@@ -433,94 +501,78 @@ endif
 " => Deoplete {{{
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 if has_key(g:plugs, 'deoplete.nvim')
-  function! Multiple_cursors_before()
-    let b:deoplete_disable_auto_complete=2
-  endfunction
-  function! Multiple_cursors_after()
-    let b:deoplete_disable_auto_complete=1
-  endfunction
+  " function g:Multiple_cursors_before()
+    " call deoplete#custom#buffer_option('auto_complete', v:false)
+  " endfunction
+  " function g:Multiple_cursors_after()
+    " call deoplete#custom#buffer_option('auto_complete', v:true)
+  " endfunction
 
   let g:deoplete#enable_at_startup = 1
-  "let b:deoplete_disable_auto_complete=1
-  let g:deoplete#file#enable_buffer_path = 1
-  let g:deoplete#enable_refresh_always = 1
-  let g:deoplete#enable_ignore_case = 1
-  let g:deoplete#enable_smart_case = 1
+	call deoplete#custom#option('smart_case', v:true)
+	call deoplete#custom#option('refresh_always', v:true)
 
-  let g:deoplete#skip_chars = ['(', ')']
+  " disable autocomplete by default
+  " call deoplete#custom#buffer_option('auto_complete', v:false)
 
-  let g:deoplete#max_abbr_width = 0
-  let g:deoplete#max_menu_width = 0
-  let g:deoplete#omni#input_patterns = get(g:,'deoplete#omni#input_patterns',{})
-  let g:deoplete#omni#input_patterns['javascript.jsx'] = ['[^. \t0-9]\.\w*']
-  " call deoplete#custom#set('_', 'matchers', ['matcher_full_fuzzy'])
+  " call deoplete#custom#option('auto_complete', v:false)
 
-  let g:deoplete#sources#jedi#statement_length = 1
-  let g:deoplete#sources#jedi#show_docstring = 1
-  let g:deoplete#sources#jedi#short_types = 1
-
-  let g:deoplete#omni#functions = get(g:, 'deoplete#omni#functions', {})
-  let g:deoplete#omni#functions.css = 'csscomplete#CompleteCSS'
-
-  "let g:deoplete#tag#cache_limit_size = 5000000
-  call deoplete#custom#set('buffer', 'mark', 'buffer')
-  call deoplete#custom#set('ternjs', 'mark', '')
-  call deoplete#custom#set('typescript', 'mark', '')
-  call deoplete#custom#set('omni', 'mark', 'omni')
-  call deoplete#custom#set('file', 'mark', 'file')
-
-  " ignore UltiSnips in completion
-  let g:deoplete#ignore_sources = {}
-  let g:deoplete#ignore_sources._ = ['ultisnips']
-
-
-  " let g:deoplete#sources = {}
-  " let g:deoplete#sources['javascript'] = ['omni', 'file', 'buffer']
-  " let g:deoplete#sources['javascript.jsx'] = ['omni', 'file', 'buffer']
-  let g:deoplete#ignore_sources['javascript.jsx'] = ['omni']
-  " call deoplete#custom#source('omni', 'rank', 1000)
-
+  " let g:deoplete#skip_chars = ['(', ')']
   let g:deoplete#auto_complete_delay = 50
+  set splitbelow
+  set completeopt+=noselect,menuone
+  " set completeopt-=preview
+  autocmd CompleteDone * pclose
+
+  let g:deoplete#file#enable_buffer_path=1
+  call deoplete#custom#source('buffer', 'mark', 'ℬ')
+  call deoplete#custom#source('tern', 'mark', '')
+  call deoplete#custom#source('omni', 'mark', '⌾')
+  call deoplete#custom#source('file', 'mark', '')
+  call deoplete#custom#source('jedi', 'mark', '')
+  call deoplete#custom#source('ultisnips', 'mark', '')
+  call deoplete#custom#source('typescript', 'mark', '')
+  call deoplete#custom#source('LanguageClient', 'mark', '')
+  call deoplete#custom#source('typescript',  'rank', 630)
+  " let g:deoplete#omni_patterns = {}
+  " let g:deoplete#omni_patterns.html = ''
+  " let g:deoplete#omni_patterns.css = ''
+
+  call deoplete#custom#option('sources', {
+        \ 'javascript': ['typescript', 'tern', 'LanguageClient', 'file', 'buffer'],
+        \ 'javascript.jsx': ['typescript', 'tern', 'LanguageClient', 'file', 'buffer'],
+        \})
+        " \ 'javascript': ['typescript', 'tern', 'omni', 'file', 'buffer'],
+        " \ 'javascript.jsx': ['typescript', 'tern', 'omni', 'file', 'buffer'],
+        " \})
+  " call deoplete#custom#source('omni', 'rank', 1000)
+  " call deoplete#custom#var('omni', 'input_patterns', {
+        " \ 'ruby': ['[^. *\t]\.\w*', '[a-zA-Z_]\w*::'],
+        " \ 'java': '[^. *\t]\.\w*',
+        " \ 'php': '\w+|[^. \t]->\w*|\w+::\w*',
+        " \ 'javascript.jsx': '[^.t0-9]\.\w*'
+        " \})
 
   function! Preview_func()
-    if &previewwindow
+    if &pvw
       setlocal nonumber norelativenumber
     endif
   endfunction
+
   autocmd WinEnter * call Preview_func()
+  call deoplete#custom#option('ignore_sources', {'_': ['ultisnips']})
 
-  autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
-  autocmd InsertLeave * if pumvisible() == 0|pclose|endif
 
-  inoremap <expr><C-l> deoplete#refresh()
-
-  " imap <silent><expr><CR> pumvisible() ?
-        " \ (neosnippet#expandable() ? "\<Plug>(neosnippet_expand)" : deoplete#close_popup())
-        " \ : (delimitMate#WithinEmptyPair() ? "\<Plug>delimitMateCR" : "\<CR>")
-  imap <expr><CR> pumvisible() ?
-        \ deoplete#close_popup()
-        \ : (delimitMate#WithinEmptyPair() ? "\<Plug>delimitMateCR" : "\<CR>")
-
-  " <Tab> completion:
-  " 1. If popup menu is visible, select and insert next item
-  " 2. Otherwise, if within a snippet, jump to next input
-  " 3. Otherwise, if preceding chars are whitespace, insert tab char
-  " 4. Otherwise, start manual autocomplete
+  inoremap <silent><expr> <TAB>
+        \ pumvisible() ? "\<C-n>" :
+        \ <SID>check_back_space() ? "\<TAB>" :
+        \ deoplete#mappings#manual_complete()
 
   function! s:check_back_space() abort "{{{
     let col = col('.') - 1
     return !col || getline('.')[col - 1]  =~ '\s'
   endfunction"}}}
 
-  imap <silent><expr><Tab> pumvisible() ? "\<C-n>"
-        \ : (<SID>check_back_space() ? "\<Tab>"
-        \ : deoplete#manual_complete())
-
-  smap <silent><expr><Tab> pumvisible() ? "\<C-n>"
-        \ : (<SID>check_back_space() ? "\<Tab>"
-        \ : deoplete#manual_complete())
-
-  inoremap <expr><S-Tab>  pumvisible() ? "\<C-p>" : "\<C-h>"
 endif
 "}}}
 
@@ -532,12 +584,14 @@ endif
 " }}}
 
 " => indentLine {{{
-let g:indentLine_conceallevel = 0
+" let g:indentLine_conceallevel = 1
+let g:vim_json_syntax_conceal = 0
 " }}}
 
 " => nerdcommenter {{{
 let g:NERDSpaceDelims = 1
-let g:NERDCompactSexyComs = 1
+" let g:NERDCompactSexyComs = 1
+let g:NERDTrimTrailingWhitespace = 1
 " }}}
 
 " => coverage {{{
@@ -552,4 +606,17 @@ endif
 
 " => javascript-libraries-syntax.vim {{{
 " let g:used_javascript_libs = 'react'
+" }}}
+
+" => vim-markdown {{{
+let g:markdown_fenced_languages = ['js=javascript', 'html', 'python', 'c++=cpp', 'viml=vim', 'bash=sh', 'ini=dosini']
+let g:markdown_minlines = 100
+" }}}
+
+" => vim-javascript {{{
+" let g:javascript_plugin_jsdoc = 1
+" }}}
+
+" => tagbar {{{
+nmap <F8> :TagbarToggle<CR>
 " }}}

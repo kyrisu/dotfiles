@@ -15,30 +15,41 @@ Plug 'MarcWeber/vim-addon-local-vimrc'
 
 " Plug 'equalsraf/neovim-gui-shim'
 
-Plug 'altercation/vim-colors-solarized'
-Plug 'morhetz/gruvbox'
+" Plug 'altercation/vim-colors-solarized'
+Plug 'rakr/vim-one'
+" Plug 'morhetz/gruvbox'
 Plug 'vim-scripts/LargeFile'
+Plug 'justinmk/vim-sneak'
 
 """"" programming general
 
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
+
 Plug 'kshenoy/vim-signature' " displays markers on the left margin
+Plug 'airblade/vim-gitgutter' " places vim +- marks on the left gutter
+
 Plug 'editorconfig/editorconfig-vim'
 Plug 'mileszs/ack.vim'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'terryma/vim-multiple-cursors'
-Plug 'airblade/vim-gitgutter' " places vim +- marks on the left gutter
-Plug 'Yggdroot/indentLine' " prints vertical indentation lines
-Plug 'Raimondi/delimitMate' " automatic closing of quotes, brackets etc
+" Plug 'Yggdroot/indentLine' " prints vertical indentation lines
+" Plug 'Raimondi/delimitMate' " automatic closing of quotes, brackets etc
 Plug 'scrooloose/nerdcommenter' " commands for commenting selected text / row
 Plug 'w0rp/ale' " async linting
 Plug 'vasconcelloslf/vim-interestingwords' " keyword selection with <leader>k
-Plug 'rhysd/devdocs.vim' " opens devdocs with shift K
+Plug 'rhysd/devdocs.vim' " opens devdocs with shift KK
+" Plug 'majutsushi/tagbar'
+" Plug 'ludovicchabant/vim-gutentags'
+
+" Plug 'metakirby5/codi.vim' " interactive scratchpad
+"
+Plug 'Konfekt/FastFold' " Speed up the updating folds when you use auto completion plugins
 
 Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
 
 Plug 'ruanyl/coverage.vim'
+Plug 'wakatime/vim-wakatime'
 
 "Plug 'christianrondeau/vim-base64'
 
@@ -56,7 +67,10 @@ if !exists('gui_oni')
     Plug 'roxma/vim-hug-neovim-rpc'
   endif
 
-  Plug 'mhartington/nvim-typescript', { 'do': ':UpdateRemotePlugins' }
+  " Plug 'roxma/nvim-completion-manager'
+  " Plug 'roxma/nvim-cm-tern',  {'do': 'npm install'}
+
+  " Plug 'mhartington/nvim-typescript', { 'do': ':UpdateRemotePlugins' }
 
   " Plug 'Shougo/vimproc.vim', { 'do' : 'make' }
   " Plug 'Quramy/tsuquyomi', { 'do': 'npm i -g typescript' }
@@ -66,22 +80,28 @@ if !exists('gui_oni')
       " \ 'for': ['javascript', 'javascript.jsx']
       " \ }
 
-  " Plug 'autozimu/LanguageClient-neovim', {
-      " \ 'branch': 'next',
-      " \ 'do': 'bash install.sh',
-      " \ }
-
-  "Plug 'prabirshrestha/asyncomplete.vim'
-  "Plug 'prabirshrestha/asyncomplete-lsp.vim'
+  Plug 'autozimu/LanguageClient-neovim', {
+      \ 'branch': 'next',
+      \ 'do': 'bash install.sh',
+      \ }
 
   " Plug 'prabirshrestha/async.vim'
   " Plug 'prabirshrestha/vim-lsp'
 
-  "Plug 'yami-beta/asyncomplete-omni.vim'
-  "Plug 'prabirshrestha/asyncomplete-necosyntax.vim'
+  " Plug 'prabirshrestha/asyncomplete.vim'
+  " Plug 'prabirshrestha/asyncomplete-lsp.vim'
+
+  " Plug 'prabirshrestha/asyncomplete-file.vim'
+  " Plug 'yami-beta/asyncomplete-omni.vim'
+  " Plug 'prabirshrestha/asyncomplete-necosyntax.vim'
+  " Plug 'prabirshrestha/asyncomplete-flow.vim'
+
+  " Plug 'runoshun/tscompletejob'
+  " Plug 'prabirshrestha/asyncomplete-tscompletejob.vim'
 
   Plug 'itchyny/lightline.vim'
   Plug 'maximbaz/lightline-ale'
+
   Plug 'ap/vim-buftabline'
 endif
 
@@ -91,20 +111,24 @@ Plug 'tpope/vim-unimpaired' " cool bindings that I need to read more about
 Plug 'tpope/vim-fugitive' " git wrapper
 
 """ Javascript
-" Plug 'pangloss/vim-javascript', { 'for': ['javascript', 'javascript.jsx'] }
-Plug 'othree/yajs.vim', { 'for': ['javascript', 'javascript.jsx'] }
-Plug 'othree/es.next.syntax.vim', { 'for': ['javascript', 'javascript.jsx'] }
-Plug 'othree/javascript-libraries-syntax.vim', { 'for': ['javascript', 'javascript.jsx'] }
+Plug 'pangloss/vim-javascript', { 'for': ['javascript', 'javascript.jsx'] }
+" Plug 'othree/yajs.vim', { 'for': ['javascript', 'javascript.jsx'] }
+" Plug 'othree/es.next.syntax.vim', { 'for': ['javascript', 'javascript.jsx'] }
+" Plug 'othree/javascript-libraries-syntax.vim', { 'for': ['javascript', 'javascript.jsx'] }
 Plug 'mxw/vim-jsx', { 'for': ['javascript', 'javascript.jsx'] }
 Plug 'alampros/vim-styled-jsx', { 'for': ['javascript', 'javascript.jsx'] }
 
 "Plug 'ruanyl/vim-fixmyjs', { 'for': ['javascript', 'javascript.jsx'] }
-Plug 'heavenshell/vim-jsdoc', { 'for': ['javascript', 'javascript.jsx'] }
+" Plug 'heavenshell/vim-jsdoc'
+" Plug 'othree/jsdoc-syntax.vim'
 
+"" Typescript
+Plug 'HerringtonDarkholme/yats.vim', { 'for': ['typescript', 'typescript.tsx'] }
 
 """ Markdown
-Plug 'shime/vim-livedown', {'for': 'markdown'}
-Plug 'plasticboy/vim-markdown', {'for': 'markdown'}
+" Plug 'shime/vim-livedown', {'for': 'markdown'}
+" Plug 'plasticboy/vim-markdown', {'for': 'markdown'}
+Plug 'tpope/vim-markdown', {'for': 'markdown'}
 
 
 """ HTML & CSS
@@ -141,16 +165,18 @@ Plug 'vim-scripts/openvpn', {'for': 'openvpn'}
 "Plug 'jparise/vim-graphql', {'for': 'gql'}
 Plug 'tomlion/vim-solidity'
 Plug 'NLKNguyen/cloudformation-syntax.vim'
+Plug 'elzr/vim-json'
 Plug 'GutenYe/json5.vim'
+Plug 'Glench/Vim-Jinja2-Syntax'
 
-Plug 'hashivim/vim-vagrant'
+" Plug 'hashivim/vim-vagrant'
 
 """ vim
 Plug 'vim-scripts/vimwiki'
 Plug 'Shougo/neco-vim', {'for': 'vim'}
 
 Plug 'ryanoasis/vim-devicons'
-Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+" Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 
 Plug 'Shougo/echodoc.vim'
 

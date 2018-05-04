@@ -80,6 +80,7 @@ augroup MyAutoCmd " {{{
 	autocmd FileType qf   if &l:buftype ==# 'quickfix'
 				\ | wincmd J | endif
 
+	autocmd FileType make set noexpandtab
 augroup END " }}}
 
 " Internal Plugin Settings  {{{

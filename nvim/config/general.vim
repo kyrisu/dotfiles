@@ -3,7 +3,7 @@
 " => General {{{
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set hidden                   " hide buffers when abandoned instead of unload
-set complete=.               " No wins, buffs, tags, include scanning
+set complete=.,w,b,u,t,k     "
 set magic                    " For regular expressions turn magic on
 set path=.,**                " Directories to search when using gf
 set virtualedit=block        " Position cursor anywhere in visual block
@@ -35,6 +35,9 @@ set autowrite " autosave on ! and others
 " diff
 set diffopt=filler,iwhite      " Diff mode: show fillers, ignore white
 set diffopt+=vertical
+if &diff
+    highlight! link DiffText MatchParen
+endif
 
 let g:mapleader = ','
 
@@ -52,15 +55,18 @@ nnoremap <leader>a <C-^>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 syntax enable "Enable syntax hl
 
+if exists('g:GtkGuiLoaded')
+  call rpcnotify(1, 'Gui', 'Font', 'DroidSansMono Nerd Font 11')
+endif
+
 if LINUX() && has('gui_running')
-  set guifont=Inconsolata\ 12,Andale\ Mono\ Regular\ 16,Menlo\ Regular\ 15,Consolas\ Regular\ 16,Courier\ New\ Regular\ 18
+  set guifont=DroidSansMono Nerd Font 11,Andale\ Mono\ Regular\ 16,Menlo\ Regular\ 15,Consolas\ Regular\ 16,Courier\ New\ Regular\ 18
 elseif OSX() && has('gui_running')
   set guifont=Andale\ Mono\ Regular:h16,Menlo\ Regular:h15,Consolas\ Regular:h16,Courier\ New\ Regular:h18
 elseif WINDOWS() && has('gui_running')
   set guifont=Andale_Mono:h10,Menlo:h10,Consolas:h10,Courier_New:h10
 endif
 
-" set termguicolors
 if has('gui_running')
   set guioptions-=T
   set guioptions-=m
@@ -71,13 +77,25 @@ if has('gui_running')
 else
 endif
 
+"Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
+if (empty($TMUX))
+  if (has('nvim'))
+    let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+  endif
+  if (has('termguicolors'))
+    set termguicolors
+  endif
+endif
+
 set background=dark
 set t_Co=256
 
 " colorscheme solarized
-colorscheme gruvbox
-let g:gruvbox_contrast_dark = 'soft'
-let g:gruvbox_contrast_light = 'medium'
+let g:one_allow_italics = 1
+colorscheme one
+" colorscheme gruvbox
+" let g:gruvbox_contrast_dark = 'soft'
+" let g:gruvbox_contrast_light = 'medium'
 
 hi Comment cterm=italic
 
@@ -173,6 +191,24 @@ map <expr><S-h> (expand('%:t') =~ '^NERD_tree.\+') ? '\<s-h>' : ':bp<cr>'
 " Close the current buffer
 map <leader>bd :silent Bclose<cr>
 
+function! WinMove(key)
+    let t:curwin = winnr()
+    exec "wincmd ".a:key
+    if (t:curwin == winnr())
+        if (match(a:key,'[jk]'))
+            wincmd v
+        else
+            wincmd s
+        endif
+        exec "wincmd ".a:key
+    endif
+endfunction
+
+" map <silent> <C-h> :call WinMove('h')<cr>
+" map <silent> <C-j> :call WinMove('j')<cr>
+" map <silent> <C-k> :call WinMove('k')<cr>
+" map <silent> <C-l> :call WinMove('l')<cr>
+
 " Close all the buffers but current
 function! CloseAllBuffersButCurrent()
   let curr = bufnr("%")
@@ -262,14 +298,9 @@ augroup omnifuncs
   autocmd FileType python set omnifunc=pythoncomplete#Complete
   autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
   autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-  autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
   autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
   autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
   autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
-  autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-  autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-  autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-  autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 augroup end
 "}}}
 
@@ -306,7 +337,7 @@ set title
 " -----
 if has('folding')
   set foldenable
-  set foldmethod=syntax
+  " set foldmethod=syntax
   set foldlevelstart=99
   set foldtext=FoldText()
 endif

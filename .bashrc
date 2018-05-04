@@ -11,12 +11,18 @@
 #set -x
 
 export EDITOR=nvim
-export PATH=$PATH:~/bin/:~/.local/bin/:~/bin/android-sdk-linux/tools:~/bin/android-sdk-linux/platform-tools
+
+PATH=$PATH:~/bin/:~/.local/bin/:~/bin/android-sdk-linux/tools:~/bin/android-sdk-linux/platform-tools
+export PATH="node_modules/.bin:$PATH"
 
 #dynamic colors
-
 # export PATH="$HOME/.dynamic-colors/bin:$PATH"
 # source $HOME/.dynamic-colors/completions/dynamic-colors.bash
+# dynamic-colors switch solarized-dark
+
+# gruvbox console colors
+# ~/bin/gruvbox_256palette.sh
+
 
 # METEOR
 export PATH=$PATH:$HOME/.meteor
@@ -124,10 +130,6 @@ export ANDROID_HOME=~/bin/android-sdk-linux
 export NVM_DIR="/home/kyrisu/.nvm"
 
 
-# gruvbox console colors
-~/bin/gruvbox_256palette.sh
-# dynamic-colors switch solarized-dark
-
 # command not found hook
 [ -r /usr/share/doc/pkgfile/command-not-found.bash ] && . /usr/share/doc/pkgfile/command-not-found.bash
 
@@ -175,3 +177,8 @@ export FZF_DEFAULT_COMMAND='ag -Q -g ""'
 
 export AWS_PROFILE=insendi-admin
 export AWS_DEFAULT_REGION=eu-west-1
+
+export NVIM_GTK_NO_HEADERBAR=1
+export NVIM_GTK_PREFER_DARK_THEME=1
+
+export QT_AUTO_SCREEN_SCALE_FACTOR=1

@@ -1,2 +1,2 @@
-GuiFont DroidSansMono Nerd Font:h12
-GuiLinespace 8
+GuiFont DroidSansMono Nerd Font:h11
+GuiLinespace 4

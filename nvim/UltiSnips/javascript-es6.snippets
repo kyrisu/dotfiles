@@ -109,14 +109,30 @@ console.log(resp.errors ?
 console.log('------------------');
 endsnippet
 
+snippet clj
+console.log(JSON.stringify($0, null, 2));
+endsnippet
+
+snippet cll
+console.log('$1 =>', $1);
+endsnippet
+
+snippet clbr
+console.log('--------------------- $1 ---------------------');
+endsnippet
+
 snippet sjsx
 <style jsx>{\`
   $0
 \`}</style>
 endsnippet
 
-snippet esld "eslint ignore next line"
+snippet esldnl "eslint ignore next line"
 // eslint-disable-next-line $0
+endsnippet
+
+snippet esldl "eslint disable line"
+// eslint-disable-line
 endsnippet
 
 snippet #knex
