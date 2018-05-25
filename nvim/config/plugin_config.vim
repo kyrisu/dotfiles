@@ -96,9 +96,11 @@ command! FZFMru call fzf#run({
 
 map <C-p> :Files<CR>
 " map <C-S-p> :Commands<CR>
-map <C-b> :Buffers<CR>
 map <C-_> :Ag<CR>
 "map <C-m> :FZFMru<CR>
+
+nmap ; :Buffers<CR>
+nmap <Leader>r :Tags<CR>
 
 " }}}
 
@@ -162,6 +164,9 @@ let g:ale_sign_warning = ''
 let g:ale_echo_msg_format = '[#%linter%#] %(code): %%s [%severity%]'
 let g:ale_statusline_format = ['E•%d', 'W•%d', 'OK']
 let g:ale_change_sign_column_color=1
+
+nmap <silent> <leader>aj :ALENext<cr>
+nmap <silent> <leader>ak :ALEPrevious<cr>
 
 " hi ALESignColumnWithErrors ctermbg=DarkRed
 
@@ -290,8 +295,8 @@ if has_key(g:plugs, 'LanguageClient-neovim')
 
   let g:LanguageClient_autoStart = 1
   " let g:LanguageClient_trace = 'verbose'
-  " let g:LanguageClient_changeThrottle = 0.5
-  " let g:LanguageClient_diagnosticsEnable = 0
+  let g:LanguageClient_changeThrottle = 0.5
+  let g:LanguageClient_diagnosticsEnable = 0
   " let g:LanguageClient_loadSettings = 1 " Use an absolute configuration path if you want system-wide settings
   " let g:LanguageClient_settingsPath = '/home/kyrisu/.dotfiles/nvim/settings.json'
 
@@ -614,9 +619,21 @@ let g:markdown_minlines = 100
 " }}}
 
 " => vim-javascript {{{
-" let g:javascript_plugin_jsdoc = 1
+let g:javascript_plugin_jsdoc = 1
+" }}}
+"
+" => vim-javascript {{{
+let g:jsdoc_enable_es6 = 1
 " }}}
 
 " => tagbar {{{
 nmap <F8> :TagbarToggle<CR>
+" }}}
+
+" => tagbar {{{
+let g:user_emmet_settings = {
+\  'javascript.jsx' : {
+\      'extends' : 'jsx',
+\  },
+\}
 " }}}

@@ -27,6 +27,21 @@ set sessionoptions-=help
 set sessionoptions-=buffers
 set sessionoptions+=tabpages
 
+" Show relative sidebar numbers
+set rnu
+function ToggleNumbersOn()
+    set rnu!
+    set nu
+endfunction
+function ToggleRelativeOn()
+    set nu!
+    set rnu
+endfunction
+autocmd FocusLost * call ToggleNumbersOn()
+autocmd FocusGained * call ToggleRelativeOn()
+autocmd InsertEnter * call ToggleNumbersOn()
+autocmd InsertLeave * call ToggleRelativeOn()
+
 " Set to auto read when a file is changed from the outside
 set autoread
 set exrc
@@ -177,7 +192,13 @@ set listchars=tab:›\ ,trail:•,extends:#,nbsp:. " Highlight problematic white
 vnoremap < <gv
 vnoremap > >gv
 
-
+" inoremap " ""<left>
+" inoremap ' ''<left>
+" inoremap ( ()<left>
+" inoremap [ []<left>
+" inoremap { {}<left>
+" inoremap {<CR> {<CR>}<ESC>O
+" inoremap {;<CR> {<CR>};<ESC>O
 "}}}
 
 " => Moving around, tabs and buffers {{{

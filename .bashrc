@@ -55,11 +55,10 @@ alias pygjs='pygmentize -f terminal -l js'
 alias server='python -m SimpleHTTPServer'
 
 # node aliasees
-alias watch_todos="WATCH='\"src/**/*\"' chokidar --silent $WATCH --initial -c \"clear && leasot $WATCH -S --ignore node_modules\""
 
 # utilities
-alias whereami='geoiplookup $(curl ifconfig.io 2> /dev/null)'
-alias beep='paplay /usr/share/sounds/freedesktop/stereo/complete.oga'
+alias whereami="geoiplookup $(curl ifconfig.io 2> /dev/null)"
+alias beep="paplay /usr/share/sounds/freedesktop/stereo/complete.oga"
 
 # soft aliases
 
@@ -181,4 +180,5 @@ export AWS_DEFAULT_REGION=eu-west-1
 export NVIM_GTK_NO_HEADERBAR=1
 export NVIM_GTK_PREFER_DARK_THEME=1
 
-export QT_AUTO_SCREEN_SCALE_FACTOR=1
+# export QT_AUTO_SCREEN_SCALE_FACTOR=1
+export QT_AUTO_SCREEN_SCALE_FACTOR=0

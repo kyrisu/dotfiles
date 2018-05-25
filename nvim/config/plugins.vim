@@ -5,7 +5,7 @@ call plug#begin('~/.local/share/nvim/plugged')
 
 let g:plug_window = 'new'
 
-Plug 'junegunn/fzf', {'do': './install --all'}
+Plug 'junegunn/fzf', {'dir': '~/.fzf', 'do': './install --all'}
 Plug 'junegunn/fzf.vim'
 Plug 'scrooloose/nerdtree'
 Plug 'junegunn/vim-easy-align'
@@ -16,10 +16,9 @@ Plug 'MarcWeber/vim-addon-local-vimrc'
 " Plug 'equalsraf/neovim-gui-shim'
 
 " Plug 'altercation/vim-colors-solarized'
-Plug 'rakr/vim-one'
 " Plug 'morhetz/gruvbox'
+Plug 'rakr/vim-one'
 Plug 'vim-scripts/LargeFile'
-Plug 'justinmk/vim-sneak'
 
 """"" programming general
 
@@ -33,25 +32,24 @@ Plug 'editorconfig/editorconfig-vim'
 Plug 'mileszs/ack.vim'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'terryma/vim-multiple-cursors'
-" Plug 'Yggdroot/indentLine' " prints vertical indentation lines
-" Plug 'Raimondi/delimitMate' " automatic closing of quotes, brackets etc
+Plug 'Yggdroot/indentLine' " prints vertical indentation lines
+Plug 'Raimondi/delimitMate' " automatic closing of quotes, brackets etc
 Plug 'scrooloose/nerdcommenter' " commands for commenting selected text / row
 Plug 'w0rp/ale' " async linting
 Plug 'vasconcelloslf/vim-interestingwords' " keyword selection with <leader>k
 Plug 'rhysd/devdocs.vim' " opens devdocs with shift KK
-" Plug 'majutsushi/tagbar'
-" Plug 'ludovicchabant/vim-gutentags'
+Plug 'majutsushi/tagbar'
+Plug 'pedrohdz/vim-yaml-folds'
 
-" Plug 'metakirby5/codi.vim' " interactive scratchpad
-"
+Plug 'metakirby5/codi.vim' " interactive scratchpad
 Plug 'Konfekt/FastFold' " Speed up the updating folds when you use auto completion plugins
 
 Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
 
 Plug 'ruanyl/coverage.vim'
-Plug 'wakatime/vim-wakatime'
+" Plug 'wakatime/vim-wakatime'
 
-"Plug 'christianrondeau/vim-base64'
+Plug 'christianrondeau/vim-base64'
 
 "" Autocomplete
 
@@ -112,15 +110,12 @@ Plug 'tpope/vim-fugitive' " git wrapper
 
 """ Javascript
 Plug 'pangloss/vim-javascript', { 'for': ['javascript', 'javascript.jsx'] }
-" Plug 'othree/yajs.vim', { 'for': ['javascript', 'javascript.jsx'] }
-" Plug 'othree/es.next.syntax.vim', { 'for': ['javascript', 'javascript.jsx'] }
-" Plug 'othree/javascript-libraries-syntax.vim', { 'for': ['javascript', 'javascript.jsx'] }
 Plug 'mxw/vim-jsx', { 'for': ['javascript', 'javascript.jsx'] }
-Plug 'alampros/vim-styled-jsx', { 'for': ['javascript', 'javascript.jsx'] }
 
-"Plug 'ruanyl/vim-fixmyjs', { 'for': ['javascript', 'javascript.jsx'] }
-" Plug 'heavenshell/vim-jsdoc'
-" Plug 'othree/jsdoc-syntax.vim'
+" This breaks jsdoc hightlighting
+" Plug 'alampros/vim-styled-jsx', { 'for': ['javascript', 'javascript.jsx'] }
+
+Plug 'heavenshell/vim-jsdoc'
 
 "" Typescript
 Plug 'HerringtonDarkholme/yats.vim', { 'for': ['typescript', 'typescript.tsx'] }
@@ -176,7 +171,6 @@ Plug 'vim-scripts/vimwiki'
 Plug 'Shougo/neco-vim', {'for': 'vim'}
 
 Plug 'ryanoasis/vim-devicons'
-" Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 
 Plug 'Shougo/echodoc.vim'
 
